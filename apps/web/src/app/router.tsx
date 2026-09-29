@@ -44,6 +44,7 @@ const AdminGovernancePage = lazy(() => import("../pages/admin-governance-page").
 const AdminAnnouncementsPage = lazy(() => import("../pages/admin-announcements-page").then((m) => ({ default: m.AdminAnnouncementsPage })));
 const AdminContactRequestsPage = lazy(() => import("../pages/admin-contact-requests-page").then((m) => ({ default: m.AdminContactRequestsPage })));
 const AdminOrganizationsPage = lazy(() => import("../pages/admin-organizations-page").then((m) => ({ default: m.AdminOrganizationsPage })));
+const AdminPlatformMetricsPage = lazy(() => import("../pages/admin-platform-metrics-page").then((m) => ({ default: m.AdminPlatformMetricsPage })));
 const AIPage = lazy(() => import("../pages/ai-page").then((m) => ({ default: m.AIPage })));
 const BillingPage = lazy(() => import("../pages/billing-page").then((m) => ({ default: m.BillingPage })));
 const DesignSystemPage = lazy(() => import("../pages/design-system-page").then((m) => ({ default: m.DesignSystemPage })));
@@ -132,6 +133,7 @@ export const router = createBrowserRouter([
       { path: "/admin/announcements", element: <RequireAdmin><AdminAnnouncementsPage /></RequireAdmin> },
       { path: "/admin/contact-requests", element: <RequireSuperAdmin><AdminContactRequestsPage /></RequireSuperAdmin> },
       { path: "/admin/organizations", element: <RequireSuperAdmin><AdminOrganizationsPage /></RequireSuperAdmin> },
+      { path: "/admin/platform-metrics", element: <RequireSuperAdmin><AdminPlatformMetricsPage /></RequireSuperAdmin> },
       { path: "/admin/settings", element: <RequireAdmin><AdminSettingsPage /></RequireAdmin> },
       { path: "/settings", element: <SettingsPage /> },
       { path: "/profile", element: <ProfilePage /> },

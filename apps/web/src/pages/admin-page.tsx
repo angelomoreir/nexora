@@ -1,4 +1,4 @@
-﻿import { Building2, ChevronRight, Inbox, Lock, Megaphone, ScrollText, Settings, Shield, ShieldCheck, Users, UsersRound, Webhook, Zap } from "lucide-react";
+﻿import { Building2, ChevronRight, Inbox, Lock, Megaphone, ScrollText, Settings, Shield, ShieldCheck, TrendingUp, Users, UsersRound, Webhook, Zap } from "lucide-react";
 import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 import { Page, PageHeader } from "../components/ui";
@@ -19,6 +19,7 @@ export function AdminPage() {
   { to: "/admin/automation", icon: Zap, perm: "workflows.manage", title: t("admin.automationTitle"), description: t("admin.automationDesc") },
   { to: "/admin/announcements", icon: Megaphone, perm: "settings.manage", title: t("admin.announcementsTitle"), description: t("admin.announcementsDesc") },
   ...(session.user.isSuperAdmin ? [
+    { to: "/admin/platform-metrics", icon: TrendingUp, perm: null, title: t("admin.platformMetricsTitle"), description: t("admin.platformMetricsDesc") },
     { to: "/admin/organizations", icon: Building2, perm: null, title: t("admin.organizationsTitle"), description: t("admin.organizationsDesc") },
     { to: "/admin/contact-requests", icon: Inbox, perm: null, title: t("admin.contactRequestsTitle"), description: t("admin.contactRequestsDesc") }
   ] : []),

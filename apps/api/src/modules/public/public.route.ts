@@ -4,6 +4,7 @@ import { AppError } from "../../lib/errors.js";
 import { prisma, transactionOptions } from "../../lib/prisma.js";
 import { storage } from "../../services/storage/index.js";
 import { authenticate } from "../auth/auth.guard.js";
+import { getPlatformMetrics } from "./platform-metrics.service.js";
 
 const contactSchema = z.object({
   name: z.string().trim().min(2).max(120),
@@ -59,6 +60,8 @@ export const publicRoute: FastifyPluginAsync = async (app) => {
       return { requests, total, page, pageSize };
     }
   );
+
+  app.get("/platform/metrics", { preHandler: [authenticate, requireSuperAdmin] }, async () => getPlatformMetrics());
 
   app.get(
     "/platform/organizations",

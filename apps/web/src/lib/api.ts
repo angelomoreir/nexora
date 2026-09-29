@@ -1,7 +1,7 @@
 import type { ApiErrorResponse, AuthSession, DashboardResponse, BulkDownloadInput, DocumentActivityResponse, DocumentCommentDto, DocumentDetailResponse, DocumentItemDto, CreateEditorDocumentInput, EditorContentResponse, SaveEditorContentInput, FolderMetadataFieldInput, FolderMetadataFieldsResponse, TrashResponse, DocumentShareLinkDto, DocumentSharePermission, DocumentShareTargetsResponse, DocumentShareTargetType, DocumentVersionType, DocumentsResponse, FolderItemDto, FormDefinitionDto, FormStatus, FormSubmissionDto, FormSubmissionsResponse, FormsResponse, HealthResponse, ListDefinitionDto, ListFieldDto, ListItemDto, ListItemsResponse, ListsResponse, ProjectDto, ProjectsResponse, PublicDocumentShareDto, PublicShareFolderContentsDto, RoleName, SharedDocumentsResponse, TaskCommentDto, TaskDto, TaskPriority, TaskStatus, TasksResponse, UserDto, WorkflowDefinitionDto, WorkflowInstanceDto, WorkflowInstancesResponse, WorkflowInstanceStatus, WorkflowStatus, WorkflowStepType, WorkflowsResponse, ApprovalDetailDto, ApprovalsResponse, ApprovalStatus, NotificationsResponse, UnreadCountResponse, SearchResponse, SearchFilters, AuditLogListResponse, AuditLogFilters, OrganizationSettingsDto, UpdateOrganizationSettingsDto, TeamDto, TeamDetailDto, CreateTeamDto, UpdateTeamDto, PermissionDto, RoleDto, CreateRoleDto, UpdateRoleDto, AIChatResponse, AIConversationDto, AIDocumentSummaryResponse, AIActionProposal, AIReportResponse, PlanDto, SubscriptionDto, UsageStats, SavedViewDto, SavedViewResourceType, CreateSavedViewInput, UpdateSavedViewInput, SavedViewsResponse, ResourceSubscriptionDto, SubscribeInput, UnsubscribeInput, SubscriptionsResponse, SubscriptionCheckResponse, SubscriptionTargetType, TemplatesResponse, DashboardDto, DashboardWidgetDto, CreateDashboardInput, UpdateDashboardInput, CreateWidgetInput, UpdateWidgetInput, DashboardsResponse, RenderedDashboardResponse, AccessPanelResponse, AccessRequestDto, AccessRequestStatus, RequestAccessInput, DecideAccessInput, AccessRequestsResponse, UpdateGovernanceInput, RecentDocumentsResponse, FavoritesResponse, InvitationDto, InvitationPreviewDto, ChangePlanResponse, SsoConfigDto, SsoLookupResponse, AutofillMetadataResponse, WebhookDto, WebhooksResponse, CreateWebhookInput, CreateWebhookResponse, UpdateWebhookInput, WebhookDeliveryDto, WebhookDeliveriesResponse, WorkflowTriggerDto, WorkflowTriggersResponse, WorkflowTriggerScope, QuickActionDto, QuickActionsResponse, AnnouncementDto, AnnouncementsResponse, AccessReviewResponse, GovernanceReportDto, DeltaFeedResponse } from "@nexora/contracts";
 
 import type { CreateSiteInput, NewsCommentDto, NewsDetailResponse, NewsListResponse, NewsPostDto, NewsStatus, SiteDto, SiteMemberDto, SiteRole, SitesResponse, SiteDetailResponse, SitePagesResponse, SitePageResponse, UpdateSiteInput, UpsertNewsInput, UpsertSitePageInput, AIScaffoldApplyInput, AIScaffoldApplyResponse, AIScaffoldProposal, AIContextResourceType, AIContextualResponse, AutomationResourcesResponse, CollaborationMembersResponse, AnalyticsPeriodDays, OperationalAnalyticsResponse, UserSessionsResponse, SecurityOverviewDto } from "@nexora/contracts";
-import type { ContactRequestsResponse, PlatformOrganizationsResponse } from "@nexora/contracts";
+import type { ContactRequestsResponse, PlatformMetricsDto, PlatformOrganizationsResponse } from "@nexora/contracts";
 
 const apiUrl = import.meta.env?.VITE_API_URL ?? "http://localhost:3000/api/v1";
 
@@ -303,6 +303,10 @@ export const platformOrganizationsApi = {
   },
   remove: (organizationId: string) =>
     apiRequest<void>(`/platform/organizations/${organizationId}`, { method: "DELETE" })
+};
+
+export const platformMetricsApi = {
+  get: () => apiRequest<PlatformMetricsDto>("/platform/metrics")
 };
 
 export const governanceApi = {

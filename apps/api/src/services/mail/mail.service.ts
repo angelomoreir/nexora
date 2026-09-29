@@ -21,7 +21,7 @@ export interface EmailService {
 
 class SmtpEmailService implements EmailService {
   readonly name = "smtp";
-  private transport: nodemailer.Transporter | null;
+  private transport: ReturnType<typeof nodemailer.createTransport> | null;
 
   constructor() {
     this.transport = env.SMTP_HOST

@@ -1813,3 +1813,28 @@ export interface PlatformOrganizationsResponse {
   page: number;
   pageSize: number;
 }
+
+// --- Platform business metrics (super admin) ---
+
+export interface PlatformPlanMetricDto {
+  code: string;
+  name: string;
+  organizations: number;
+  paying: number;
+  mrrCents: number;
+}
+
+export interface PlatformMetricsDto {
+  generatedAt: string;
+  currency: string;
+  mrrCents: number;
+  arrCents: number;
+  arpaCents: number;
+  conversionRate: number;
+  activationRate: number;
+  organizations: { total: number; active: number; activated: number; new30d: number; newPrev30d: number };
+  users: { total: number; new30d: number };
+  subscriptions: { paying: number; trialing: number; pastDue: number; canceled30d: number };
+  plans: PlatformPlanMetricDto[];
+  signupsByMonth: { month: string; organizations: number }[];
+}

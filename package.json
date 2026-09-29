@@ -2,6 +2,7 @@
   "name": "nexora",
   "version": "0.1.0",
   "private": true,
+  "license": "UNLICENSED",
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -19,6 +20,11 @@
   "devDependencies": {
     "concurrently": "9.2.4",
     "typescript": "5.9.2"
+  },
+  "overrides": {
+    "exceljs": {
+      "uuid": "11.1.1"
+    }
   },
   "engines": {
     "node": ">=22.12.0",
