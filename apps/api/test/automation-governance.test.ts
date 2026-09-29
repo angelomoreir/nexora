@@ -410,3 +410,58 @@ test("a quick action with a foreign or nonexistent folder scope is rejected", as
   assert.equal(foreign.statusCode, 404);
   assert.equal(foreign.json().error.code, "FOLDER_NOT_FOUND");
 });
+
+test("form submissions feed workflow conditions and can create tasks on out-of-range values", async () => {
+  // Workflow: if the submitted "Temperatura" field is > 5, create an alert task.
+  const workflow = await app.inject({
+    method: "POST",
+    url: `/api/v1/organizations/${organizationId}/workflows`,
+    headers: { cookie: ownerCookies },
+    payload: {
+      name: "Temperature check",
+      steps: [
+        { order: 0, type: "START", name: "Start", config: {} },
+        { order: 1, type: "CONDITION", name: "In range?", config: { variable: "submission.Temperatura", operator: "lte", value: 5, jumpToOrder: 3 } },
+        { order: 2, type: "CREATE_TASK", name: "Alert task", config: { title: "Temperatura fora do limite" } },
+        { order: 3, type: "END", name: "End", config: {} }
+      ]
+    }
+  });
+  assert.equal(workflow.statusCode, 201, workflow.body);
+  const formWorkflowId = workflow.json().id as string;
+  const publish = await app.inject({ method: "POST", url: `/api/v1/organizations/${organizationId}/workflows/${formWorkflowId}/publish`, headers: { cookie: ownerCookies } });
+  assert.equal(publish.statusCode, 200, publish.body);
+
+  const trigger = await app.inject({ method: "POST", url: `/api/v1/organizations/${organizationId}/workflow-triggers`, headers: { cookie: ownerCookies }, payload: { workflowDefinitionId: formWorkflowId, event: "form.submitted", scopeType: "organization" } });
+  assert.equal(trigger.statusCode, 201, trigger.body);
+
+  const form = await app.inject({
+    method: "POST",
+    url: `/api/v1/organizations/${organizationId}/forms`,
+    headers: { cookie: ownerCookies },
+    payload: { name: "Registo de temperatura", fields: [{ id: "f1", type: "number", label: "Temperatura", required: true, order: 0 }] }
+  });
+  assert.equal(form.statusCode, 201, form.body);
+  const publishForm = await app.inject({ method: "PATCH", url: `/api/v1/organizations/${organizationId}/forms/${form.json().id}`, headers: { cookie: ownerCookies }, payload: { status: "PUBLISHED" } });
+  assert.equal(publishForm.statusCode, 200, publishForm.body);
+
+  const countAlerts = () => prisma.task.count({ where: { tenantId: organizationId, title: "Temperatura fora do limite" } });
+  const before = await countAlerts();
+
+  // In-range value: the condition is false, so no task is created.
+  const inRange = await app.inject({ method: "POST", url: `/api/v1/organizations/${organizationId}/forms/${form.json().id}/submissions`, headers: { cookie: ownerCookies }, payload: { values: { f1: 3 } } });
+  assert.equal(inRange.statusCode, 201, inRange.body);
+  assert.equal(await countAlerts(), before);
+
+  // Out-of-range value: the condition is true and a task is created.
+  const outOfRange = await app.inject({ method: "POST", url: `/api/v1/organizations/${organizationId}/forms/${form.json().id}/submissions`, headers: { cookie: ownerCookies }, payload: { values: { f1: 8 } } });
+  assert.equal(outOfRange.statusCode, 201, outOfRange.body);
+  assert.equal(await countAlerts(), before + 1);
+
+  // The instance recorded the submitted value both by field id and by label.
+  const instance = await prisma.workflowInstance.findFirst({ where: { tenantId: organizationId, workflowDefinitionId: formWorkflowId }, orderBy: { startedAt: "desc" } });
+  assert.ok(instance);
+  const context = JSON.parse(instance.contextJson ?? "{}") as Record<string, unknown>;
+  assert.equal(context["submission.f1"], 8);
+  assert.equal(context["submission.Temperatura"], 8);
+});

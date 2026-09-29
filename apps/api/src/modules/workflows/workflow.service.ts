@@ -689,6 +689,13 @@ async function executeStep(step: WorkflowStep, config: Record<string, unknown>, 
       else if (operator === "not_equals") matches = String(actualValue) !== String(compareValue);
       else if (operator === "exists") matches = actualValue !== undefined;
       else if (operator === "not_exists") matches = actualValue === undefined;
+      else if (operator === "gt" || operator === "gte" || operator === "lt" || operator === "lte") {
+        const actual = Number(actualValue);
+        const expected = Number(compareValue);
+        if (Number.isFinite(actual) && Number.isFinite(expected)) {
+          matches = operator === "gt" ? actual > expected : operator === "gte" ? actual >= expected : operator === "lt" ? actual < expected : actual <= expected;
+        }
+      }
       else throw new Error(`Unknown operator "${operator}".`);
       return matches && typeof jumpToOrder === "number" ? { jumpToOrder } : {};
     }

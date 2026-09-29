@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>Nexora — O espaço de trabalho da sua empresa</title>
+<!-- ATENÇÃO: "nexora.pt" é um placeholder. Substituir pelo domínio real da empresa (e re-gerar o PDF) antes de distribuir. O Gmail pessoal não deve aparecer em material comercial. -->
+<style>
+  @page { size: A4; margin: 12mm 13mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9pt; color: #1c2430; line-height: 1.4; margin: 0; }
+  .top { display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #4f46e5; padding-bottom: 3mm; }
+  .brand { font-size: 22pt; font-weight: 800; color: #4f46e5; letter-spacing: 2px; }
+  .tag { font-size: 9.5pt; color: #475569; text-align: right; max-width: 90mm; }
+  h2 { font-size: 11pt; color: #3730a3; margin: 5mm 0 1.5mm; }
+  .lead { font-size: 10.5pt; color: #0f172a; margin: 4mm 0 2mm; }
+  .cols { display: flex; gap: 4mm; }
+  .col { flex: 1; }
+  .card { border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; border-radius: 4px; padding: 2.5mm 3mm; margin: 2mm 0; }
+  .card b { color: #3730a3; }
+  ul { margin: 1mm 0 1.5mm; padding-left: 5mm; }
+  li { margin: 0.8mm 0; }
+  table { border-collapse: collapse; width: 100%; margin: 1.5mm 0; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; }
+  .price { font-weight: 700; color: #3730a3; }
+  .flow { display: flex; align-items: center; gap: 2mm; margin: 2mm 0; font-size: 8.5pt; }
+  .flow .step { background: #eef2ff; border: 1px solid #c7d2fe; border-radius: 4px; padding: 1.5mm 2.5mm; color: #312e81; font-weight: 600; }
+  .flow .arr { color: #4f46e5; font-weight: 800; }
+  .cta { background: linear-gradient(135deg, #312e81, #4f46e5); color: #fff; border-radius: 8px; padding: 4mm 5mm; margin-top: 4mm; display: flex; justify-content: space-between; align-items: center; }
+  .cta b { font-size: 12pt; }
+  .cta .small { color: #e0e7ff; font-size: 8.5pt; }
+  .cta .btn { background: #fff; color: #312e81; font-weight: 800; border-radius: 6px; padding: 2.5mm 5mm; font-size: 10pt; }
+  .foot { margin-top: 3mm; font-size: 7.5pt; color: #94a3b8; display: flex; justify-content: space-between; }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="brand">NEXORA</div>
+  <div class="tag"><b>O espaço de trabalho da sua empresa.</b><br>Documentos, processos e equipas num só sítio — com um preço por organização, não por utilizador.</div>
+</div>
+
+<p class="lead"><b>Os documentos da empresa vivem em emails e pastas partilhadas; as aprovações perdem-se em "responder a todos".</b><br>
+A Nexora junta documentos com versões, formulários, tarefas e aprovações num só espaço — cada um ligado ao seguinte, com histórico completo.</p>
+
+<div class="cols">
+  <div class="col">
+    <h2>O que a Nexora faz</h2>
+    <div class="card"><b>Documentos e versões.</b> Editor de documentos e folhas de cálculo integrados, histórico de versões e ficheiros organizados por projeto.</div>
+    <div class="card"><b>Aprovações e workflows.</b> Um documento entra para aprovação, o responsável aprova no telemóvel e fica registado quem, quando e porquê.</div>
+    <div class="card"><b>Formulários que geram trabalho.</b> Registos no terreno ou no armazém; um valor fora do limite cria automaticamente uma tarefa para o responsável.</div>
+    <div class="card"><b>Partilhas externas seguras.</b> Links para clientes e subempreiteiros com palavra-passe e prazo — sem conta e sem verem o resto.</div>
+  </div>
+  <div class="col">
+    <h2>Exemplo: registo com alerta</h2>
+    <div class="flow">
+      <span class="step">Formulário no telemóvel</span><span class="arr">→</span>
+      <span class="step">Valor fora do limite</span><span class="arr">→</span>
+      <span class="step">Tarefa ao responsável</span><span class="arr">→</span>
+      <span class="step">Registado p/ auditoria</span>
+    </div>
+    <h2>Para quem</h2>
+    <ul>
+      <li><b>Engenharia e construção</b> — desenhos, pareceres e autos por obra, aprovações registadas, partilhas com subempreiteiros.</li>
+      <li><b>Indústria alimentar e distribuição</b> — registos HACCP por formulário, alertas automáticos, evidências para auditorias.</li>
+      <li><b>Serviços e consultoras</b> — propostas, contratos e entregáveis com versões e aprovação interna.</li>
+    </ul>
+    <h2>Segurança e RGPD</h2>
+    <ul>
+      <li>Dados isolados por organização — verificado por testes automáticos em cada versão.</li>
+      <li>Passwords com Argon2, SSO para empresas, registo de auditoria e acordo de tratamento de dados (DPA) disponível.</li>
+    </ul>
+  </div>
+</div>
+
+<h2>Preço — por empresa, não por pessoa</h2>
+<table>
+  <tr><th>Plano</th><th>Mensal</th><th>Anual</th><th>Indicado para</th></tr>
+  <tr><td>Free</td><td class="price">0 €</td><td class="price">0 €</td><td>Experimentar com a equipa toda (até 5)</td></tr>
+  <tr><td>Basic</td><td class="price">29 €</td><td class="price">290 €</td><td>Até 15 pessoas</td></tr>
+  <tr><td>Professional</td><td class="price">69 €</td><td class="price">690 €</td><td>Até 50 pessoas — workflows e automação</td></tr>
+  <tr><td>Business</td><td class="price">149 €</td><td class="price">1.490 €</td><td>Até 200 pessoas — controlo avançado</td></tr>
+  <tr><td>Enterprise</td><td class="price" colspan="2">desde 399 €/mês</td><td>200+, SSO e requisitos próprios</td></tr>
+</table>
+
+<div class="cta">
+  <div><b>Veja em 15 minutos, com os seus processos.</b><br><span class="small">Demonstração gratuita e sem compromisso — preparamos um cenário com o vocabulário da sua empresa.</span></div>
+  <div class="btn">nexora.pt/contact?intent=demo</div>
+</div>
+
+<div class="foot"><span>Nexora — plataforma europeia de gestão de trabalho</span><span>nexora.pt · segurança e RGPD: nexora.pt/security · comercial@nexora.pt</span></div>
+
+</body>
+</html>

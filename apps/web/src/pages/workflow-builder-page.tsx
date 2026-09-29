@@ -449,7 +449,7 @@ function StepConfigEditor({ step, onChange, disabled = false, resources }: { ste
       return (
         <div className="grid gap-2 sm:grid-cols-2">
           <ConfigInput label={t("workflows.contextVariable")} value={config.variable as string ?? ""} onChange={(v) => set("variable", v)} placeholder="Ex: __lastApproval" disabled={disabled} />
-          <ConfigInput label={t("workflows.operatorLabel")} value={config.operator as string ?? "equals"} onChange={(v) => set("operator", v)} options={["equals", "not_equals", "exists", "not_exists"]} disabled={disabled} />
+          <ConfigInput label={t("workflows.operatorLabel")} value={config.operator as string ?? "equals"} onChange={(v) => set("operator", v)} options={["equals", "not_equals", "exists", "not_exists", "gt", "gte", "lt", "lte"]} disabled={disabled} />
           <ConfigInput label={t("workflows.compareValue")} value={config.value as string ?? ""} onChange={(v) => set("value", v)} disabled={disabled} />
           <ConfigInput label={t("workflows.jumpToStep")} type="number" value={typeof config.jumpToOrder === "number" ? String(config.jumpToOrder + 1) : ""} onChange={(v) => set("jumpToOrder", v ? Number(v) - 1 : undefined)} disabled={disabled} />
         </div>

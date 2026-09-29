@@ -257,7 +257,17 @@ export async function submitForm(
     include: { submitter: { select: { id: true, name: true, avatar: true } } }
   });
   // Anonymous submissions have no member context to run workflows as.
-  if (actor) await fireWorkflowEvent(actor, "form.submitted", { formId, formName: form.name, submissionId: submission.id });
+  if (actor) {
+    const context: Record<string, unknown> = { formId, formName: form.name, submissionId: submission.id };
+    for (const field of fields) {
+      if (field.type === "heading" || field.type === "separator") continue;
+      if (!(field.id in validated)) continue;
+      context[`submission.${field.id}`] = validated[field.id];
+      const labelKey = `submission.${field.label}`;
+      if (!(labelKey in context)) context[labelKey] = validated[field.id];
+    }
+    await fireWorkflowEvent(actor, "form.submitted", context);
+  }
   return toSubmissionDto(submission);
 }
 
