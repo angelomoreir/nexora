@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guião de Testes Manuais</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  h4 { font-size: 10pt; color: #0f172a; margin: 3.5mm 0 1.5mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .section { page-break-before: always; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; page-break-inside: auto; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  .cb { display: inline-block; width: 3.4mm; height: 3.4mm; border: 1.4px solid #64748b; border-radius: 1px; margin-right: 2mm; vertical-align: -0.5mm; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .deny { color: #b91c1c; }
+  .deny::before { content: "→ Esperado (negado): "; font-weight: 600; color: #b91c1c; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+  .role-pill { display: inline-block; background: #e0e7ff; color: #3730a3; border-radius: 10px; padding: 0 2.5mm; font-size: 8pt; font-weight: 600; }
+  .legend td { border: none; padding: 1mm 2mm 1mm 0; }
+</style>
+</head>
+<body>
+
+<!-- ===================== CAPA ===================== -->
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guião de Testes Manuais — Passo a Passo</div>
+  <div class="meta">
+    <p>Âmbito: todas as funcionalidades da aplicação, todos os papéis de utilizador</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173 · API http://localhost:3000/api/v1</p>
+    <p>Versão: 1.0 · Data: ____________ · Tester: ____________________</p>
+  </div>
+</div>
+
+<!-- ===================== 0. COMO USAR ===================== -->
+<h2>0. Como usar este guião</h2>
+<p>Execute os passos pela ordem indicada. Em cada passo, marque a caixa <span class="cb"></span> quando concluído e compare o resultado com o texto <span class="exp" style="font-weight:400">a verde</span>. Quando o resultado não corresponder ao esperado, registe o defeito na tabela da Secção G (última página).</p>
+<table class="legend"><tr>
+  <td><span class="cb"></span> Passo a executar e marcar</td>
+  <td><span class="exp">→ Esperado:</span> resultado correto</td>
+  <td><span class="deny">→ Esperado (negado):</span> a ação deve ser recusada / invisível</td>
+</tr></table>
+<div class="tip"><b>Sugestão de ordem:</b> 1) preparar ambiente → 2) site público e autenticação → 3) criar organização e os 5 utilizadores → 4) testes funcionais por módulo com o Admin → 5) repetir os pontos-chave com cada papel → 6) isolamento entre organizações.</div>
+
+<h2>1. Preparação do ambiente</h2>
+<ol class="steps">
+  <li><span class="cb"></span> Abrir um terminal em <code>D:\nexora</code> e garantir que o PostgreSQL está a correr: <code>docker compose up -d postgres</code> (ou uma instância existente em <code>DATABASE_URL</code>).</li>
+  <li><span class="cb"></span> Arrancar a app: <code>npm run dev</code>. <span class="exp">Dois processos sobem: API em <code>http://localhost:3000/api/v1</code> e Web em <code>http://localhost:5173</code>.</span></li>
+  <li><span class="cb"></span> Confirmar o health check no browser: <code>http://localhost:3000/api/v1/health</code>. <span class="exp">JSON com estado OK da base de dados e storage.</span></li>
+  <li><span class="cb"></span> <b>(Opcional, recomendado)</b> Povoar dados de demonstração: com a API a correr, executar <code>node scripts/seed-demo.mjs</code>. <span class="exp">É criada a organização «XPTO, Lda.» com 5 utilizadores (um por papel), pastas, documento, lista «Clientes», projeto «Onboarding ABC», 3 tarefas, workflow «Aprovação de Despesas» publicado, equipa «Consultores», uma notícia e um convite pendente.</span></li>
+</ol>
+
+<h3>1.1 Contas de teste</h3>
+<p>Pode testar de duas formas: (a) usar o seed acima — password de todas as contas: <code>XPTOdemo2024!</code>; ou (b) registar a sua própria organização e criar os utilizadores pela interface (Secção 4). Para a matriz de papéis precisa de uma conta por papel (as contas abaixo pertencem à organização <b>xpto</b>):</p>
+<table>
+  <thead><tr><th>Papel</th><th>Conta do seed (XPTO)</th><th>Resumo de acesso</th></tr></thead>
+  <tbody>
+    <tr><td><b>Admin</b></td><td>ana@xpto.pt</td><td>Acesso total à organização (criada pelo registo)</td></tr>
+    <tr><td><b>Manager</b></td><td>bruno@xpto.pt</td><td>Gere conteúdos, utilizadores, definições e auditoria; não apaga utilizadores nem gere funções</td></tr>
+    <tr><td><b>Editor</b></td><td>diana@xpto.pt</td><td>Gere conteúdos, processos e sites; não partilha documentos nem vê análise/auditoria</td></tr>
+    <tr><td><b>Member</b></td><td>carla@xpto.pt</td><td>Colabora: tarefas, aprovações, edita documentos; listas/formulários só de leitura</td></tr>
+    <tr><td><b>Viewer</b></td><td>eduardo@xpto.pt</td><td>Só consulta — não cria nem edita nada</td></tr>
+  </tbody>
+</table>
+<p class="small">Nota: «Super Admin» existe como papel de plataforma mas não é atribuível pela interface — a criação de um utilizador com papel Admin por alguém sem permissão deve ser recusada (testado na Secção 5).</p>
+
+<h2>2. Site público (sem login)</h2>
+<ol class="steps">
+  <li><span class="cb"></span> Abrir <code>http://localhost:5173/</code> em sessão anónima. <span class="exp">Landing page carrega com menu: Funcionalidades, Preços, Sobre, FAQ, Contacto.</span></li>
+  <li><span class="cb"></span> Percorrer <code>/features</code>, <code>/pricing</code>, <code>/about</code>, <code>/faq</code>, <code>/contact</code>. <span class="exp">Todas as páginas renderizam sem erros; /pricing mostra os 5 planos (Free, Basic, Professional, Business, Enterprise) com preços mensal/anual.</span></li>
+  <li><span class="cb"></span> Abrir <code>/terms</code> e <code>/privacy</code>. <span class="exp">Páginas legais carregam.</span></li>
+  <li><span class="cb"></span> Tentar abrir uma rota inexistente, ex.: <code>/xyz</code>. <span class="exp">Redireciona para a landing page.</span></li>
+  <li><span class="cb"></span> Tentar abrir <code>/dashboard</code> sem sessão. <span class="exp">Redireciona para <code>/login</code>.</span></li>
+</ol>
+
+<h2>3. Autenticação e ciclo de vida da conta</h2>
+<h3>3.1 Registo de nova organização</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Em <code>/register</code>, submeter com password fraca (ex.: <code>abc123</code>). <span class="exp">Erro de validação — a password exige mínimo 12 caracteres, maiúscula, minúscula e número.</span></li>
+  <li><span class="cb"></span> Registar: Nome <i>Teste Admin</i>, Organização <i>Empresa Teste Lda</i>, email único, password válida (ex.: <code>Teste12345!</code> → tem 12+? use <code>TesteSegura123</code>). <span class="exp">Conta criada e sessão iniciada; entra como Admin da nova organização; plano Free atribuído; pastas «Documentos → Contratos, Faturas, Projetos» já existem em Documentos.</span></li>
+  <li><span class="cb"></span> Registar outro utilizador com o <b>mesmo email</b>. <span class="exp">Recusado com erro de email já existente.</span></li>
+</ol>
+<h3>3.2 Login / logout / erros</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Terminar sessão pelo menu do avatar → <i>Sair</i>. <span class="exp">Volta a <code>/login</code>; rotas internas deixam de abrir.</span></li>
+  <li><span class="cb"></span> Login com password errada. <span class="exp">Mensagem de credenciais inválidas (sem revelar se o email existe).</span></li>
+  <li><span class="cb"></span> Repetir login errado várias vezes seguidas (5+). <span class="exp">Rate limiting entra em ação (HTTP 429 / mensagem de bloqueio temporário).</span></li>
+  <li><span class="cb"></span> Login correto. <span class="exp">Entra e cai no Dashboard / O meu dia.</span></li>
+  <li><span class="cb"></span> No login, clicar «Continuar com SSO» com um email de domínio sem SSO. <span class="exp">Mensagem «Não existe SSO configurado para este domínio de email.»</span></li>
+</ol>
+<h3>3.3 Recuperação de password</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Em <code>/forgot-password</code>, submeter um email existente. <span class="exp">Confirmação genérica «Instruções enviadas». Em dev (<code>EXPOSE_PASSWORD_RESET_TOKEN=true</code>) aparece «Abrir ligação de desenvolvimento».</span></li>
+  <li><span class="cb"></span> Abrir a ligação de desenvolvimento → definir nova password válida. <span class="exp">Password atualizada; consegue entrar com a nova password.</span></li>
+  <li><span class="cb"></span> Reutilizar a mesma ligação de reset. <span class="deny">Ligação inválida — só pode ser usada uma vez.</span></li>
+  <li><span class="cb"></span> Pedir reset para email inexistente. <span class="exp">Mesma mensagem genérica (não revela se a conta existe).</span></li>
+</ol>
+
+<h2 class="section">4. Criar todos os tipos de utilizador (como Admin)</h2>
+<p>Em <b>Administração → Utilizadores</b> (ou em <b>Configurações</b>), criar um utilizador por papel. Se usou o seed, estas contas já existem — mesmo assim valide o fluxo de convite.</p>
+<ol class="steps">
+  <li><span class="cb"></span> «Adicionar utilizador»: criar <i>Manager Teste</i> com papel <b>Manager</b> e password inicial válida. <span class="exp">Aparece na lista com a função Manager.</span></li>
+  <li><span class="cb"></span> Repetir para <b>Editor</b>, <b>Member</b> e <b>Viewer</b>. <span class="exp">Os 4 utilizadores aparecem na lista.</span></li>
+  <li><span class="cb"></span> Criar utilizador com password com &lt; 12 caracteres. <span class="deny">Validação impede a submissão.</span></li>
+  <li><span class="cb"></span> <b>Convite por email:</b> «Convidar utilizador» com um email novo e papel Viewer. <span class="exp">Convite criado; aparece em «Convites pendentes» com estado Pendente e data de expiração. Sem SMTP configurado, a app mostra a ligação de convite para copiar.</span></li>
+  <li><span class="cb"></span> Copiar a ligação e abrir <code>/accept-invite?token=…</code> em janela anónima → aceitar e definir password. <span class="exp">Conta criada/iniciada; o convite passa a «Aceite»; o utilizador entra na organização.</span></li>
+  <li><span class="cb"></span> Reabrir a mesma ligação de convite. <span class="deny">«Convite inválido» — já utilizado.</span></li>
+  <li><span class="cb"></span> Criar novo convite e depois «Revogar» antes de ser aceite → abrir a ligação. <span class="deny">Convite inválido/revogado.</span></li>
+  <li><span class="cb"></span> Iniciar sessão com cada um dos 5 utilizadores criados e confirmar que entram. <span class="exp">Todos autenticam; o menu lateral adapta-se ao papel (ver Secção 5).</span></li>
+</ol>
+
+<h2>5. Matriz de papéis — o que cada um deve (e não deve) conseguir</h2>
+<p>Para cada papel, iniciar sessão e verificar o menu lateral e as ações. <b>Dica:</b> use janelas de browser separadas ou perfis diferentes para manter várias sessões em simultâneo.</p>
+
+<h3>5.1 Viewer (só leitura) — eduardo@xpto.pt</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Menu lateral: <span class="exp">Vê O meu dia, Dashboard, Pesquisa, Tarefas, Aprovações, Processos, Notificações, Sites, Notícias, Documentos, Listas, Formulários, IA, Ajuda, Planos, Configurações, Perfil. <b>Não vê</b> «Análise» nem «Administração».</span></li>
+  <li><span class="cb"></span> Documentos: tentar «Nova pasta» / «Upload». <span class="deny">Ações de escrita indisponíveis ou recusadas (403).</span></li>
+  <li><span class="cb"></span> Tarefas: tentar «Nova tarefa». <span class="deny">Recusado.</span></li>
+  <li><span class="cb"></span> Listas e Formulários: abrir e consultar registos. <span class="exp">Lê tudo; botões de criar/editar ausentes ou recusados.</span></li>
+  <li><span class="cb"></span> Processos: abrir um workflow. <span class="exp">Vê o desenho; não consegue editar nem iniciar.</span></li>
+  <li><span class="cb"></span> Aprovações: vê a fila. <span class="exp">Consulta; não decide — salvo se for o aprovador designado (a decisão é por atribuição, não por permissão).</span></li>
+</ol>
+
+<h3>5.2 Member — carla@xpto.pt</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Menu: igual ao Viewer, <b>sem</b> «Análise» e «Administração». <span class="exp">Confirma-se.</span></li>
+  <li><span class="cb"></span> Criar uma tarefa e marcar como concluída. <span class="exp">Permitido.</span></li>
+  <li><span class="cb"></span> Fazer upload de um documento e editar metadados. <span class="exp">Permitido (documents.edit).</span></li>
+  <li><span class="cb"></span> Tentar <b>eliminar</b> um documento e <b>partilhar</b> um documento. <span class="deny">Ambos recusados — Member não tem documents.delete nem documents.share.</span></li>
+  <li><span class="cb"></span> Tentar criar Lista / Formulário / Processo / Site / Notícia. <span class="deny">Tudo recusado (só view nestes módulos).</span></li>
+  <li><span class="cb"></span> Aprovar/rejeitar uma aprovação atribuída a si. <span class="exp">Permitido (approvals.manage).</span></li>
+  <li><span class="cb"></span> Abrir <code>/admin</code> e <code>/analytics</code> diretamente pelo URL. <span class="deny">Redirecionado para o dashboard / acesso negado.</span></li>
+</ol>
+
+<h3>5.3 Editor — diana@xpto.pt</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Menu: <span class="exp">Aparece «Administração» (tem users.update e webhooks.manage), mas <b>não</b> «Análise».</span></li>
+  <li><span class="cb"></span> Criar lista, formulário, processo, notícia e página de site. <span class="exp">Permitido (manage nesses módulos).</span></li>
+  <li><span class="cb"></span> Eliminar documento. <span class="exp">Permitido (documents.delete).</span></li>
+  <li><span class="cb"></span> Partilhar documento / criar link público. <span class="deny">Recusado (sem documents.share).</span></li>
+  <li><span class="cb"></span> Criar <b>site</b> (não só páginas). <span class="exp">Permitido — Editor tem sites.manage.</span></li>
+  <li><span class="cb"></span> Em Administração: abrir Auditoria e Definições da organização. <span class="deny">Sem audit.view nem settings.manage — cartões ocultos no painel e dados recusados por URL direto.</span></li>
+  <li><span class="cb"></span> Tentar criar utilizador ou mudar o papel de alguém. <span class="deny">Recusado (users.create / roles.manage ausentes); users.update só permite suspender/reativar membros — não edita perfis de terceiros nem papéis.</span></li>
+  <li><span class="cb"></span> Criar um webhook em Administração → Webhooks. <span class="exp">Permitido (webhooks.manage).</span></li>
+</ol>
+
+<h3>5.4 Manager — bruno@xpto.pt</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Menu: <span class="exp">Vê «Análise» e «Administração».</span></li>
+  <li><span class="cb"></span> Criar utilizador com papel <b>Member</b>. <span class="exp">Permitido — é o único papel que pode atribuir (a API exige roles.manage para qualquer outro papel).</span></li>
+  <li><span class="cb"></span> Criar utilizador com papel <b>Viewer/Editor/Admin</b>. <span class="deny">Recusado — a API exige roles.manage para papéis que não Member; a interface só oferece «Member» a quem não tem roles.manage.</span></li>
+  <li><span class="cb"></span> Mudar o papel de um membro existente. <span class="deny">Recusado (roles.manage é só do Admin).</span></li>
+  <li><span class="cb"></span> Eliminar um utilizador. <span class="deny">Recusado (users.delete é só do Admin).</span></li>
+  <li><span class="cb"></span> Suspender/reativar membro (estado na organização). <span class="exp">Permitido (users.update).</span> Editar nome/cargo/avatar de <b>outro</b> utilizador: <span class="deny">recusado — os campos de perfil globais só podem ser alterados pelo próprio ou pelo Super Admin.</span></li>
+  <li><span class="cb"></span> Abrir Auditoria, Definições da org, Webhooks, Automatização, Governance, Anúncios. <span class="exp">Tudo acessível.</span></li>
+  <li><span class="cb"></span> Criar função personalizada em Funções. <span class="deny">Recusado (roles.manage).</span></li>
+</ol>
+
+<h3>5.5 Admin — ana@xpto.pt</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Confirmar acesso a <b>tudo</b> o que foi negado acima: eliminar utilizador, criar/editar funções personalizadas, mudar papéis, criar Admins, gerir definições e SSO. <span class="exp">Todas permitidas — exceto editar o perfil (nome/cargo/avatar) de outro utilizador, que é exclusivo do próprio ou do Super Admin.</span></li>
+  <li><span class="cb"></span> Tentar editar uma «Função de sistema» (Admin, Manager…). <span class="deny">Protegida — «As funções de sistema não podem ser editadas.» (a API também recusa).</span></li>
+  <li><span class="cb"></span> Remover-se a si próprio da organização. <span class="deny">A interface não oferece a opção e a API recusa (400 — não pode remover-se a si próprio).</span></li>
+</ol>
+
+<h2 class="section">6. Testes funcionais por módulo (executar como Admin, salvo indicação)</h2>
+
+<h3>6.1 O meu dia, Dashboard e Pesquisa</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Abrir «O meu dia». <span class="exp">Saudação conforme a hora; contadores «Para hoje», «Em atraso», «Aprovações pendentes», «Por ler»; secções Foco de hoje / Próximas tarefas / Decisões pendentes / Atualizações por ler.</span></li>
+  <li><span class="cb"></span> Num cartão de tarefa, clicar «Iniciar» e depois «Concluir». <span class="exp">O estado da tarefa muda sem sair da página.</span></li>
+  <li><span class="cb"></span> Botão «Atualizar». <span class="exp">Recarrega os dados.</span></li>
+  <li><span class="cb"></span> Dashboard: criar «Novo dashboard», renomear, alternar entre dashboards, ver widgets e anúncios. <span class="exp">Dashboards persistem e refletem dados da organização.</span></li>
+  <li><span class="cb"></span> Pesquisa (<code>/search</code>): pesquisar «ABC». <span class="exp">Resultados agrupados por tipo (documentos, registos da lista Clientes, tarefas…); filtros por tipo funcionam; clicar num resultado navega para o item.</span></li>
+  <li><span class="cb"></span> Pesquisar um termo do <b>conteúdo</b> de um ficheiro de texto enviado. <span class="exp">O documento aparece (pesquisa full-text em txt/CSV/PDF/Word).</span></li>
+  <li><span class="cb"></span> Pressionar <code>Ctrl+K</code>. <span class="exp">Abre a pesquisa universal: comandos de navegação + resultados; setas navegam, Enter abre.</span></li>
+</ol>
+
+<h3>6.2 Documentos — estrutura e ficheiros</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Em Documentos, criar pasta «Testes» e dentro dela «Subpasta». <span class="exp">Hierarquia criada; breadcrumb navega.</span></li>
+  <li><span class="cb"></span> «Upload» de um ficheiro (ex.: PDF ou TXT) para a subpasta. <span class="exp">Ficheiro aparece com tipo, tamanho, proprietário e data.</span></li>
+  <li><span class="cb"></span> Arrastar um ficheiro para a lista (drag &amp; drop). <span class="exp">Overlay «Largue para enviar»; fila de envio mostra progresso e conclui.</span></li>
+  <li><span class="cb"></span> Alternar vista Lista/Grelha; ordenar por Nome, Modificado, Tamanho, Tipo; pesquisar na pasta; filtros Todos/Documentos/Pastas/Favoritos. <span class="exp">Tudo reage corretamente.</span></li>
+  <li><span class="cb"></span> Vistas rápidas: Recentes, Favoritos, Partilhado comigo, Todos. <span class="exp">Cada vista filtra como descrito.</span></li>
+  <li><span class="cb"></span> Marcar documento como Favorito e «Fixar no topo». <span class="exp">Aparece em Favoritos e fica pinado na lista.</span></li>
+  <li><span class="cb"></span> Renomear, Mover e Copiar o documento entre pastas. <span class="exp">Operações concluídas; cópia criada no destino.</span></li>
+  <li><span class="cb"></span> Selecionar vários itens (checkbox) → ações em massa: mover e eliminar. <span class="exp">Operações aplicadas a todos os selecionados.</span></li>
+</ol>
+
+<h3>6.3 Documentos — detalhe, versões e colaboração</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Abrir o detalhe do documento. <span class="exp">Separadores Detalhes/Versões/Comentários/Atividade; pré-visualização se o formato suportar (senão «Descarregar para visualizar»).</span></li>
+  <li><span class="cb"></span> «Enviar nova versão» (ficheiro alterado) como versão <b>Principal</b> e depois como <b>Secundária (rascunho)</b>. <span class="exp">Histórico mostra as duas; a secundária fica como rascunho/pendente.</span></li>
+  <li><span class="cb"></span> «Restaurar versão» antiga e «Descarregar versão». <span class="exp">Versão restaurada passa a atual; download funciona.</span></li>
+  <li><span class="cb"></span> «Check-out» do documento; com <b>outro</b> utilizador tentar editar/enviar versão. <span class="deny">Bloqueado — «em check-out por {nome}». Como Admin, «Forçar check-in» liberta o documento.</span></li>
+  <li><span class="cb"></span> Adicionar comentário com menção «@Nome». <span class="exp">Comentário registado; o mencionado recebe notificação.</span></li>
+  <li><span class="cb"></span> «Sugerir metadados com IA». <span class="exp">Campos sugeridos marcados com selo IA (requer provider configurado).</span></li>
+  <li><span class="cb"></span> «Alertar-me» (subscrição). <span class="exp">Alerta ativo; uma alteração posterior gera notificação.</span></li>
+  <li><span class="cb"></span> Ver separador Atividade. <span class="exp">Regista visualizações, transferências e edições.</span></li>
+</ol>
+
+<h3>6.4 Documentos — partilha, acesso e governança</h3>
+<ol class="steps">
+  <li><span class="cb"></span> «Partilhar» → com <b>utilizador</b> (Viewer), com <b>equipa</b> e com a <b>organização</b>, com níveis Leitura/Edição. <span class="exp">Os destinos passam a ver o item em «Partilhado comigo» com a permissão certa.</span></li>
+  <li><span class="cb"></span> «Criar link» público com validade (ex.: 24h) e password. Abrir <code>/share/{token}</code> em janela anónima. <span class="exp">Pede a password; após password correta permite ver/descarregar.</span></li>
+  <li><span class="cb"></span> Link com permissão de edição → «Enviar nova versão» via link público. <span class="exp">Nova versão registada na atividade como «Nova versão via link».</span></li>
+  <li><span class="cb"></span> Revogar o link e reabrir o URL. <span class="deny">«Link indisponível».</span></li>
+  <li><span class="cb"></span> Numa pasta, criar link de «Pedido de ficheiros». <span class="exp">Quem abre o link pode enviar ficheiros mas <b>não</b> vê o conteúdo da pasta.</span></li>
+  <li><span class="cb"></span> «Gerir acesso»: ver quem tem acesso e a origem (proprietário/utilizador/equipa/ligação); desligar «Herdar permissões». <span class="exp">Com herança desligada, quem só tinha acesso por herança deixa de ver o item.</span></li>
+  <li><span class="cb"></span> Como utilizador sem acesso, abrir o URL direto do documento → «Pedir acesso» com mensagem. Como proprietário, aprovar em «Pedidos de acesso». <span class="exp">Pedido enviado → aprovado → o utilizador ganha acesso e recebe notificação.</span></li>
+  <li><span class="cb"></span> «Governança» na pasta: definir Sensibilidade = Confidencial. <span class="exp">A criação de links públicos fica bloqueada nessa pasta e descendentes.</span></li>
+  <li><span class="cb"></span> Sensibilidade = Restrito. <span class="exp">Também bloqueia partilha com toda a organização.</span></li>
+  <li><span class="cb"></span> Retenção = «Bloquear eliminação» → tentar eliminar item dentro. <span class="deny">Bloqueado pela política de retenção.</span></li>
+  <li><span class="cb"></span> «Exigir aprovação de conteúdo» numa pasta → enviar nova versão. <span class="exp">Versão fica «Pendente»; só após «Aprovar» é publicada; «Recusar» marca como recusada.</span></li>
+  <li><span class="cb"></span> «Declarar como registo» e «Aplicar retenção legal» num documento. <span class="exp">Badges «Registo»/«Retenção legal»; o registo fica imutável e não pode ser eliminado.</span></li>
+  <li><span class="cb"></span> «Campos de metadados» numa pasta: adicionar campos; abrir documento numa subpasta. <span class="exp">Subpastas herdam os campos; documento permite preenchê-los.</span></li>
+  <li><span class="cb"></span> «Marcar como modelo» um documento/pasta → «Novo a partir de modelo». <span class="exp">Cria cópia a partir do modelo na pasta atual.</span></li>
+</ol>
+
+<h3>6.5 Reciclagem</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Eliminar um documento e uma pasta. <span class="exp">São movidos para a reciclagem (não apagados já).</span></li>
+  <li><span class="cb"></span> Abrir Documentos → Reciclagem. <span class="exp">Itens com localização original, «Eliminado por» e data.</span></li>
+  <li><span class="cb"></span> «Restaurar» um item. <span class="exp">Volta à pasta original.</span></li>
+  <li><span class="cb"></span> «Eliminar definitivamente» um item. <span class="exp">Removido para sempre após confirmação.</span></li>
+  <li><span class="cb"></span> «Esvaziar reciclagem». <span class="exp">Tudo eliminado definitivamente (ação não anulável).</span></li>
+</ol>
+
+<h3>6.6 Listas</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Criar lista «Fornecedores». No Construtor adicionar campos de vários tipos: Texto (obrigatório), Número, Moeda, Data, Escolha (com opções), Email, Boolean. <span class="exp">Campos criados e reordenáveis (mover para cima/baixo).</span></li>
+  <li><span class="cb"></span> Separador Dados → «Novo registo» com campo obrigatório vazio. <span class="deny">Validação «é obrigatório».</span></li>
+  <li><span class="cb"></span> Criar 3 registos válidos; editar um; pesquisar registos; selecionar 2 → «Eliminar (2)». <span class="exp">CRUD, pesquisa e eliminação em massa funcionam.</span></li>
+  <li><span class="cb"></span> «Exportar CSV». <span class="exp">Ficheiro descarregado com os registos.</span></li>
+  <li><span class="cb"></span> «Duplicar» a lista. <span class="exp">Cópia criada com a mesma estrutura.</span></li>
+  <li><span class="cb"></span> Como Member/Viewer: tentar criar lista ou registo. <span class="deny">Recusado (só leitura).</span></li>
+</ol>
+
+<h3>6.7 Formulários</h3>
+<ol class="steps">
+  <li><span class="cb"></span> «Novo formulário» → abrir no Construtor → adicionar componentes: Título, Texto, Email (obrigatório), Seleção, Rádio, Checkbox, Upload, Separador. <span class="exp">Componentes adicionados com etiqueta, placeholder, obrigatório e opções configuráveis.</span></li>
+  <li><span class="cb"></span> Modo «Pré-visualização». <span class="exp">Aviso de que não está publicado; pré-visualiza o formulário.</span></li>
+  <li><span class="cb"></span> «Publicar» → submeter uma resposta válida e uma inválida (sem email obrigatório). <span class="exp">Válida aceite; inválida bloqueada por validação.</span></li>
+  <li><span class="cb"></span> Separador «Respostas»: ver submissões e «Exportar CSV». <span class="exp">Submissões listadas com data e autor; CSV correto.</span></li>
+  <li><span class="cb"></span> «Arquivar» → tentar submeter. <span class="deny">Não aceita novas respostas.</span> «Reativar» repõe.</li>
+  <li><span class="cb"></span> «Duplicar» e «Eliminar» formulário. <span class="exp">Ambos funcionam com confirmação.</span></li>
+</ol>
+
+<h3>6.8 Tarefas e projetos</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Criar projeto «Projeto Teste» (com cor). <span class="exp">Projeto criado e selecionável nas tarefas.</span></li>
+  <li><span class="cb"></span> «Nova tarefa»: título, descrição, prioridade Urgente, responsável (Member), data limite amanhã, etiquetas «teste, cliente», associar projeto. <span class="exp">Tarefa criada; o responsável recebe notificação «Tarefa atribuída».</span></li>
+  <li><span class="cb"></span> Vistas Lista / Kanban / Calendário. <span class="exp">Kanban agrupa por estado (A fazer, Em curso, Em revisão, Concluída, Cancelada) e permite mover; calendário mostra a tarefa no dia do prazo.</span></li>
+  <li><span class="cb"></span> Abrir o detalhe da tarefa: editar estado/prioridade/responsável, adicionar comentário. <span class="exp">Alterações guardadas; comentários contados.</span></li>
+  <li><span class="cb"></span> Como Member (responsável): mudar a tarefa para Concluída. <span class="exp">Permitido.</span></li>
+  <li><span class="cb"></span> Como Viewer: tentar criar tarefa. <span class="deny">Recusado.</span></li>
+  <li><span class="cb"></span> Pesquisar/filtrar tarefas por texto, estado e responsável. <span class="exp">Filtros aplicados corretamente.</span></li>
+</ol>
+
+<h3>6.9 Processos (workflows)</h3>
+<ol class="steps">
+  <li><span class="cb"></span> «Novo processo» «Teste Aprovação» → abrir o Construtor. <span class="exp">Criado como Rascunho com passos Início/Fim por defeito.</span></li>
+  <li><span class="cb"></span> Na paleta, adicionar passos: <b>Aprovação</b> (definir aprovador = Manager), <b>Enviar notificação</b>, <b>Criar tarefa</b>, <b>Condição</b> (com salto para passo). <span class="exp">Passos adicionados, reordenáveis/arrastáveis, duplicáveis; configuração por passo (aprovador, título da notificação, operador, valor de comparação…).</span></li>
+  <li><span class="cb"></span> Tentar publicar sem passo Fim no fim / sem nome num passo. <span class="deny">Painel de validação «O fluxo precisa de atenção» lista os problemas.</span></li>
+  <li><span class="cb"></span> Corrigir e «Guardar processo» → «Publicar». <span class="exp">Estado Publicado; o construtor fica bloqueado para edição.</span></li>
+  <li><span class="cb"></span> «Iniciar processo» com dados de entrada JSON (ex.: <code>{"valor": 250}</code>). <span class="exp">Instância criada «Em execução»; passo de aprovação fica a aguardar; o aprovador recebe notificação.</span></li>
+  <li><span class="cb"></span> Como aprovador, abrir a instância → «Aprovar» com comentário. <span class="exp">Passo concluído; processo avança; notificação enviada; tarefa criada pelo passo correspondente; instância «Concluída».</span></li>
+  <li><span class="cb"></span> Nova instância → «Rejeitar» no passo de aprovação. <span class="exp">Respeita o «Em rejeição, saltar para o passo #» se configurado; estado coerente.</span></li>
+  <li><span class="cb"></span> Ver «Instâncias» no detalhe do processo: progresso «X de Y passos concluídos», detalhes e resultado de cada execução. <span class="exp">Histórico completo.</span></li>
+  <li><span class="cb"></span> «Arquivar» o processo → tentar iniciar. <span class="deny">Não inicia.</span> «Reativar» repõe.</li>
+  <li><span class="cb"></span> Como Editor: editar/criar processo. <span class="exp">Permitido.</span> Como Member/Viewer: <span class="deny">só consulta (mensagem de sem permissão no builder).</span></li>
+</ol>
+
+<h3>6.10 Aprovações</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Separadores Minhas/Todas; filtros Pendentes/Aprovadas/Rejeitadas. <span class="exp">A fila reflete as aprovações do processo de 6.9.</span></li>
+  <li><span class="cb"></span> Abrir uma pendente: ver pedido, recurso, histórico; «Aprovar» e «Rejeitar» com nota de decisão. <span class="exp">Decisão registada com data e autor; pedido original recebe notificação.</span></li>
+  <li><span class="cb"></span> «Delegar» uma aprovação noutro membro. <span class="exp">Estado «Delegada»; passa a constar na fila do delegado, que pode decidir.</span></li>
+  <li><span class="cb"></span> Adicionar comentário a uma aprovação. <span class="exp">Comentário fica registado no histórico.</span></li>
+  <li><span class="cb"></span> Como Viewer: ver a fila. <span class="exp">Só consulta — sem botões de decisão.</span></li>
+</ol>
+
+<h3>6.11 Notificações</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Sino no topo com contador. <span class="exp">Badge mostra nº de não lidas (9+ se mais de 9); atualiza em tempo real quando chega notificação nova.</span></li>
+  <li><span class="cb"></span> Página Notificações: separadores Todas/Não lidas; «Marcar como lida» numa; «Marcar todas como lidas». <span class="exp">Estados atualizam e o badge desce.</span></li>
+  <li><span class="cb"></span> Verificar que os eventos anteriores geraram os tipos certos: tarefa atribuída, menção, aprovação pendente, decisão, processo concluído, documento partilhado/alterado/comentado, pedido de acesso. <span class="exp">Cada tipo tem texto/ícone próprio.</span></li>
+</ol>
+
+<h3>6.12 Análise (Admin/Manager)</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Abrir «Análise» e alternar período 7/30/90 dias. <span class="exp">KPIs atualizam: tarefas criadas/concluídas, taxa de conclusão, em atraso, documentos criados, utilizadores ativos, tempo médio de aprovação, taxa de sucesso de workflows.</span></li>
+  <li><span class="cb"></span> Verificar gráficos: Atividade diária, Tarefas por estado, Aprovações, Desempenho de workflows, Adoção. <span class="exp">Refletem a atividade gerada nos testes anteriores.</span></li>
+  <li><span class="cb"></span> Como Editor/Member/Viewer abrir <code>/analytics</code> diretamente. <span class="deny">«Análises indisponíveis» / sem permissão.</span></li>
+</ol>
+
+<h3>6.13 Sites e páginas</h3>
+<ol class="steps">
+  <li><span class="cb"></span> «Criar site»: nome, tipo Departamento, visibilidade «Toda a organização», cor. <span class="exp">Site criado; badge «O meu papel: Administrador».</span></li>
+  <li><span class="cb"></span> Dentro do site: criar <b>sub-site</b> (tipo Projeto, privado) e uma <b>página</b>; publicar a página e defini-la como inicial. <span class="exp">Separador Início mostra a página; Conteúdo lista páginas com estado Rascunho/Publicada.</span></li>
+  <li><span class="cb"></span> «Adicionar membro» ao site com papel Contribuidor e outro Leitor. <span class="exp">Membros listados com papéis de site (independentes do papel global).</span></li>
+  <li><span class="cb"></span> Site privado: como utilizador não-membro, tentar abrir o URL do site. <span class="deny">Sem acesso / não listado.</span></li>
+  <li><span class="cb"></span> «Zona de perigo» → Eliminar site (num site de teste). <span class="exp">Confirmação e remoção com conteúdos associados.</span></li>
+  <li><span class="cb"></span> Como Editor: criar site. <span class="exp">Permitido (sites.manage).</span> Como Member/Viewer: <span class="deny">recusado (só sites.view).</span></li>
+</ol>
+
+<h3>6.14 Notícias</h3>
+<ol class="steps">
+  <li><span class="cb"></span> «Nova notícia»: título, resumo, corpo, categoria, etiquetas, cor de capa, Destaque, estado Publicada. <span class="exp">Publicada no feed; destaque visível.</span></li>
+  <li><span class="cb"></span> Notícia com estado Rascunho e outra Agendada. <span class="exp">Estados corretos; rascunho não aparece como publicada para outros.</span></li>
+  <li><span class="cb"></span> Associar notícia a um site (vs. global). <span class="exp">Aparece no contexto do site.</span></li>
+  <li><span class="cb"></span> Abrir a notícia → comentar como outro utilizador. <span class="exp">Comentários contados e visíveis.</span></li>
+  <li><span class="cb"></span> Como Member/Viewer: criar notícia. <span class="deny">Recusado (só news.view).</span></li>
+</ol>
+
+<h3>6.15 Assistente IA</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Abrir «Assistente IA» → «Nova conversa». <span class="exp">Ecrã «Como posso ajudar?» com sugestões e indicação «Respeita as suas permissões».</span></li>
+  <li><span class="cb"></span> Clicar numa sugestão (ex.: «Quais são as tarefas atrasadas?»). <span class="exp">Resposta baseada nos dados reais da organização.</span></li>
+  <li><span class="cb"></span> Pedir «Que documentos tenho sobre o cliente X?». <span class="exp">Resposta só refere documentos a que tem acesso.</span></li>
+  <li><span class="cb"></span> Pedir «Cria uma lista de Clientes com Nome, NIF, Email, Telefone e Estado». <span class="exp">Proposta com prévia (nº de campos) → «Confirmar» → lista criada e visível em Listas.</span></li>
+  <li><span class="cb"></span> Pedir «Cria um processo para aprovar despesas superiores a 1.000 euros». <span class="exp">Prévia com nº de passos → confirmar → workflow criado como <b>rascunho</b> em Processos.</span></li>
+  <li><span class="cb"></span> Pedir uma aplicação completa (lista+formulário+workflow+página) e escolher site de destino. <span class="exp">Estrutura criada; página publicada no site escolhido.</span></li>
+  <li><span class="cb"></span> Ver painel «Utilização hoje» (pedidos/tokens/custo) e «Limpar conversa». <span class="exp">Métricas e limpeza funcionam.</span></li>
+  <li><span class="cb"></span> Como Viewer: pedir para criar algo. <span class="deny">A IA não executa ações que o papel não permite.</span></li>
+</ol>
+
+<h3>6.16 Central de Ajuda</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Abrir «Central de Ajuda»: navegar categorias e artigos, usar a pesquisa de ajuda e o assistente. <span class="exp">Conteúdo carrega; pesquisa devolve artigos.</span></li>
+  <li><span class="cb"></span> Botão de ajuda contextual (ícone ?) numa página, ex.: Documentos. <span class="exp">Abre ajuda relativa a essa página.</span></li>
+</ol>
+
+<h3>6.17 Administração</h3>
+<ol class="steps">
+  <li><span class="cb"></span> <b>Painel Admin</b>: cartões Utilizadores, Equipas, Funções, Auditoria, Segurança, Webhooks, Automatização, Governance, Anúncios, Definições. <span class="exp">Todos navegam para a respetiva página.</span></li>
+  <li><span class="cb"></span> <b>Utilizadores</b>: suspender um membro → esse utilizador tenta entrar. <span class="deny">Login recusado enquanto suspenso.</span> Reativar repõe o acesso.</li>
+  <li><span class="cb"></span> <b>Equipas</b>: criar equipa, adicionar/remover membros, eliminar equipa de teste. <span class="exp">Equipas usáveis na partilha de documentos e atribuições.</span></li>
+  <li><span class="cb"></span> <b>Funções</b>: criar função personalizada com um subconjunto de permissões (ex.: só documents.view + tasks.view), atribuí-la a um utilizador e entrar com ele. <span class="exp">O utilizador fica limitado exatamente a esse subconjunto.</span></li>
+  <li><span class="cb"></span> <b>Auditoria</b>: pesquisar e filtrar por ação, tipo de recurso e resultado. <span class="exp">Registos das ações feitas nos testes (criações, logins, alterações de definições) com ator, IP, data e resultado.</span></li>
+  <li><span class="cb"></span> <b>Segurança</b>: ver estado do SSO, política de passwords, membros suspensos, sessões ativas e eventos de segurança (logins falhados dos testes 3.2 devem aparecer). <span class="exp">Painel coerente com os testes feitos.</span></li>
+  <li><span class="cb"></span> <b>Definições → Geral</b>: alterar URL do logo, idioma e fuso horário da organização → guardar. <span class="exp">Logo aplicado no menu; definições persistem após reload.</span></li>
+  <li><span class="cb"></span> <b>Definições → Segurança</b>: aumentar «Comprimento mínimo da password» e ativar «Exigir símbolo» → criar utilizador com password simples. <span class="deny">A nova política é aplicada.</span> Repor valores depois.</li>
+  <li><span class="cb"></span> <b>Definições → SSO</b>: preencher Issuer URL, Client ID, Secret e domínio de email → ativar. <span class="exp">Configuração guardada; o login passa a oferecer SSO para esse domínio (o fluxo completo exige IdP real — sem IdP, validar apenas a configuração e o redirecionamento).</span></li>
+  <li><span class="cb"></span> <b>Webhooks</b>: criar webhook (nome, URL de endpoint, eventos) → copiar o segredo de assinatura (mostrado uma só vez) → «Testar» e ver «Entregas». <span class="exp">Webhook criado; teste regista entrega (falha se o endpoint não existir — verificar que a falha é registada, não que a app crasha).</span></li>
+  <li><span class="cb"></span> <b>Automatização</b>: criar trigger «Quando um documento é criado → executar processo publicado» numa pasta; depois criar documento nessa pasta. <span class="exp">O processo inicia automaticamente (nova instância visível).</span></li>
+  <li><span class="cb"></span> <b>Automatização → Ações rápidas</b>: criar ação para documentos → executá-la a partir do menu de um documento. <span class="exp">«Ação iniciada» e workflow executado para o item.</span></li>
+  <li><span class="cb"></span> <b>Governance</b>: relatórios de ligações públicas ativas, documentos inativos, ficheiros duplicados, registos e retenções legais. <span class="exp">Refletem o que criou nos testes 6.4 (links, registos, holds) e duplicados se enviou o mesmo ficheiro duas vezes.</span></li>
+  <li><span class="cb"></span> <b>Anúncios</b>: criar anúncio com público «Todos» e datas de publicação/expiração; outro com público «Equipa». <span class="exp">Anúncios aparecem no dashboard dos utilizadores abrangidos e expiram na data definida.</span></li>
+</ol>
+
+<h3>6.18 Planos e faturação</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Abrir «Planos e Faturação». <span class="exp">Plano atual (Free) e medidores de utilização: utilizadores, armazenamento, documentos, workflows, IA/mês.</span></li>
+  <li><span class="cb"></span> Alternar faturação mensal/anual. <span class="exp">Preços atualizam (anual = 2 meses grátis).</span></li>
+  <li><span class="cb"></span> «Selecionar» noutro plano. <span class="exp">Inicia checkout Stripe se configurado; caso contrário erro tratado («Não foi possível iniciar o checkout»), sem crash.</span></li>
+  <li><span class="cb"></span> Teste de limite: com plano Free (5 utilizadores / 1 GB / 100 documentos), tentar exceder o limite de utilizadores convidando o 6.º. <span class="deny">«Limite atingido» com sugestão de upgrade.</span></li>
+  <li><span class="cb"></span> «Cancelar subscrição» e «Gerir pagamento». <span class="exp">Pedem confirmação / comportam-se conforme o provider configurado (no-op em dev sem Stripe).</span></li>
+</ol>
+
+<h3>6.19 Perfil, tema e idioma</h3>
+<ol class="steps">
+  <li><span class="cb"></span> Perfil: alterar nome, cargo e URL do avatar → guardar. <span class="exp">Avatar/nome atualizam no topo e nas listas de utilizadores.</span></li>
+  <li><span class="cb"></span> «Alterar password» com a atual correta. <span class="exp">Sucesso; todas as sessões terminadas → volta ao login e entra com a nova password.</span></li>
+  <li><span class="cb"></span> Com 2 sessões abertas (browsers diferentes), em Perfil → Sessões ativas → «Terminar» a outra sessão. <span class="exp">A outra sessão deixa de funcionar; a atual continua.</span></li>
+  <li><span class="cb"></span> Alternar tema claro/escuro/sistema. <span class="exp">Tema aplica-se de imediato e persiste.</span></li>
+  <li><span class="cb"></span> Mudar idioma da interface (EN, ES, FR, DE, PT). <span class="exp">Interface traduzida por completo; datas/números formatados no locale.</span></li>
+  <li><span class="cb"></span> Se pertencer a 2 organizações: usar o seletor de organização no topo para alternar. <span class="exp">Todos os dados mudam para a org selecionada.</span></li>
+</ol>
+
+<h2 class="section">7. Isolamento multi-tenant e casos limite</h2>
+<ol class="steps">
+  <li><span class="cb"></span> Registar uma <b>segunda organização</b> (conta nova) e criar lá um documento «Segredo Org2». <span class="exp">Dados totalmente separados.</span></li>
+  <li><span class="cb"></span> Com a sessão da Org1, tentar abrir o URL/ID do documento da Org2. <span class="deny">Sem acesso / não encontrado — nenhum dado vaza entre tenants, nem via pesquisa nem via IA.</span></li>
+  <li><span class="cb"></span> Upload de ficheiro com tipo não permitido ou acima do tamanho máximo. <span class="deny">Recusado com mensagem clara.</span></li>
+  <li><span class="cb"></span> Upload de ficheiro com extensão falsa (ex.: .txt renomeado para .pdf). <span class="deny">Validação por magic bytes recusa.</span></li>
+  <li><span class="cb"></span> Exportar CSV de uma lista com campo a começar por «=» (ex.: <code>=1+1</code>). <span class="exp">CSV sanitizado contra formula injection.</span></li>
+  <li><span class="cb"></span> Sessão inativa/expirada: deixar o token expirar e continuar a navegar. <span class="exp">Refresh token renova em silêncio; quando expira de vez, volta ao login.</span></li>
+  <li><span class="cb"></span> Com a app offline (parar a API), usar o menu. <span class="exp">Mensagens de erro amigáveis («verifique a ligação»), sem ecrãs partidos.</span></li>
+  <li><span class="cb"></span> Testar em janela estreita / telemóvel (responsive). <span class="exp">Menu lateral colapsa em hamburger; tabelas e modais utilizáveis.</span></li>
+</ol>
+
+<h2 class="section">8. Registo de defeitos</h2>
+<table>
+  <thead><tr><th style="width:8mm">ID</th><th style="width:26mm">Módulo / Passo</th><th>Descrição do problema</th><th style="width:38mm">Resultado esperado</th><th style="width:20mm">Severidade</th><th style="width:18mm">Estado</th></tr></thead>
+  <tbody>
+    <tr><td>B-01</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>B-02</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>B-03</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>B-04</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>B-05</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>B-06</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>B-07</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>B-08</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>B-09</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>B-10</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>B-11</td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td>B-12</td><td></td><td></td><td></td><td></td><td></td></tr>
+  </tbody>
+</table>
+<p class="small">Severidade sugerida: Bloqueante (impede uso) · Alta (funcionalidade errada) · Média (contornável) · Baixa (cosmético).</p>
+
+<h3>Fecho da ronda de testes</h3>
+<table>
+  <tbody>
+    <tr><td style="width:55mm">Data de execução</td><td></td></tr>
+    <tr><td>Tester</td><td></td></tr>
+    <tr><td>Ambiente (URL / build)</td><td></td></tr>
+    <tr><td>Passos executados / total</td><td>______ / ~150</td></tr>
+    <tr><td>Defeitos encontrados</td><td></td></tr>
+    <tr><td>Parecer final</td><td>☐ Aprovado &nbsp;&nbsp; ☐ Aprovado com ressalvas &nbsp;&nbsp; ☐ Reprovado</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>

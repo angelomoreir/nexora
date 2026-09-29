@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de Introdução e Navegação</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+  .kbd { display: inline-block; border: 1px solid #cbd5e1; border-bottom-width: 2px; border-radius: 4px; background: #f8fafc; padding: 0 5px; font-family: Consolas, monospace; font-size: 8.5pt; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — Introdução e Navegação</div>
+  <div class="meta">
+    <p>Capítulo de arranque — ler antes de todos os outros</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que é o NEXORA</h2>
+<p>O NEXORA é uma plataforma empresarial que centraliza o trabalho de uma equipa num único espaço: <b>documentos</b>, <b>listas de dados</b>, <b>formulários</b>, <b>tarefas</b>, <b>processos automatizados (workflows)</b>, <b>sites internos</b>, <b>notícias</b>, <b>pesquisa global</b> e um <b>assistente de IA</b>. Foi desenhado para substituir ferramentas como o SharePoint com uma interface moderna e simples.</p>
+
+<h2>2. Conceitos fundamentais</h2>
+<table>
+  <thead><tr><th>Conceito</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><b>Organização</b></td><td>O espaço de trabalho da empresa (ex.: «xpto»). Todos os dados — documentos, listas, workflows — pertencem a uma organização e são <b>isolados</b> das outras. Uma conta pode pertencer a várias organizações.</td></tr>
+    <tr><td><b>Utilizador</b></td><td>Uma pessoa com a sua própria conta (email + palavra-passe). Nunca se partilham credenciais — auditoria, permissões e notificações são individuais.</td></tr>
+    <tr><td><b>Função (papel/role)</b></td><td>Conjunto de permissões do utilizador dentro da organização: Viewer, Member, Editor, Manager, Admin, Super Admin — ou funções personalizadas criadas pelo Admin.</td></tr>
+    <tr><td><b>Permissão</b></td><td>Uma capacidade concreta, ex.: <code>documents.edit</code>, <code>users.create</code>, <code>workflows.manage</code>. As funções agrupam permissões.</td></tr>
+    <tr><td><b>Auditoria</b></td><td>Registo imutável de ações relevantes (quem fez o quê e quando) — em Administração → Auditoria.</td></tr>
+    <tr><td><b>Instância</b></td><td>Uma execução concreta de um processo — o percurso real de um pedido.</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Idiomas e aparência</h2>
+<p>A interface está disponível em <b>Português (PT-PT), English, Español, Français e Deutsch</b> — selecionável no seletor de idioma do cabeçalho. Tema claro/escuro também disponível. Todas as mensagens, incluindo erros de permissão, seguem o idioma escolhido.</p>
+
+<h2>4. Entrar: registo e convites</h2>
+<h3>4.1 Registar uma organização nova</h3>
+<ol class="steps">
+  <li>Abrir <code>/register</code> → preencher nome, <b>organização</b>, email e palavra-passe (mínimo 12 caracteres).</li>
+  <li>Ao submeter, o sistema cria a organização e a conta como <b>Admin</b> — entra diretamente no Dashboard.</li>
+</ol>
+<h3>4.2 Convidar a equipa (o fluxo recomendado)</h3>
+<ol class="steps">
+  <li>Administração → Utilizadores → <b>«Convidar utilizador»</b>.</li>
+  <li>Introduzir o email e escolher a função → «Enviar convite».</li>
+  <li>O convite tem validade de <b>7 dias</b>. Com servidor de email configurado, chega por email; sem SMTP, a página mostra o link com botão <b>«Copiar»</b> para enviar por outro canal.</li>
+  <li>A tabela de convites mostra o estado de cada um (Pendente / Aceite / Revogado / Expirado) e permite <b>revogar</b>.</li>
+</ol>
+<h3>4.3 Aceitar o convite</h3>
+<ol class="steps">
+  <li>O convidado abre o link → vê «Foste convidado para {organização}».</li>
+  <li><b>Sem conta:</b> define nome e palavra-passe → conta criada já como membro.</li>
+  <li><b>Com conta existente:</b> faz login e a organização é adicionada ao seu seletor.</li>
+</ol>
+<div class="tip"><b>Nunca partilhar credenciais:</b> com convite, ninguém fica a conhecer a password de outra pessoa — nem o Admin. A alternativa «criar utilizador» (Configurações ou Administração) existe, mas quem cria define a password do colega.</div>
+<div class="note"><b>Primeiro acesso:</b> o Dashboard mostra um <b>checklist de onboarding</b> com passos guiados (primeiro documento, primeira lista, primeira tarefa, convidar a equipa, primeiro workflow).</div>
+
+<h2>5. Navegação e interface geral</h2>
+<h3>5.1 Barra lateral</h3>
+<table>
+  <thead><tr><th>Grupo</th><th>Itens</th></tr></thead>
+  <tbody>
+    <tr><td><b>Pessoal</b></td><td>O meu dia, Dashboard, Pesquisa</td></tr>
+    <tr><td><b>Trabalho</b></td><td>Tarefas, Aprovações, Processos, Notificações (com contador de não lidas)</td></tr>
+    <tr><td><b>Análise</b></td><td>Análise — <b>só com <code>analytics.view</code></b> (Admin, Manager)</td></tr>
+    <tr><td><b>Conteúdo</b></td><td>Sites, Notícias, Documentos, Listas, Formulários</td></tr>
+    <tr><td><b>Ferramentas</b></td><td>IA, Ajuda</td></tr>
+    <tr><td><b>Gerir</b></td><td>Administração — <b>só com permissões administrativas</b> · Planos, Configurações, Perfil</td></tr>
+  </tbody>
+</table>
+<p>Em ecrãs pequenos a barra colapsa atrás do botão ☰.</p>
+<h3>5.2 Cabeçalho</h3>
+<ul>
+  <li><b>Seletor de organização</b> — aparece quando pertence a mais do que uma; alterna o tenant inteiro da app.</li>
+  <li><b>Pesquisa</b> <span class="kbd">Ctrl</span>+<span class="kbd">K</span> — abre a paleta de comandos.</li>
+  <li><b>Tema</b> claro/escuro, <b>idioma</b> (5 línguas), <b>sino de notificações</b> com contador, <b>menu do utilizador</b> (perfil / terminar sessão).</li>
+</ul>
+<h3>5.3 Paleta de comandos <span class="kbd">Ctrl</span>+<span class="kbd">K</span></h3>
+<p>Pesquisa instantânea: com texto, procura em documentos, tarefas, listas e mais; sem texto, mostra todos os destinos de navegação. Setas <span class="kbd">↑</span><span class="kbd">↓</span> para navegar, <span class="kbd">Enter</span> para abrir.</p>
+<h3>5.4 Ajuda contextual</h3>
+<p>O botão «?» junto ao título de várias páginas abre o artigo de ajuda <b>daquele módulo</b> — e o menu Ajuda tem o centro completo (~80 artigos por categoria, pesquisa e assistente).</p>
+
+<h2>6. Glossário</h2>
+<table>
+  <thead><tr><th>Termo</th><th>Significado</th></tr></thead>
+  <tbody>
+    <tr><td>ACL / Gerir acesso</td><td>Lista de controlo de acesso — quem pode ver/editar cada documento ou pasta.</td></tr>
+    <tr><td>Check-out / Check-in</td><td>Bloquear um documento para edição exclusiva e devolvê-lo depois (nova versão).</td></tr>
+    <tr><td>Convite</td><td>Ligação segura (7 dias) para alguém entrar na organização com uma função definida.</td></tr>
+    <tr><td>Legal hold</td><td>Retenção legal que impede a eliminação de um documento.</td></tr>
+    <tr><td>Reciclagem</td><td>Documentos eliminados ficam recuperáveis até à purga (soft delete).</td></tr>
+    <tr><td>SSO / OIDC</td><td>Login único via fornecedor de identidade (Google, Azure AD…) — configurado em Administração.</td></tr>
+    <tr><td>Webhook</td><td>Notificação automática HTTP enviada a sistemas externos quando ocorrem eventos.</td></tr>
+    <tr><td>Widget</td><td>Bloco de conteúdo de uma página de site (hero, texto, documentos recentes, KPI…).</td></tr>
+  </tbody>
+</table>
+
+<h2>7. Perguntas frequentes</h2>
+<p><b>Cada pessoa precisa da sua conta?</b> Sim — contas individuais garantem auditoria, permissões e notificações corretas.</p>
+<p><b>O admin vê as passwords dos utilizadores?</b> Não — são guardadas com hash Argon2id; ninguém as pode ler. É por isso que o convite existe.</p>
+<p><b>Se alguém sair da empresa?</b> Administração → Utilizadores → <b>Suspender</b> — acesso cortado, histórico preservado.</p>
+<p><b>Um convite expirou — e agora?</b> Enviar um novo para o mesmo email; convites expirados não são reutilizáveis.</p>
+<p><b>Posso pertencer a duas organizações?</b> Sim — a mesma conta pode ser membro de várias; alterna no seletor do cabeçalho.</p>
+<p><b>Esqueci-me da password?</b> Página de login → recuperação por email (requer SMTP configurado).</p>
+<p><b>A IA lê os meus documentos?</b> Só os que tem permissão para abrir — e cada operação fica auditada.</p>
+
+</body>
+</html>

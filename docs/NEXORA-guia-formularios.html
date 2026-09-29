@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de Formulários</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  h4 { font-size: 10pt; color: #0f172a; margin: 3.5mm 0 1.5mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .section { page-break-before: always; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .deny { color: #b91c1c; }
+  .deny::before { content: "→ Esperado (negado): "; font-weight: 600; color: #b91c1c; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+  .role-pill { display: inline-block; background: #e0e7ff; color: #3730a3; border-radius: 10px; padding: 0 2.5mm; font-size: 8pt; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — Formulários</div>
+  <div class="meta">
+    <p>Módulo: Formulários (menu lateral → Formulários · <code>/forms</code>)</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que são Formulários</h2>
+<p>Um <b>Formulário</b> é uma ferramenta de <b>recolha de dados</b> — o equivalente interno a um Google Forms. Quem gere <b>constrói</b> o questionário, <b>publica-o</b>, e os membros da organização <b>respondem</b> — cada pessoa com a sua submissão. As respostas ficam reunidas numa tabela consultável e exportável.</p>
+<p><b>Quando usar:</b> pedidos de férias, inscrições em eventos, questionários de satisfação, registo de ocorrências, requisições, avaliações — sempre que várias pessoas submetem informação de forma estruturada.</p>
+
+<h2>2. Ciclo de vida — os 3 estados</h2>
+<table>
+  <thead><tr><th>Estado</th><th>O que significa</th><th>Quem pode responder</th></tr></thead>
+  <tbody>
+    <tr><td><b>Rascunho</b> (DRAFT)</td><td>Em construção — estado inicial</td><td>Ninguém</td></tr>
+    <tr><td><b>Publicado</b> (PUBLISHED)</td><td>Aberto a respostas</td><td>Todos os membros da organização</td></tr>
+    <tr><td><b>Arquivado</b> (ARCHIVED)</td><td>Fechado — não aceita novas respostas (reativável)</td><td>Ninguém</td></tr>
+  </tbody>
+</table>
+<div class="note"><b>Regras importantes:</b> (1) a API rejeita submissões de formulários não publicados; (2) não é possível publicar um formulário sem campos — precisa de pelo menos um campo de dados (além de títulos/separadores decorativos); (3) as respostas são <b>internas</b> — não existe link público externo.</div>
+
+<h2>3. Tipos de campo</h2>
+<table>
+  <thead><tr><th>Tipo</th><th>Comportamento</th><th>Exemplo</th></tr></thead>
+  <tbody>
+    <tr><td><b>Texto</b></td><td>Resposta curta, uma linha</td><td>Nome, assunto</td></tr>
+    <tr><td><b>Texto longo</b></td><td>Resposta multi-linha</td><td>Observações, descrição</td></tr>
+    <tr><td><b>Número</b></td><td>Valor numérico</td><td>Quantidade, avaliação 1–5</td></tr>
+    <tr><td><b>Moeda</b></td><td>Valor monetário</td><td>Valor do pedido</td></tr>
+    <tr><td><b>Email</b></td><td>Endereço validado</td><td>Email de contacto</td></tr>
+    <tr><td><b>Telefone</b></td><td>Número de telefone</td><td>Contacto direto</td></tr>
+    <tr><td><b>Data</b></td><td>Seletor de data</td><td>Data de início das férias</td></tr>
+    <tr><td><b>Seleção</b> (select)</td><td>Dropdown com opções — <i>exige opções</i></td><td>Departamento</td></tr>
+    <tr><td><b>Escolha única</b> (radio)</td><td>Botões de opção — uma escolha</td><td>Sim/Não, tipo de licença</td></tr>
+    <tr><td><b>Caixas de seleção</b> (checkbox)</td><td>Múltiplas escolhas</td><td>Restrições alimentares</td></tr>
+    <tr><td><b>Upload</b></td><td>Anexo de ficheiro</td><td>Comprovativo, evidência</td></tr>
+    <tr><td><b>Título</b> (heading)</td><td>Cabeçalho decorativo — organiza o formulário em secções</td><td>«Secção 2 — Detalhes»</td></tr>
+    <tr><td><b>Separador</b></td><td>Linha divisória visual</td><td>Separar blocos temáticos</td></tr>
+  </tbody>
+</table>
+<p class="small">Cada campo tem: <b>etiqueta</b> (a pergunta), <b>obrigatório</b> (sim/não), <b>placeholder</b> (texto de ajuda dentro do campo) e <b>valor por defeito</b> opcional. Campos de escolha exigem pelo menos uma opção.</p>
+
+<h2>4. Fluxo completo — passo a passo</h2>
+<h3>4.1 Criar</h3>
+<ol class="steps">
+  <li><b>Formulários → «Novo formulário»</b> → abre o seletor de modelos.</li>
+  <li>Escolher «Em branco» ou um template: <i>Pedido de férias, Questionário de satisfação, Registo de ocorrência, Inscrição em evento, Pedido de contacto</i>.</li>
+  <li>Ajustar nome/descrição → Criar. Nasce em <b>Rascunho</b>.</li>
+</ol>
+<h3>4.2 Construir (Builder)</h3>
+<ol class="steps">
+  <li>Abrir o formulário → <b>«Construtor»</b>.</li>
+  <li><b>«+ Adicionar campo»</b> → escolher tipo → configurar etiqueta, obrigatoriedade, opções.</li>
+  <li>Reordenar com setas; usar <b>Títulos</b> e <b>Separadores</b> para organizar formulários longos.</li>
+  <li><b>Guardar</b> — confirmação «Formulário guardado».</li>
+</ol>
+<h3>4.3 Publicar e recolher</h3>
+<ol class="steps">
+  <li>Na página do formulário → <b>«Publicar»</b>. <span class="exp">Estado passa a Publicado; membros já podem responder.</span></li>
+  <li>Os respondentes abrem <b>Formulários → nome</b>, preenchem e submetem.</li>
+  <li>Na página do formulário, o separador de <b>respostas</b> mostra cada submissão com autor e data; <b>«Exportar CSV»</b> descarrega tudo.</li>
+</ol>
+<h3>4.4 Fechar e reutilizar</h3>
+<ol class="steps">
+  <li><b>«Arquivar»</b> — fecha a novas respostas (as existentes ficam consultáveis). Reativável depois.</li>
+  <li><b>«Duplicar»</b> — copia a estrutura para um novo formulário (questionários recorrentes).</li>
+  <li><b>Eliminar</b> — remove o formulário e as respostas.</li>
+</ol>
+
+<h2>5. Exemplos práticos</h2>
+
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Pedido de férias (template)</div>
+  <ul>
+    <li><b>Texto:</b> Nome do colaborador (obrigatório)</li>
+    <li><b>Data:</b> Data de início · <b>Data:</b> Data de fim (ambas obrigatórias)</li>
+    <li><b>Escolha única:</b> Tipo — Férias / Licença / Outro</li>
+    <li><b>Texto longo:</b> Observações</li>
+  </ul>
+  <p>Publicar → cada membro submete o seu pedido → RH exporta CSV no fim do mês.</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Questionário de satisfação</div>
+  <ul>
+    <li><b>Número:</b> Avaliação geral (1–5)</li>
+    <li><b>Texto longo:</b> O que mais gostou? · <b>Texto longo:</b> Sugestões de melhoria</li>
+  </ul>
+  <p>Arquivar quando terminar o período de resposta → analisar o CSV.</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Registo de ocorrências</div>
+  <ul>
+    <li><b>Texto:</b> Título da ocorrência · <b>Data:</b> Quando aconteceu</li>
+    <li><b>Seleção:</b> Gravidade — Baixa / Média / Alta / Crítica</li>
+    <li><b>Texto longo:</b> Descrição detalhada · <b>Upload:</b> Evidência (foto/ficheiro)</li>
+  </ul>
+</div>
+
+<h2>6. Formulários vs Listas</h2>
+<table>
+  <thead><tr><th></th><th>Formulário</th><th>Lista</th></tr></thead>
+  <tbody>
+    <tr><td><b>Propósito</b></td><td>Recolher respostas — uma por pessoa</td><td>Base de dados viva, mantida em conjunto</td></tr>
+    <tr><td><b>Escrita</b></td><td>Qualquer membro submete (sem precisar de manage)</td><td>Só quem tem <code>lists.manage</code></td></tr>
+    <tr><td><b>Respostas</b></td><td>Submissões datadas por autor, não editáveis por terceiros</td><td>Registos editáveis/apagáveis</td></tr>
+    <tr><td><b>Estados</b></td><td>Rascunho → Publicado → Arquivado</td><td>Sempre ativa</td></tr>
+  </tbody>
+</table>
+
+<h2>7. Permissões</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver formulários e respostas, exportar CSV</td><td><code>forms.view</code></td><td>Todos</td></tr>
+    <tr><td><b>Responder/submeter</b></td><td>Ser membro autenticado</td><td>Todos (incl. Viewer)</td></tr>
+    <tr><td>Criar, editar campos, publicar, arquivar, duplicar, eliminar</td><td><code>forms.manage</code></td><td>Admin, Manager, Editor</td></tr>
+  </tbody>
+</table>
+
+<h2>8. Boas práticas e resolução de problemas</h2>
+<ul>
+  <li><b>Poucos campos, boas respostas:</b> formulários curtos têm mais submissões — corte o que não é essencial.</li>
+  <li><b>Obrigatório com parcimónia:</b> marque só o que inviabiliza a resposta se faltar.</li>
+  <li><b>Placeholders como exemplos:</b> «ex.: 25/09/2026» dentro do campo reduz erros.</li>
+  <li><b>Teste antes de publicar:</b> crie, construa, submeta uma resposta de teste, e só depois divulgue.</li>
+  <li><b>Formulários recorrentes:</b> duplique o anterior em vez de reconstruir.</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>«Publicar» falha</td><td>Formulário sem campos de dados (títulos/separadores não contam)</td></tr>
+    <tr><td>Submissão rejeitada</td><td>Formulário não está Publicado (ou foi arquivado)</td></tr>
+    <tr><td>Campo de escolha não grava</td><td>Falta pelo menos uma opção</td></tr>
+    <tr><td>Não consigo criar/editar formulários</td><td>Member/Viewer — falta <code>forms.manage</code> (mas pode responder)</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>

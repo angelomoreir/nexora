@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de Análise</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — Análise</div>
+  <div class="meta">
+    <p>Módulo: Análise (menu lateral → Análise · <code>/analytics</code>)</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que é a Análise</h2>
+<p>A página de <b>Análise</b> é o centro de <b>métricas operacionais</b> da organização — gráficos e indicadores sobre a atividade da plataforma num período escolhido: produtividade de tarefas, adoção de documentos, uso de processos e adoção geral. Responde a «como evoluímos?» — complementando o Dashboard (estado atual) com <b>tendências no tempo</b>.</p>
+
+<h2>2. O que a página mostra</h2>
+<table>
+  <thead><tr><th>Secção</th><th>Conteúdo</th></tr></thead>
+  <tbody>
+    <tr><td><b>Seletor de período</b></td><td>Escolha o intervalo de dias analisado (os gráficos reagem)</td></tr>
+    <tr><td><b>Resumo (KPIs)</b></td><td>Cartões com os números-chave do período</td></tr>
+    <tr><td><b>Tendência</b></td><td>Gráfico temporal de <b>tarefas criadas</b>, <b>tarefas concluídas</b> e <b>documentos criados</b> por dia</td></tr>
+    <tr><td><b>Estado das tarefas</b></td><td>Distribuição por estado (Por fazer, Em curso, Em revisão, Concluída, Cancelada)</td></tr>
+    <tr><td><b>Processos</b></td><td>Estatísticas de execuções de workflows (instâncias, estados)</td></tr>
+    <tr><td><b>Adoção</b></td><td>Quão ativa está a organização nos vários módulos</td></tr>
+  </tbody>
+</table>
+<div class="note"><b>Secções vazias são normais</b> em organizações novas ou períodos sem atividade — cada gráfico mostra um estado vazio próprio («Sem dados de tendência» etc.).</div>
+
+<h2>3. Como usar</h2>
+<ol class="steps">
+  <li>Menu lateral → <b>Análise</b> (só aparece a quem tem <code>analytics.view</code>).</li>
+  <li>Ajustar o <b>período</b> (número de dias) — a API recalcula e os gráficos atualizam.</li>
+  <li>Ler o resumo → descer à tendência diária → distribuições por estado → adoção.</li>
+</ol>
+
+<h2>4. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Revisão semanal</div>
+  <p>Período 7 dias: a tendência mostra picos de criação de tarefas na segunda e conclusões na sexta — ritmo saudável. Se «criadas ≫ concluídas» por várias semanas, a fila está a acumular.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Adoção pós-rollout</div>
+  <p>Depois de lançar o NEXORA à equipa: a secção de adoção mostra quais os módulos usados — se «Documentos» está a zeros ao fim de um mês, é preciso formação ou incentivo.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Gargalo de tarefas</div>
+  <p>A distribuição por estado mostra muitas tarefas «Em revisão» paradas — sinal de que o passo de validação é o gargalo do processo de trabalho.</p>
+</div>
+
+<h2>5. Permissões</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver a página de Análise</td><td><code>analytics.view</code></td><td>Admin, Manager</td></tr>
+    <tr><td>Editor / Member / Viewer</td><td>—</td><td>Sem o item no menu; por URL direto → «Análises indisponíveis»</td></tr>
+  </tbody>
+</table>
+<p class="small">A permissão é deliberadamente restrita: métricas operacionais são informação de gestão, não de execução.</p>
+
+<h2>6. Análise vs Dashboard vs Auditoria</h2>
+<table>
+  <thead><tr><th>Ferramenta</th><th>Pergunta</th><th>Quem</th></tr></thead>
+  <tbody>
+    <tr><td><b>Análise</b></td><td>«Como evoluímos?» — tendências, gráficos</td><td>Admin, Manager</td></tr>
+    <tr><td><b>Dashboard</b></td><td>«Como está agora?» — estado atual, KPIs</td><td>Todos</td></tr>
+    <tr><td><b>Auditoria</b></td><td>«Quem fez o quê?» — registo de eventos</td><td><code>audit.view</code> (Admin, Manager)</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>

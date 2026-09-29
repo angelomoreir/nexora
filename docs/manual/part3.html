@@ -1,0 +1,85 @@
+<!-- ============ 6. DOCUMENTOS ============ -->
+<h1 id="documentos">6. Documentos</h1>
+<p>O coração do NEXORA — uma biblioteca de documentos com pastas, versões, permissões finas e partilha. Na XPTO é onde vivem os contratos, propostas e relatórios de clientes.</p>
+
+<h2>Carregar e organizar</h2>
+<ul>
+  <li><strong>Upload</strong> — botão "Adicionar documento" (também no dashboard); o ficheiro fica disponível na biblioteca com nome, tipo, tamanho e autor.</li>
+  <li><strong>Pastas</strong> — estrutura em árvore (ex.: <code>Clientes / ABC S.A. / Contratos</code>), com navegação por breadcrumb e atalhos para pastas recentes e favoritas.</li>
+  <li><strong>Mover, renomear, duplicar</strong> documentos e pastas.</li>
+  <li><strong>Templates</strong> — qualquer documento ou pasta pode ser marcado como modelo e depois "instanciado" (criar uma cópia pronta a usar). Na XPTO, a pasta "Modelo — Proposta Comercial" é reutilizada em cada novo cliente.</li>
+  <li><strong>Vistas guardadas</strong> — filtros de pesquisa dentro da biblioteca (tipo, pasta, autor) que podem ser gravados para acesso rápido.</li>
+</ul>
+
+<h2>Versões</h2>
+<p>Cada edição/carregamento cria uma nova <strong>versão</strong> com histórico completo: quem alterou, quando, e download de qualquer versão anterior. É possível <strong>restaurar</strong> uma versão antiga — o histórico nunca se perde. Na XPTO, o "Contrato ABC v3" foi restaurado depois de uma edição errada da Carla.</p>
+
+<h2>Comentários</h2>
+<p>Discussão por documento: a Carla comenta <em>"falta a cláusula de confidencialidade"</em> e o Bruno responde — sem sair da página do documento.</p>
+
+<h2>Check-out / Check-in</h2>
+<p>Para evitar edições em conflito, um documento pode ser <strong>bloqueado para edição</strong> (check-out) — fica marcado como "a ser editado por X" — e depois <strong>devolvido</strong> (check-in) com a nova versão.</p>
+
+<h2>Metadados</h2>
+<p>Campos adicionais além do ficheiro: a organização pode definir <strong>esquemas de metadados</strong> por pasta (ex.: pasta "Contratos" exige Nº de contrato, Cliente, Data de vencimento). A IA pode também <strong>sugerir metadados</strong> automaticamente (ver secção IA).</p>
+
+<h2>Permissões (ACL) — gerir acesso</h2>
+<p>Cada documento e pasta tem uma lista de acesso:</p>
+<table>
+  <tr><th>Concessão</th><th>Significa</th></tr>
+  <tr><td><strong>Proprietário</strong></td><td>Quem criou — controlo total.</td></tr>
+  <tr><td><strong>Por utilizador</strong></td><td>Ex.: "a Carla pode editar este contrato".</td></tr>
+  <tr><td><strong>Por equipa</strong></td><td>Ex.: "a equipa Comercial pode ver a pasta Propostas".</td></tr>
+  <tr><td><strong>Toda a organização</strong></td><td>Visível a todos os membros da XPTO.</td></tr>
+</table>
+<p>As permissões herdam das pastas pai. A IA e a pesquisa respeitam esta lista — ninguém vê (nem a IA lê) documentos a que não tenha acesso.</p>
+
+<h2>Partilha externa — links</h2>
+<p>Com a permissão <code>documents.share</code> (Bruno e Ana), é possível criar <strong>links públicos</strong> para um documento ou pasta — com expiração e, opcionalmente, permissão de upload/edição. Ideal para enviar um contrato a um cliente fora da empresa. O link pode ser revogado a qualquer momento e cada acesso fica auditado.</p>
+
+<h2>Reciclagem</h2>
+<p>Documentos e pastas eliminados vão para a <strong>reciclagem</strong> (Documentos → Reciclagem): podem ser <strong>restaurados</strong> ou eliminados definitivamente. Existe também purga automática por retenção (ver Governação).</p>
+
+<h2>Governação documental</h2>
+<p>Para conformidade (Administração → Governação): <strong>retenção legal</strong> (legal hold impede eliminação), políticas de retenção com purga automática, e marcação de documentos como <strong>registos</strong> (records) oficiais.</p>
+
+<h2>Download em massa</h2>
+<p>Seleção de vários documentos → download conjunto (fica registado na auditoria).</p>
+
+<h3>Quem faz o quê na XPTO</h3>
+<table>
+  <tr><th>Ação</th><th>Carla (Member)</th><th>Bruno (Manager)</th><th>Ana (Admin)</th></tr>
+  <tr><td>Carregar e editar documentos</td><td>✔</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Apagar / gerir acesso / check-out</td><td>—</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Criar links de partilha externa</td><td>—</td><td>✔</td><td>✔</td></tr>
+</table>
+
+<!-- ============ 7. LISTAS ============ -->
+<h1 id="listas">7. Listas</h1>
+<p>Listas são bases de dados simples — tabelas com colunas à medida, tipo "mini-Excel" dentro da organização. Na XPTO existem duas: <strong>"Clientes"</strong> (Nome, NIF, Email, Setor, Estado) e <strong>"Fornecedores"</strong>.</p>
+<h2>Criar uma lista</h2>
+<ol class="steps">
+  <li>Listas → <strong>"Nova lista"</strong>: nome, descrição e colunas.</li>
+  <li>Cada coluna tem um tipo (texto, número, data, seleção, etc.).</li>
+  <li>A lista fica disponível a toda a organização (quem tem <code>lists.view</code>); criar/editar estrutura exige <code>lists.manage</code> (Bruno e Ana).</li>
+</ol>
+<h2>Trabalhar com itens</h2>
+<ul>
+  <li>Adicionar, editar e eliminar registos dentro da lista.</li>
+  <li><strong>Duplicar</strong> uma lista inteira (estrutura + dados) como ponto de partida.</li>
+  <li><strong>Exportar para CSV</strong> — levar os dados para Excel ou outro sistema.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>O Bruno desenhou a estrutura da lista "Clientes". A Carla adiciona e atualiza os registos dos clientes que acompanha. A Ana exporta o CSV mensalmente para a contabilidade externa.</p>
+
+<!-- ============ 8. FORMULÁRIOS ============ -->
+<h1 id="formularios">8. Formulários</h1>
+<p>Formulários personalizados para recolher dados estruturados — internos ou partilháveis.</p>
+<h2>Construtor de formulários</h2>
+<ol class="steps">
+  <li>Formulários → "Novo formulário" → <strong>builder visual</strong>: arrastar campos (texto, número, data, seleção, opções múltiplas, etc.), ordenar e configurar obrigatoriedade.</li>
+  <li>Publicar o formulário — fica disponível para recolha de respostas.</li>
+  <li>Cada submissão fica registada e pode ser consultada/guida por quem gere o formulário.</li>
+</ol>
+<h3>Na XPTO</h3>
+<p>O Bruno criou o formulário <strong>"Pedido de Despesa"</strong> com campos: valor, categoria, justificação e fatura anexa. A Carla submete os pedidos dela — cada submissão alimenta depois o workflow de aprovação de despesas (secção 10). Um segundo formulário, "Novo Cliente", recolhe os dados iniciais que depois entram na lista de Clientes.</p>

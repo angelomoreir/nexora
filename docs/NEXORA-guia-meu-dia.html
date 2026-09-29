@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de O meu dia</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — O meu dia</div>
+  <div class="meta">
+    <p>Módulo: O meu dia (menu lateral → O meu dia · <code>/my-day</code>)</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que é «O meu dia»</h2>
+<p>«O meu dia» é a <b>página de foco diário</b> — o painel pessoal que agrega, num só ecrã, tudo o que precisa da sua atenção <b>hoje</b>: as suas tarefas prioritárias, as aprovações à sua espera e as notificações recentes. É o ponto de partida recomendado para cada dia de trabalho.</p>
+<p>Ao contrário do Dashboard (que mostra métricas da organização), «O meu dia» é <b>pessoal e acionável</b>: cada item pode ser tratado diretamente ali, sem abrir outra página.</p>
+
+<h2>2. O que a página mostra</h2>
+<table>
+  <thead><tr><th>Secção</th><th>Conteúdo</th></tr></thead>
+  <tbody>
+    <tr><td><b>Saudação</b></td><td>«Bom dia / Boa tarde / Boa noite, {nome}» — muda consoante a hora do dia</td></tr>
+    <tr><td><b>Foco</b></td><td>As suas tarefas que pedem atenção — em curso, com prazo próximo ou prioritárias</td></tr>
+    <tr><td><b>Aprovações</b></td><td>Aprovações pendentes <b>atribuídas a si</b> — pode aprovar/rejeitar sem sair da página</td></tr>
+    <tr><td><b>Notificações</b></td><td>As mais recentes — marcar como lidas inline</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Ações diretas na página</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Como</th></tr></thead>
+  <tbody>
+    <tr><td><b>Concluir tarefa</b></td><td>Clicar na ação de concluir junto à tarefa — atualiza o estado para Concluída e refresca Dashboard/Tarefas</td></tr>
+    <tr><td><b>Abrir detalhe</b></td><td>Clicar no título leva à página de detalhe (tarefa, aprovação ou origem da notificação)</td></tr>
+    <tr><td><b>Marcar notificação como lida</b></td><td>Ação junto à notificação — atualiza também o contador do sino</td></tr>
+    <tr><td><b>Decidir aprovação</b></td><td>Aprovar/Rejeitar diretamente no cartão da aprovação</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Quando usar — exemplos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Início do dia</div>
+  <p>Abre «O meu dia» às 9h: vê 3 tarefas em curso com prazo hoje, 1 aprovação de férias pendente e 4 notificações novas. Decide a aprovação, marca as notificações lidas, e começa pela tarefa mais urgente — tudo sem navegar.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — «Tenho 10 minutos»</div>
+  <p>Entre reuniões: abre «O meu dia», conclui a tarefa que acabou de entregar e trata a aprovação pendente — em 2 cliques cada.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Estado vazio</div>
+  <p>Sem tarefas de foco nem aprovações? A página mostra estados vazios amigáveis («Nada em foco») — é o sinal de que o dia está controlado.</p>
+</div>
+
+<h2>5. O meu dia vs Dashboard vs Notificações</h2>
+<table>
+  <thead><tr><th>Página</th><th>Foco</th><th>Para quê</th></tr></thead>
+  <tbody>
+    <tr><td><b>O meu dia</b></td><td>Pessoal, acionável</td><td>«O que tenho de fazer hoje?»</td></tr>
+    <tr><td><b>Dashboard</b></td><td>Organização, métricas</td><td>«Como está a operação?»</td></tr>
+    <tr><td><b>Notificações</b></td><td>Histórico completo</td><td>«O que aconteceu enquanto estive fora?»</td></tr>
+  </tbody>
+</table>
+
+<h2>6. Permissões e notas</h2>
+<p>Disponível para <b>todos os papéis</b> — cada pessoa vê apenas <b>o que lhe pertence</b>: as suas tarefas, as aprovações atribuídas a si, as suas notificações. Um Viewer sem aprovações atribuídas vê a secção vazia; um Member com trabalho atribuído vê a página cheia.</p>
+<ul>
+  <li>A secção de foco só mostra tarefas <b>suas</b> — tarefas da equipa aparecem em Tarefas, não aqui.</li>
+  <li>Aprovações listadas são as <b>atribuídas a si</b> — a decisão é por atribuição, não por permissão global.</li>
+  <li>Se a página mostrar erro de carregamento, há botão de retry — indica problema de API, não de permissões.</li>
+</ul>
+
+</body>
+</html>

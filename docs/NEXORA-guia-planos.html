@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de Planos</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — Planos (Faturação)</div>
+  <div class="meta">
+    <p>Módulo: Planos (menu lateral → Planos · <code>/billing</code>)</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que é a página de Planos</h2>
+<p>A página de <b>Planos</b> é o centro de faturação da organização — mostra o <b>plano atual</b>, a <b>utilização contra os limites</b> e os <b>planos disponíveis</b> para upgrade. Os pagamentos são geridos via Stripe: ao escolher um plano pago, é redirecionado para o checkout seguro.</p>
+
+<h2>2. As três secções</h2>
+<h3>2.1 Utilização atual</h3>
+<p>Cartões com barras de progresso para cada limite do plano — <b>atualizados a cada 30 segundos</b>:</p>
+<table>
+  <thead><tr><th>Recurso</th><th>O que mede</th></tr></thead>
+  <tbody>
+    <tr><td><b>Utilizadores</b></td><td>Membros ativos da organização</td></tr>
+    <tr><td><b>Armazenamento</b></td><td>Bytes usados por documentos/ficheiros</td></tr>
+    <tr><td><b>Documentos</b></td><td>Número de documentos criados</td></tr>
+    <tr><td><b>Processos</b></td><td>Workflows existentes</td></tr>
+    <tr><td><b>Pedidos IA/mês</b></td><td>Interações com o Copilot no mês corrente</td></tr>
+  </tbody>
+</table>
+<p>As barras mudam de cor: azul (normal) → amarela (&gt;80%) → vermelha (limite atingido). Um aviso «Limite atingido» lista os recursos excedidos.</p>
+
+<h3>2.2 Subscrição atual</h3>
+<p>Faixa com o <b>plano ativo</b>, o estado (ACTIVE, TRIALING…) e ações:</p>
+<ul>
+  <li><b>«Gerir faturação»</b> — abre o portal Stripe (métodos de pagamento, faturas) — só quando a faturação é gerida externamente.</li>
+  <li><b>«Cancelar subscrição»</b> — para planos pagos, com confirmação; o plano reverte para Free.</li>
+</ul>
+
+<h3>2.3 Grelha de planos</h3>
+<p>Cada cartão mostra: nome, descrição, preço mensal (+ preço anual quando existe), os 5 limites e a lista de funcionalidades incluídas. O plano atual tem moldura destacada e botão «Atual» desativado.</p>
+<table>
+  <thead><tr><th>Plano</th><th>Perfil</th></tr></thead>
+  <tbody>
+    <tr><td><b>Free</b></td><td>Começar — limites base, sem custo</td></tr>
+    <tr><td><b>Basic</b></td><td>Equipas pequenas</td></tr>
+    <tr><td><b>Professional</b></td><td>Operação a sério</td></tr>
+    <tr><td><b>Business</b></td><td>Empresas em crescimento</td></tr>
+    <tr><td><b>Enterprise</b></td><td>Destaque «Premium» — limites mais altos/ilimitados</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Mudar de plano — passo a passo</h2>
+<ol class="steps">
+  <li>Planos → rever a utilização: que limites estão próximos?</li>
+  <li>Comparar planos na grelha — limites e funcionalidades lado a lado.</li>
+  <li><b>«Selecionar»</b> no plano pretendido → se for pago, redireciona para o <b>checkout Stripe</b>.</li>
+  <li>Completar o pagamento → volta à app com o aviso «Subscrição ativada».</li>
+  <li><b>«Começar grátis»</b> no plano Free muda imediatamente, sem checkout.</li>
+</ol>
+<div class="tip"><b>Ciclos de faturação:</b> planos pagos suportam mensal e anual — o preço anual aparece por baixo do mensal no cartão.</div>
+
+<h2>4. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Limite de armazenamento a 85%</div>
+  <p>A barra de Armazenamento está amarela → fazer upgrade para o plano com mais GB antes de bloquear uploads.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Cancelamento</div>
+  <p>«Cancelar subscrição» → confirmar → a organização volta ao plano Free; os limites passam a aplicar-se — verifique primeiro se a utilização cabe nos limites Free.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Gerir cartão</div>
+  <p>«Gerir faturação» → portal Stripe → atualizar método de pagamento e descarregar faturas — sem sair do fluxo da app.</p>
+</div>
+
+<h2>5. Permissões e notas</h2>
+<p>A página é visível a todos no menu, mas as ações de <b>mudança de plano</b> são controladas pela API — em produção, tipicamente restritas a quem gere a organização. Os limites são <b>aplicados pela API</b>: criar o 11.º documento num plano de 10 falha com erro de limite, não apenas um aviso.</p>
+<ul>
+  <li>Os dados de utilização atualizam sozinhos (30s) — não precisa de refresh.</li>
+  <li>«Ilimitado» aparece como valor <code>-1</code> — sem barra de progresso.</li>
+  <li>Após checkout cancelado, a página mostra aviso informativo — nada foi cobrado.</li>
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de IA</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — IA (Copilot)</div>
+  <div class="meta">
+    <p>Módulo: IA (menu lateral → IA · <code>/ai</code>) + Copilot contextual em todas as páginas</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que é a IA no NEXORA</h2>
+<p>A <b>IA</b> é o assistente inteligente da plataforma — um copiloto conversacional que conhece o contexto da organização e pode <b>responder a perguntas</b>, <b>resumir</b> e sobretudo <b>criar estruturas reais</b>: listas completas com campos, processos (workflows) com passos, e até esboços de aplicações. As conversas ficam guardadas e há estatísticas de utilização.</p>
+<p>Há dois pontos de acesso: a <b>página IA</b> (<code>/ai</code>) com o histórico de conversas, e o <b>Copilot contextual</b> — o botão flutuante disponível nas páginas, que sabe em que ecrã está e ajuda nesse contexto.</p>
+
+<h2>2. O que a IA pode fazer</h2>
+<table>
+  <thead><tr><th>Capacidade</th><th>Descrição</th><th>Exemplo de pedido</th></tr></thead>
+  <tbody>
+    <tr><td><b>Conversar</b></td><td>Perguntas sobre a plataforma e os seus dados</td><td>«Que tarefas estão pendentes?»</td></tr>
+    <tr><td><b>Criar listas</b></td><td>Propõe e cria uma lista completa com campos tipados</td><td>«Cria uma lista de clientes com nome, email e estado»</td></tr>
+    <tr><td><b>Criar processos</b></td><td>Propõe e cria um workflow com passos configurados</td><td>«Faz um processo de aprovação de férias»</td></tr>
+    <tr><td><b>Criar aplicações</b></td><td>Gera um esboço de app (scaffold)</td><td>«Monta uma app de gestão de inventário»</td></tr>
+    <tr><td><b>Sugerir</b></td><td>Sugestões contextuais na página onde está</td><td>Cartões de sugestão no ecrã inicial</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Fluxo de uma proposta de criação</h2>
+<ol class="steps">
+  <li>Pedir em linguagem natural: <i>«cria uma lista de fornecedores»</i>.</li>
+  <li>A IA responde com uma <b>proposta estruturada</b> (nome, descrição, campos com tipos).</li>
+  <li><b>Confirmar</b> → a lista é criada de verdade na organização — aparece em Listas, pronta a usar.</li>
+  <li>O mesmo para workflows: a proposta inclui os passos — confirmar cria o processo em Rascunho.</li>
+</ol>
+<div class="note"><b>A IA respeita permissões:</b> não executa ações que o papel do utilizador não permite — um Viewer pode conversar, mas a criação de listas/processos falha nas mesmas regras da API (a IA usa os endpoints normais).</div>
+
+<h2>4. A página IA</h2>
+<table>
+  <thead><tr><th>Elemento</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><b>Lista de conversas</b></td><td>Histórico de sessões de chat — retome onde ficou</td></tr>
+    <tr><td><b>Sugestões iniciais</b></td><td>Cartões com prompts prontos (criar lista, criar workflow, resumir documentos, pendências…)</td></tr>
+    <tr><td><b>Utilização</b></td><td>Estatísticas de uso da IA na organização</td></tr>
+    <tr><td><b>Chat</b></td><td>A conversa em si — mensagens, propostas acionáveis com botão de confirmação</td></tr>
+  </tbody>
+</table>
+
+<h2>5. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Lista em 30 segundos</div>
+  <p>«Cria uma lista de controlo de equipamentos com nome, número de série, estado e responsável» → a IA propõe a estrutura com tipos corretos (texto, escolha, utilizador) → Confirmar → a lista existe.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Processo sem desenhar passos</div>
+  <p>«Faz um processo de aprovação de despesas: aprovação do gestor, depois notificação ao financeiro» → proposta com os passos → Confirmar → abre no Construtor para ajustar os aprovadores reais.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Copilot contextual</div>
+  <p>Na página de um documento, o botão Copilot oferece ações contextuais («resume este documento») — o assistente sabe onde está.</p>
+</div>
+
+<h2>6. Boas práticas e notas</h2>
+<ul>
+  <li><b>Seja específico:</b> «lista de clientes com nome, empresa, email e estado ativo/inativo» dá melhores propostas que «uma lista».</li>
+  <li><b>Revise antes de confirmar:</b> a proposta mostra exatamente o que será criado — os nomes, tipos e passos.</li>
+  <li><b>Depois da criação, ajuste:</b> listas e processos criados pela IA são objetos normais — edite-os nos respetivos construtores.</li>
+  <li><b>O Copilot contextual é por página:</b> as sugestões mudam consoante onde está (documento vs processo vs lista).</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>Criação pela IA falha</td><td>O seu papel não tem a permissão de gestão desse módulo — a IA usa as mesmas regras da API</td></tr>
+    <tr><td>Respostas vagas</td><td>Pedidos pouco específicos — dê nomes de campos e contexto</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>

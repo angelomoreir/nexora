@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de Ajuda</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — Ajuda</div>
+  <div class="meta">
+    <p>Módulo: Ajuda (menu lateral → Ajuda · <code>/help</code>)</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que é a Ajuda</h2>
+<p>A <b>Ajuda</b> é o centro de documentação integrado do NEXORA — artigos organizados por categorias sobre cada módulo, pesquisa dedicada e um <b>assistente de ajuda</b> conversacional. Está disponível a todos os utilizadores, sem permissões especiais.</p>
+
+<h2>2. Estrutura</h2>
+<table>
+  <thead><tr><th>Elemento</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><b>Pesquisa de ajuda</b></td><td>Campo hero no topo — procura nos títulos e conteúdos dos artigos; resultados instantâneos</td></tr>
+    <tr><td><b>Categorias</b></td><td>Artigos agrupados por tema/módulo (Documentos, Tarefas, Administração…)</td></tr>
+    <tr><td><b>Artigos</b></td><td>Guias passo a passo com ícone e resumo — cada um com a sua página</td></tr>
+    <tr><td><b>Assistente de ajuda</b></td><td>Chat dedicado a dúvidas de utilização (<code>/help/assistant</code>)</td></tr>
+    <tr><td><b>Ajuda contextual</b></td><td>Botões «?» espalhados pela app — abrem o artigo relevante <b>para a página onde está</b></td></tr>
+  </tbody>
+</table>
+
+<h2>3. Como usar</h2>
+<ol class="steps">
+  <li><b>Pesquisar diretamente:</b> escrever no campo do topo (ex.: «partilhar documento») → resultados aparecem imediatamente → clicar abre o artigo.</li>
+  <li><b>Navegar por categoria:</b> escolher a categoria do módulo → lista de artigos → abrir o que interessa.</li>
+  <li><b>Perguntar ao assistente:</b> <code>/help/assistant</code> — conversa orientada a «como fazer X».</li>
+  <li><b>Ajuda no contexto:</b> noutras páginas, o botão de ajuda contextual (junto ao título) leva ao artigo daquele módulo.</li>
+</ol>
+
+<h2>4. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — «Como partilho um documento?»</div>
+  <p>Em Documentos, clicar no botão de ajuda contextual → abre o artigo de partilha — ou pesquisar «partilhar» na Ajuda.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Onboarding de novo membro</div>
+  <p>Um membro novo explora as categorias por módulo para aprender a plataforma sozinho — sem depender de colegas.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Admin a configurar segurança</div>
+  <p>A Ajuda tem secção própria de administração (<code>/help/admin</code>) com artigos sobre papéis, permissões e segurança.</p>
+</div>
+
+<h2>5. Notas</h2>
+<ul>
+  <li>Disponível para <b>todos os papéis</b> — a ajuda não esconde conteúdo por permissão.</li>
+  <li>A pesquisa de ajuda é <b>independente</b> da Pesquisa global — procura só nos artigos, não nos seus dados.</li>
+  <li>Os artigos seguem o <b>idioma da interface</b> — mude o idioma no seletor do topo para ver a ajuda noutra língua.</li>
+</ul>
+
+</body>
+</html>

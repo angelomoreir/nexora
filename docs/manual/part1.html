@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<title>NEXORA — Manual do Utilizador</title>
+<style>
+  @page { size: A4; margin: 2cm 1.8cm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", system-ui, sans-serif; color: #1a2332; font-size: 10.5pt; line-height: 1.55; margin: 0; }
+  h1 { font-size: 22pt; color: #0f1f38; border-bottom: 3px solid #2563eb; padding-bottom: 8px; margin-top: 0; page-break-before: always; }
+  h1.first { page-break-before: avoid; }
+  h2 { font-size: 14pt; color: #1e40af; margin-top: 22px; }
+  h3 { font-size: 11.5pt; color: #334155; margin-top: 16px; }
+  p { margin: 6px 0; }
+  ul, ol { margin: 6px 0 6px 20px; padding: 0; }
+  li { margin: 3px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 9.5pt; }
+  th { background: #eff6ff; color: #1e3a8a; text-align: left; padding: 6px 8px; border: 1px solid #bfdbfe; }
+  td { padding: 5px 8px; border: 1px solid #dbe3ee; vertical-align: top; }
+  code { font-family: Consolas, monospace; background: #f1f5f9; padding: 1px 4px; border-radius: 3px; font-size: 9pt; }
+  .cover { text-align: center; padding-top: 220px; }
+  .cover .logo { font-size: 40pt; font-weight: 800; letter-spacing: 0.25em; color: #1e40af; }
+  .cover .subtitle { font-size: 14pt; color: #475569; margin-top: 14px; }
+  .cover .meta { margin-top: 60px; color: #64748b; font-size: 10pt; }
+  .box { border: 1px solid #bfdbfe; background: #eff6ff; border-radius: 6px; padding: 10px 14px; margin: 10px 0; }
+  .box.warn { border-color: #fcd34d; background: #fffbeb; }
+  .box.tip { border-color: #86efac; background: #f0fdf4; }
+  .box strong { color: #1e3a8a; }
+  .persona { border: 1px solid #dbe3ee; border-left: 4px solid #2563eb; border-radius: 6px; padding: 10px 14px; margin: 8px 0; }
+  .persona h3 { margin: 0 0 4px 0; }
+  .toc a { color: #1e40af; text-decoration: none; }
+  .toc li { margin: 4px 0; }
+  .steps { counter-reset: step; list-style: none; margin-left: 0; }
+  .steps li { counter-increment: step; margin: 7px 0; padding-left: 30px; position: relative; }
+  .steps li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 20px; height: 20px; background: #2563eb; color: #fff; border-radius: 50%; font-size: 9pt; font-weight: 700; display: grid; place-items: center; }
+  .kbd { font-family: Consolas, monospace; font-size: 8.5pt; border: 1px solid #94a3b8; border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; background: #f8fafc; }
+  .tag { display: inline-block; font-size: 8pt; font-weight: 700; padding: 1px 7px; border-radius: 10px; }
+  .tag.admin { background: #fee2e2; color: #b91c1c; }
+  .tag.manager { background: #fef3c7; color: #b45309; }
+  .tag.member { background: #dcfce7; color: #15803d; }
+  .tag.editor { background: #ffedd5; color: #c2410c; }
+  .tag.viewer { background: #e0e7ff; color: #4338ca; }
+  .tag.all { background: #f1f5f9; color: #475569; }
+  .pagebreak { page-break-before: always; }
+  footer { font-size: 8pt; color: #94a3b8; }
+</style>
+</head>
+<body>
+
+<!-- ============ CAPA ============ -->
+<div class="cover">
+  <div class="logo">NEXORA</div>
+  <div class="subtitle">Plataforma Empresarial de Gestão, Documentos e Processos</div>
+  <div class="subtitle" style="font-size:18pt; color:#0f1f38; margin-top:40px;">Manual do Utilizador</div>
+  <div class="meta">
+    <p>Caso de estudo: empresa <strong>XPTO, Lda.</strong> com 5 utilizadores</p>
+    <p>Versão 1.0 — Documento gerado para demonstração funcional</p>
+  </div>
+</div>
+
+<!-- ============ ÍNDICE ============ -->
+<h1>Índice</h1>
+<div class="toc">
+<ol>
+  <li><a href="#intro">Introdução — o que é o NEXORA</a></li>
+  <li><a href="#personas">A empresa XPTO e os seus 5 utilizadores</a></li>
+  <li><a href="#onboarding">Começar: registo e convites</a></li>
+  <li><a href="#navegacao">Navegação e interface geral</a></li>
+  <li><a href="#dashboard">Dashboard</a></li>
+  <li><a href="#documentos">Documentos</a></li>
+  <li><a href="#listas">Listas</a></li>
+  <li><a href="#formularios">Formulários</a></li>
+  <li><a href="#tarefas">Tarefas e projetos</a></li>
+  <li><a href="#workflows">Workflows (processos)</a></li>
+  <li><a href="#aprovacoes">Aprovações</a></li>
+  <li><a href="#sites">Sites e páginas</a></li>
+  <li><a href="#noticias">Notícias</a></li>
+  <li><a href="#pesquisa">Pesquisa e paleta de comandos</a></li>
+  <li><a href="#notificacoes">Notificações</a></li>
+  <li><a href="#ia">Assistente de IA</a></li>
+  <li><a href="#admin">Administração (área da Ana)</a></li>
+  <li><a href="#faturacao">Faturação e planos</a></li>
+  <li><a href="#conta">Perfil e conta</a></li>
+  <li><a href="#cenarios">Um dia na XPTO — cenários completos de colaboração</a></li>
+  <li><a href="#glossario">Glossário e FAQ</a></li>
+</ol>
+</div>
+
+<!-- ============ 1. INTRODUÇÃO ============ -->
+<h1 id="intro">1. Introdução — o que é o NEXORA</h1>
+<p>O NEXORA é uma plataforma empresarial que centraliza o trabalho de uma equipa num único espaço: <strong>documentos</strong>, <strong>listas de dados</strong>, <strong>formulários</strong>, <strong>tarefas</strong>, <strong>processos de aprovação (workflows)</strong>, <strong>sites internos</strong>, <strong>notícias</strong>, <strong>pesquisa global</strong> e um <strong>assistente de IA</strong>. Foi desenhado para substituir ferramentas como o SharePoint com uma interface moderna e simples.</p>
+<h2>Conceitos fundamentais</h2>
+<table>
+  <tr><th>Conceito</th><th>Descrição</th></tr>
+  <tr><td><strong>Organização</strong></td><td>O espaço de trabalho da empresa (ex.: "XPTO"). Todos os dados — documentos, listas, workflows — pertencem a uma organização e são isolados das outras.</td></tr>
+  <tr><td><strong>Utilizador</strong></td><td>Uma pessoa com a sua própria conta (email + palavra-passe). Cada pessoa deve ter a sua conta — nunca se partilham credenciais, porque a auditoria, permissões e notificações são individuais.</td></tr>
+  <tr><td><strong>Função (role)</strong></td><td>Um conjunto de permissões atribuído ao utilizador dentro da organização: Viewer, Member, Editor, Manager ou Admin (ou funções personalizadas criadas pelo admin).</td></tr>
+  <tr><td><strong>Permissão</strong></td><td>Uma capacidade concreta, ex.: <code>documents.edit</code>, <code>users.create</code>, <code>workflows.manage</code>. As funções agrupam permissões.</td></tr>
+  <tr><td><strong>Auditoria</strong></td><td>Registo de todas as ações relevantes (quem fez o quê e quando), visível na atividade recente do dashboard e em Administração → Auditoria.</td></tr>
+</table>
+<h2>Idiomas e aparência</h2>
+<p>A interface está disponível em <strong>Português (PT-PT), English, Español, Français e Deutsch</strong> — selecionável no seletor de idioma no topo da página. Tema claro/escuro também disponível.</p>
+
+<!-- ============ 2. PERSONAS ============ -->
+<h1 id="personas">2. A empresa XPTO e os seus 5 utilizadores</h1>
+<p>A <strong>XPTO, Lda.</strong> é uma pequena empresa de consultoria. Vai usar o NEXORA para gerir documentos de clientes, acompanhar tarefas, aprovar despesas e manter um portal interno. Tem 5 funcionários — um por cada função do sistema:</p>
+
+<div class="persona">
+  <h3><span class="tag admin">ADMIN</span> Ana Silva — Diretora-Geral</h3>
+  <p><strong>Email:</strong> ana@xpto.pt &nbsp;•&nbsp; <strong>Função:</strong> Admin</p>
+  <p>Foi ela que registou a empresa no NEXORA — ficou automaticamente como administradora. Gere utilizadores, convites, funções, configurações, faturação, auditoria e todo o conteúdo. É a "dona" da organização.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag manager">MANAGER</span> Bruno Costa — Gestor de Operações</h3>
+  <p><strong>Email:</strong> bruno@xpto.pt &nbsp;•&nbsp; <strong>Função:</strong> Manager</p>
+  <p>Responsável pela operação diária: cria e gere listas de clientes, formulários, workflows e o site interno. Pode convidar novos utilizadores e consultar a auditoria, mas não pode apagar utilizadores nem gerir funções ou a faturação.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag editor">EDITOR</span> Diana Rocha — Gestora de Conteúdos</h3>
+  <p><strong>Email:</strong> diana@xpto.pt &nbsp;•&nbsp; <strong>Função:</strong> Editor</p>
+  <p>Produz e gere o conteúdo da empresa: cria e apaga documentos, estrutura listas e formulários, edita workflows, páginas e notícias do site. Não partilha documentos externamente, não convida utilizadores nem vê a auditoria.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag member">MEMBER</span> Carla Mendes — Consultora</h3>
+  <p><strong>Email:</strong> carla@xpto.pt &nbsp;•&nbsp; <strong>Função:</strong> Member</p>
+  <p>Trabalhadora operacional: carrega e edita documentos, preenche itens de listas, executa as suas tarefas e submete coisas para aprovação. Não gere estruturas (não cria listas, workflows nem sites) nem administra nada.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag viewer">VIEWER</span> Eduardo Santos — Diretor Financeiro</h3>
+  <p><strong>Email:</strong> eduardo@xpto.pt &nbsp;•&nbsp; <strong>Função:</strong> Viewer</p>
+  <p>Só consulta: vê documentos, listas, tarefas, workflows, aprovações, sites e notícias, mas não cria nem altera nada. Ideal para quem precisa de visibilidade total sem risco de modificar conteúdo — direção, auditoria externa ou consultores.</p>
+</div>
+
+<div class="box tip"><strong>Porquê estas funções?</strong> Princípio do menor privilégio: cada pessoa recebe apenas o acesso de que precisa. As 5 funções de sistema cobrem a maioria dos casos; se nenhuma servir, a Ana pode criar funções personalizadas em Administração → Funções combinando as permissões disponíveis.</div>
+
+<h2>Matriz rápida de funções</h2>
+<table>
+  <tr><th>Capacidade</th><th>Viewer<br>(Eduardo)</th><th>Member<br>(Carla)</th><th>Editor<br>(Diana)</th><th>Manager<br>(Bruno)</th><th>Admin<br>(Ana)</th></tr>
+  <tr><td>Ver todo o conteúdo</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Criar/editar documentos e tarefas</td><td>—</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Apagar documentos</td><td>—</td><td>—</td><td>✔</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Partilhar documentos externamente</td><td>—</td><td>—</td><td>—</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Gerir listas, formulários, workflows, páginas, notícias</td><td>—</td><td>—</td><td>✔</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Gerir sites</td><td>—</td><td>—</td><td>—</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Convidar/editar utilizadores</td><td>—</td><td>—</td><td>—</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Ver auditoria, gerir definições e webhooks</td><td>—</td><td>—</td><td>—</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Apagar utilizadores, gerir funções, organização e faturação</td><td>—</td><td>—</td><td>—</td><td>—</td><td>✔</td></tr>
+</table>

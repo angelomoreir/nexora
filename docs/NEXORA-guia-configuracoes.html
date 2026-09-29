@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de Configurações</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — Configurações</div>
+  <div class="meta">
+    <p>Módulo: Configurações (menu lateral → Configurações · <code>/settings</code>)</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que é a página de Configurações</h2>
+<p>A página de <b>Configurações</b> é a vista rápida de <b>gestão de utilizadores</b> da organização — lista os membros com os seus papéis e permite criar novos utilizadores diretamente e removê-los. É a versão simples do que a Administração → Utilizadores oferece em profundidade.</p>
+<div class="note"><b>Não confundir:</b> «Configurações» (<code>/settings</code>) trata de <b>utilizadores</b>. As definições da organização (SSO, branding, etc.) vivem em <b>Administração → Definições</b> (<code>/admin/settings</code>) — que exige <code>settings.manage</code>. O seu perfil pessoal está em <b>Perfil</b> (<code>/profile</code>).</div>
+
+<h2>2. O que a página mostra</h2>
+<table>
+  <thead><tr><th>Elemento</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><b>Lista de utilizadores</b></td><td>Cada membro com avatar, nome, email, cargo e <b>badge com os papéis</b> na organização</td></tr>
+    <tr><td><b>Botão «Adicionar utilizador»</b></td><td>Abre o formulário de criação</td></tr>
+    <tr><td><b>Remover</b></td><td>Ícone de lixeira por membro — com confirmação; <b>não aparece na sua própria linha</b></td></tr>
+  </tbody>
+</table>
+
+<h2>3. Criar um utilizador — passo a passo</h2>
+<ol class="steps">
+  <li>Configurações → <b>«Adicionar utilizador»</b>.</li>
+  <li>Preencher: <b>Nome</b>, <b>Email</b> (obrigatórios), <b>Cargo</b> (opcional), <b>Função</b> (Admin, Manager, Editor, Member, Viewer) e <b>Palavra-passe</b> — <b>mínimo 12 caracteres</b>.</li>
+  <li><b>«Criar utilizador»</b> → a conta entra na organização com o papel escolhido; o formulário fecha e a lista atualiza.</li>
+  <li>Erros da API (email duplicado, permissão insuficiente) aparecem em alerta vermelho no formulário.</li>
+</ol>
+<div class="note"><b>Atenção à escolha do papel:</b> este formulário oferece todas as funções de sistema, mas a API aplica as regras de proteção — criar com papel ≠ Member exige <code>roles.manage</code> (só Admin). Um Manager que tente criar um «Admin» aqui recebe 403 — deve usar Administração → Utilizadores ou convites.</div>
+
+<h2>4. Remover um utilizador</h2>
+<ol class="steps">
+  <li>Na linha do membro → ícone de lixeira → confirmar.</li>
+  <li>O membro é removido da organização (soft delete — o histórico fica na auditoria).</li>
+  <li>A sua própria linha <b>não tem</b> o botão — a API também bloqueia auto-remoção.</li>
+</ol>
+
+<h2>5. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Entrada rápida de membro</div>
+  <p>Novo colaborador sem processo de convite: Configurações → Adicionar utilizador → nome, email, papel Member, password temporária forte → partilhar credenciais por canal seguro.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Saída de colaborador</div>
+  <p>Configurações → lixeira na linha do membro → confirmar → acesso à organização cortado imediatamente (a sessão expira).</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Auditoria rápida de papéis</div>
+  <p>Rever a lista: «há algum Admin a mais?» — os badges mostram os papéis de cada um à primeira vista.</p>
+</div>
+
+<h2>6. Permissões</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver a lista de utilizadores</td><td><code>users.read</code></td><td>Todos</td></tr>
+    <tr><td>Criar utilizador (papel Member)</td><td><code>users.create</code></td><td>Admin, Manager</td></tr>
+    <tr><td>Criar com outro papel</td><td><code>users.create</code> + <code>roles.manage</code></td><td>Admin</td></tr>
+    <tr><td>Remover membro</td><td><code>users.delete</code></td><td>Admin</td></tr>
+  </tbody>
+</table>
+<p class="small">Editor/Member/Viewer veem a lista (têm <code>users.read</code>) mas as ações falham na API conforme a tabela — a página é essencialmente de consulta para eles.</p>
+
+<h2>7. Resolução de problemas</h2>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>«Criar utilizador» dá 403</td><td>Sem <code>users.create</code>, ou tentou papel ≠ Member sem <code>roles.manage</code></td></tr>
+    <tr><td>Lixeira não aparece numa linha</td><td>É a sua própria conta — auto-remoção bloqueada</td></tr>
+    <tr><td>Password rejeitada</td><td>Mínimo 12 caracteres — exigido no campo e pela API</td></tr>
+    <tr><td>«Email já existe»</td><td>Conta duplicada — usar convite ou outro email</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>

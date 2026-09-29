@@ -1,0 +1,28 @@
+node_modules/
+dist/
+.env
+.env.local
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+apps/api/prisma/*.db
+apps/api/prisma/*.db-journal
+apps/api/storage/*
+!apps/api/storage/.gitkeep
+coverage/
+test-results/
+playwright-report/
+*.tsbuildinfo
+
+# Marketing media (large binaries — keep outside git or use LFS)
+docs/*.mp4
+docs/shots/
+
+# Personal/working files
+*.docx
+*.lnk
+.tmp-*
+apps/api/_*.cjs
+apps/api/db-check.cjs

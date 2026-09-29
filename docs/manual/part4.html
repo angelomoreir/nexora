@@ -1,0 +1,80 @@
+<!-- ============ 9. TAREFAS ============ -->
+<h1 id="tarefas">9. Tarefas e projetos</h1>
+<p>Gestão de trabalho do dia a dia: tarefas com título, descrição, prioridade (Baixa, Normal, Alta, Urgente), data-limite, responsável e estado — agrupáveis em <strong>projetos</strong>.</p>
+<h2>Criar e gerir</h2>
+<ul>
+  <li><strong>Criar</strong> — no dashboard ("Criar tarefa") ou em Tarefas → novo.</li>
+  <li><strong>Atribuir</strong> a um membro — a pessoa vê-a nas suas tarefas e recebe notificação.</li>
+  <li><strong>Vistas</strong> — filtros por estado, prioridade, responsável e prazo; tarefas atrasadas são assinaladas.</li>
+  <li><strong>Comentários</strong> por tarefa para discussão em contexto.</li>
+  <li><strong>Projetos</strong> — agrupam tarefas relacionadas (ex.: projeto "Implementação Cliente ABC" com 8 tarefas).</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>O Bruno distribui trabalho: <em>"Carla — rever proposta ABC (Alta, até sexta)"</em>. A Carla vê-a no topo das suas tarefas, comenta dúvidas e marca-a como concluída. A Ana acompanha a distribuição de tarefas no widget do dashboard.</p>
+
+<!-- ============ 10. WORKFLOWS ============ -->
+<h1 id="workflows">10. Workflows (processos)</h1>
+<p>Workflows automatizam processos de negócio: sequências de passos por onde um pedido passa até ser concluído — aprovações, revisões, notificações.</p>
+<h2>Construtor de workflows</h2>
+<ol class="steps">
+  <li>Workflows → "Novo workflow" → <strong>builder</strong>: adicionar passos ordenados.</li>
+  <li>Tipos de passo: <strong>Início</strong>, <strong>Aprovação</strong> (alguém decide), passos de ação e <strong>Fim</strong>.</li>
+  <li>Em cada passo de aprovação define-se <strong>quem decide</strong> (utilizador ou função).</li>
+  <li>O workflow pode ficar em rascunho e ser <strong>publicado</strong> quando pronto — também pode ser despublicado.</li>
+</ol>
+<h2>Executar (instâncias)</h2>
+<p>Cada vez que o processo é iniciado cria-se uma <strong>instância</strong>: segue os passos em ordem, regista quem decidiu o quê e quando, e pode ser <strong>cancelada</strong>. O histórico da instância mostra o percurso completo.</p>
+<h3>O workflow da XPTO: "Aprovação de Despesas"</h3>
+<table>
+  <tr><th>#</th><th>Passo</th><th>Responsável</th></tr>
+  <tr><td>1</td><td>Início — submissão do pedido (do formulário "Pedido de Despesa")</td><td>Qualquer membro</td></tr>
+  <tr><td>2</td><td>Aprovação do gestor</td><td>Bruno</td></tr>
+  <tr><td>3</td><td>Aprovação final (valores &gt; 500€)</td><td>Ana</td></tr>
+  <tr><td>4</td><td>Fim — despesa aprovada ou rejeitada</td><td>—</td></tr>
+</table>
+<p>A Carla submete uma despesa de 200€ → o Bruno recebe a aprovação → aprova → a instância termina como aprovada. Se fosse 800€, depois do Bruno ainda passaria pela Ana.</p>
+
+<!-- ============ 11. APROVAÇÕES ============ -->
+<h1 id="aprovacoes">11. Aprovações</h1>
+<p>A caixa de entrada de decisões. Cada passo de aprovação pendente aparece aqui, atribuído a quem deve decidir.</p>
+<ul>
+  <li><strong>Aprovar ou rejeitar</strong> com comentário justificativo.</li>
+  <li><strong>Delegar</strong> — transferir a decisão para outra pessoa (ex.: o Bruno delega na Ana quando está de férias).</li>
+  <li><strong>Comentários</strong> na aprovação para pedir esclarecimentos antes de decidir.</li>
+  <li>Histórico completo: quem decidiu, quando, e a decisão tomada.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>O Bruno abre Aprovações todas as manhãs: vê as despesas pendentes da equipa, aprova duas, rejeita uma (<em>"falta a fatura — reenviar"</em>) e delega na Ana uma decisão que ultrapassa a sua alçada. A Carla recebe notificação do resultado de cada decisão sobre os seus pedidos.</p>
+
+<!-- ============ 12. SITES ============ -->
+<h1 id="sites">12. Sites e páginas</h1>
+<p>Sites internos — mini-portais da organização com páginas e widgets. Na XPTO existe o <strong>"Portal XPTO"</strong>: página inicial com as notícias, documentos-chave e links rápidos da empresa.</p>
+<ul>
+  <li><strong>Sites</strong> — criar e gerir portais; cada site tem membros com papéis (proprietário/editor/leitor).</li>
+  <li><strong>Páginas</strong> — dentro de cada site, páginas com conteúdo estruturado em <strong>widgets</strong> (texto, documentos, listas, notícias, links).</li>
+  <li><strong>Membros do site</strong> — controla quem pode editar cada site, independente da função global.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>O Bruno mantém o Portal XPTO: uma página "Bem-vindo" com os procedimentos internos, uma página "Clientes" com um widget ligado à lista de Clientes, e outra "Recursos" com os templates de documentos. A Carla consulta-o diariamente; a Ana tem direitos de edição mas raramente precisa de os usar.</p>
+
+<!-- ============ 13. NOTÍCIAS ============ -->
+<h1 id="noticias">13. Notícias</h1>
+<p>Comunicação interna: artigos publicados na organização — avisos, novidades, comunicados.</p>
+<ul>
+  <li>Criar, editar, publicar e eliminar notícias (<code>news.manage</code> — Bruno e Ana).</li>
+  <li>Comentários nas notícias (a equipa pode reagir — comentários podem ser moderados).</li>
+  <li>As notícias publicadas aparecem também no feed do dashboard e podem ser expostas em widgets de sites.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>A Ana publica <em>"Novo processo de despesas — ler antes de submeter"</em>. Toda a equipa vê a notícia no feed e pode comentar.</p>
+
+<!-- ============ 14. PESQUISA ============ -->
+<h1 id="pesquisa">14. Pesquisa e paleta de comandos</h1>
+<p>Pesquisa global em toda a organização — documentos, pastas, tarefas, listas, formulários, workflows, sites, notícias.</p>
+<ul>
+  <li><strong>Página de pesquisa</strong> (/search): resultados agrupados por tipo, com subtítulos e ligações diretas; filtros por tipo de recurso.</li>
+  <li><strong>Paleta de comandos</strong> <span class="kbd">Ctrl K</span>: a mesma pesquisa a partir de qualquer página — resultados remotos misturados com atalhos de navegação.</li>
+  <li>A pesquisa <strong>respeita permissões</strong>: só aparece o que o utilizador pode ver.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>A Carla escreve "ABC" — encontra a pasta do cliente, o contrato, a tarefa de revisão e a lista onde está o contacto. Sem sair do teclado: <span class="kbd">Ctrl K</span> → "ABC" → <span class="kbd">↓</span> <span class="kbd">Enter</span>.</p>

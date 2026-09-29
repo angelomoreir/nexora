@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de Aprovações</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — Aprovações</div>
+  <div class="meta">
+    <p>Módulo: Aprovações (menu lateral → Aprovações · <code>/approvals</code>)</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que são Aprovações</h2>
+<p>As <b>Aprovações</b> são os pontos de <b>decisão humana</b> dentro dos Processos (workflows). Quando um processo atinge um passo do tipo <b>«Aprovação»</b>, a execução <b>pára</b> e cria uma pendência para o aprovador designado — que decide <b>Aprovar</b> ou <b>Rejeitar</b>. A página de Aprovações é a fila central onde essas decisões se tomam.</p>
+
+<h2>2. Como uma aprovação nasce</h2>
+<ol class="steps">
+  <li>Um Processo publicado com um passo «Aprovação» é <b>iniciado</b>.</li>
+  <li>Ao chegar a esse passo, a instância fica «A aguardar aprovação» e cria a pendência.</li>
+  <li>O aprovador configurado recebe uma <b>notificação</b> «Aprovação necessária» e vê o item na fila.</li>
+  <li>Ao decidir, o processo continua: <b>Aprovado</b> → passo seguinte; <b>Rejeitado</b> → salta para o passo configurado em «salto de rejeição» (ou termina).</li>
+</ol>
+
+<h2>3. A página de Aprovações</h2>
+<table>
+  <thead><tr><th>Elemento</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><b>Filtro de estado</b></td><td>Pendentes / aprovadas / rejeitadas / todas</td></tr>
+    <tr><td><b>Âmbito</b></td><td>«Minhas» (atribuídas a si) vs todas as que pode ver</td></tr>
+    <tr><td><b>Cartão de aprovação</b></td><td>Título, processo de origem, passo, aprovador designado, data — e quem delegou, se aplicável</td></tr>
+    <tr><td><b>Ações</b></td><td><b>Aprovar</b>, <b>Rejeitar</b>, <b>Delegar</b> — em cada pendência sua</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Delegar uma aprovação</h2>
+<ol class="steps">
+  <li>Na pendência → <b>«Delegar»</b> → escolher outro membro da organização.</li>
+  <li>A aprovação passa a ser decidida por essa pessoa — o registo mostra «delegado por {nome}».</li>
+  <li>Não se pode delegar para si próprio nem para o aprovador atual.</li>
+</ol>
+<div class="tip"><b>Caso de uso:</b> vai de férias e é o aprovador configurado num processo — delegue as pendências no substituto em vez de bloquear os processos.</div>
+
+<h2>5. Quem decide — a regra fundamental</h2>
+<div class="note"><b>A decisão é por ATRIBUIÇÃO, não por permissão global.</b> Só o <b>aprovador designado</b> no passo (ou o delegado, ou o Super Admin) pode aprovar/rejeitar — mesmo um Admin da organização recebe 403 se não for o designado. A permissão <code>approvals.view</code> deixa <i>ver</i> a fila; <code>approvals.manage</code> está ligada à gestão administrativa das aprovações.</div>
+<table>
+  <thead><tr><th>Papel</th><th>Ver fila</th><th>Decidir</th></tr></thead>
+  <tbody>
+    <tr><td><b>Viewer</b></td><td>✓ (<code>approvals.view</code>)</td><td>Só as que lhe são atribuídas/delegadas</td></tr>
+    <tr><td><b>Member</b></td><td>✓</td><td>As suas + delegadas (<code>approvals.manage</code>)</td></tr>
+    <tr><td><b>Editor / Manager / Admin</b></td><td>✓</td><td>As suas + gestão</td></tr>
+    <tr><td><b>Super Admin</b></td><td>✓</td><td>Qualquer uma</td></tr>
+  </tbody>
+</table>
+
+<h2>6. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Aprovação de documento (o fluxo testado)</div>
+  <ol class="steps">
+    <li>Processo «Aprovação de documento» publicado → <b>Iniciar</b>.</li>
+    <li>Instância fica «A aguardar aprovação» no passo 1 → o aprovador recebe notificação.</li>
+    <li>Aprovador abre <b>Aprovações</b> → <b>Aprovar</b> → o processo continua sozinho (move documento, notifica, termina) e a notificação de pedido é marcada como lida automaticamente.</li>
+  </ol>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Rejeição com salto</div>
+  <p>Num processo com «salto de rejeição» configurado (ex.: voltar ao passo de correção), <b>Rejeitar</b> não mata o processo — redireciona-o para o passo definido.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Delegação antes de férias</div>
+  <p>Gestor vai estar ausente → abre cada pendência → «Delegar» para o adjunto → o adjunto passa a ver as pendências na sua fila com a etiqueta «delegado por…».</p>
+</div>
+
+<h2>7. Ligações com outros módulos</h2>
+<ul>
+  <li><b>Processos</b> — as aprovações nascem dos passos «Aprovação»; a instância mostra o histórico da decisão.</li>
+  <li><b>O meu dia</b> — as suas aprovações pendentes aparecem na secção própria, decidíveis ali.</li>
+  <li><b>Notificações</b> — «Aprovação necessária» ao ser designado; «Aprovação concedida/rejeitada» a quem iniciou o processo.</li>
+  <li><b>Dashboard</b> — contagem de aprovações pessoais pendentes.</li>
+</ul>
+
+<h2>8. Resolução de problemas</h2>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>Vê a aprovação mas não consegue decidir</td><td>Não é o aprovador designado — a decisão é por atribuição</td></tr>
+    <tr><td>Fila vazia como Viewer</td><td>Normal — sem atribuições; a consulta continua disponível</td></tr>
+    <tr><td>Notificação de aprovação não desaparece</td><td>Atualize — ao decidir, a notificação de pedido é marcada como lida automaticamente</td></tr>
+    <tr><td>Não consegue delegar para alguém</td><td>Não é possível delegar para si próprio nem para o aprovador atual</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>

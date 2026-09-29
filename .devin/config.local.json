@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Exec(#)",
+      "Exec(git checkout)",
+      "Exec(Test-Path)",
+      "Exec(Get-Content)",
+      "Exec(npx tsc)",
+      "Exec(Select-String)",
+      "Exec(Measure-Object)",
+      "Exec(Select-Object)",
+      "Exec(npm run)",
+      "Exec($c)",
+      "Exec(Write-Output)",
+      "Exec($false)",
+      "Exec(\"  ${ns}: \\{\")",
+      "Exec(})",
+      "Exec($output)",
+      "Exec($i)",
+      "Exec(0)"
+    ]
+  }
+}

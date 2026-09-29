@@ -1,0 +1,117 @@
+<!-- ============ 15. NOTIFICAÇÕES ============ -->
+<h1 id="notificacoes">15. Notificações</h1>
+<p>Centro de notificações por utilizador: atribuições de tarefas, aprovações a decidir, resultados de aprovações, menções e alertas do sistema.</p>
+<ul>
+  <li><strong>Contador de não lidas</strong> na barra lateral e no sino do cabeçalho (atualiza automaticamente).</li>
+  <li><strong>Marcar como lida</strong> individualmente ou todas de uma vez.</li>
+  <li><strong>Subscrições e alertas</strong> — o utilizador pode subscrever recursos para ser notificado de alterações.</li>
+  <li><strong>Anúncios</strong> — mensagens globais do admin aparecem em destaque no dashboard (feed de anúncios).</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>Quando o Bruno aprova a despesa da Carla, ela recebe notificação imediata. Quando a Ana atribui uma tarefa ao Bruno, o contador dele incrementa.</p>
+
+<!-- ============ 16. IA ============ -->
+<h1 id="ia">16. Assistente de IA</h1>
+<p>O NEXORA inclui um assistente de IA integrado e <strong>consciente das permissões</strong> — só acede ao que o utilizador pode ver. Na XPTO está configurado com um modelo externo (Groq/OpenAI-compatible); sem chave configurada funciona um modo local baseado em regras.</p>
+
+<h2>Conversação</h2>
+<ul>
+  <li>Chat persistente por utilizador (histórico de conversas guardado).</li>
+  <li>Perguntas sobre a organização: <em>"quantos documentos temos?", "que tarefas estão atrasadas?"</em>.</li>
+  <li>Respostas no idioma da organização.</li>
+</ul>
+
+<h2>Operações em documentos</h2>
+<p>Na página de um documento, a IA pode (sempre respeitando o acesso do utilizador):</p>
+<table>
+  <tr><th>Operação</th><th>O que faz</th></tr>
+  <tr><td><strong>Resumir</strong></td><td>Gera resumo + palavras-chave + classificação do documento.</td></tr>
+  <tr><td><strong>Classificar</strong></td><td>Sugere categoria (Contrato, Fatura, RH...) e keywords.</td></tr>
+  <tr><td><strong>Perguntas (Q&amp;A)</strong></td><td>Responde a perguntas sobre o conteúdo do documento.</td></tr>
+  <tr><td><strong>Sugerir metadados</strong></td><td>Propõe valores para os campos de metadados.</td></tr>
+</table>
+
+<h2>Criação assistida</h2>
+<p>A IA pode propor e depois <strong>materializar</strong> estruturas completas:</p>
+<ul>
+  <li><em>"cria uma lista de Clientes com Nome, NIF e Email"</em> → propõe a estrutura → aplicar cria a lista real.</li>
+  <li><em>"cria um workflow de aprovação de férias"</em> → propõe os passos → aplicar cria o workflow.</li>
+  <li><em>"cria uma app para gestão de stock"</em> → scaffold completo: lista + formulário + workflow + página de site.</li>
+  <li><strong>Relatórios</strong>: <em>"relatório do estado da organização"</em> — narrativa sobre dados reais (tarefas, documentos, processos).</li>
+</ul>
+
+<h2>Governança e custos da IA</h2>
+<ul>
+  <li><strong>Permissões verificadas em cada operação</strong> — a IA não lê documentos fora do acesso do utilizador.</li>
+  <li><strong>Auditoria</strong> — cada operação regista provider, modelo, tokens, custo e resultado.</li>
+  <li><strong>Limites</strong> — controlo de custo diário por organização e limite por plano.</li>
+  <li><strong>Usage</strong> — a Ana pode consultar o consumo de IA (tokens/custo) da organização.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>A Carla usa a IA para resumir contratos longos antes de os rever. O Bruno criou a lista "Fornecedores" com uma frase no chat. A Ana pede um relatório mensal de atividade ao assistente.</p>
+
+<!-- ============ 17. ADMINISTRAÇÃO ============ -->
+<h1 id="admin">17. Administração (área da Ana)</h1>
+<p>Entrada: barra lateral → Gerir → <strong>Administração</strong> (visível apenas a quem tem permissões administrativas). Página-hub com 9 áreas:</p>
+
+<h2>Utilizadores</h2>
+<ul>
+  <li><strong>Convidar</strong> por email com função (fluxo descrito na secção 3) — método recomendado.</li>
+  <li><strong>Criar diretamente</strong> — alternativa em que o admin define a password.</li>
+  <li><strong>Convites pendentes</strong> — listar e revogar.</li>
+  <li><strong>Suspender / reativar</strong> utilizadores — um suspenso perde acesso imediato.</li>
+</ul>
+
+<h2>Equipas</h2>
+<p>Agrupamentos de membros (ex.: "Comercial", "Operações") usados nas permissões de documentos — dar acesso a uma pasta a uma equipa inteira em vez de pessoa a pessoa. A Ana criou a equipa "Consultores" com Bruno e Carla.</p>
+
+<h2>Funções (roles)</h2>
+<ul>
+  <li>As 5 funções de sistema (Viewer, Member, Editor, Manager, Admin) não podem ser eliminadas.</li>
+  <li><strong>Funções personalizadas</strong> — criar novas combinando as 31 permissões disponíveis. Ex.: a Ana pode criar "Contabilidade" com acesso só a documentos e aprovações.</li>
+  <li>Funções personalizadas aparecem no seletor do convite.</li>
+</ul>
+
+<h2>Auditoria</h2>
+<p>Registo completo de ações: data/hora, utilizador, ação, recurso, IP e resultado — com filtros. A Ana vê quem fez o quê: logins, uploads, partilhas, decisões de aprovação, operações de IA.</p>
+
+<h2>Webhooks</h2>
+<p>Notificações automáticas para sistemas externos: quando um evento acontece no NEXORA (documento criado, tarefa concluída...), a organização pode receber um POST HTTP num endpoint configurado — criar, editar, testar e eliminar webhooks.</p>
+
+<h2>Automação</h2>
+<p>Regras automáticas da organização — ações desencadeadas por eventos sem intervenção manual.</p>
+
+<h2>Anúncios</h2>
+<p>Mensagens globais que aparecem no dashboard de todos os membros — a Ana publica avisos importantes ("Migração de dados sexta-feira às 18h").</p>
+
+<h2>Governação</h2>
+<p>Políticas de conformidade: retenção de documentos, legal holds e registos oficiais (ver secção 6).</p>
+
+<h2>Definições da organização</h2>
+<ul>
+  <li>Dados da organização (nome, etc.) e <strong>idioma</strong> — afeta conteúdo gerado pela IA e mensagens do sistema.</li>
+  <li><strong>SSO (Single Sign-On)</strong> — configurar login via OIDC (ex.: Azure AD, Google Workspace): descoberta automática do issuer, e os utilizadores passam a poder entrar com "Entrar com SSO" na página de login.</li>
+  <li>Políticas de palavra-passe e outras configurações.</li>
+</ul>
+
+<!-- ============ 18. FATURAÇÃO ============ -->
+<h1 id="faturacao">18. Faturação e planos</h1>
+<p>Área Faturação (barra lateral → Gerir):</p>
+<ul>
+  <li><strong>Plano atual</strong> — Free, Pro ou Enterprise — com os limites de cada plano (utilizadores, armazenamento, IA, etc.).</li>
+  <li><strong>Upgrade via Stripe Checkout</strong> — escolher plano → redirecionado para pagamento seguro Stripe → webhook confirma e ativa a subscrição.</li>
+  <li><strong>Portal de faturação Stripe</strong> — gerir método de pagamento, faturas e cancelamento.</li>
+  <li><strong>Limites de uso</strong> — a página mostra consumo vs. limites do plano.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>A XPTO começou no plano Free. Quando chegarem ao limite de utilizadores ou armazenamento, a Ana faz upgrade para o Pro — o SSO e os limites maiores ficam disponíveis no Enterprise.</p>
+
+<!-- ============ 19. CONTA ============ -->
+<h1 id="conta">19. Perfil e conta</h1>
+<ul>
+  <li><strong>Perfil</strong> — nome, cargo (job title), avatar, idioma de interface.</li>
+  <li><strong>Alterar palavra-passe</strong> — password atual + nova (mín. 12 caracteres).</li>
+  <li><strong>Recuperação</strong> — "Esqueci-me da palavra-passe" no login envia link de reposição por email.</li>
+  <li><strong>Multi-organização</strong> — um utilizador pode pertencer a várias organizações e alternar no seletor do cabeçalho; cada uma com a sua função.</li>
+  <li><strong>Sessões</strong> — login com JWT + refresh; logout termina a sessão.</li>
+</ul>

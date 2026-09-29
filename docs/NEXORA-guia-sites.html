@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de Sites</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  h4 { font-size: 10pt; color: #0f172a; margin: 3.5mm 0 1.5mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .section { page-break-before: always; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .deny { color: #b91c1c; }
+  .deny::before { content: "→ Esperado (negado): "; font-weight: 600; color: #b91c1c; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+  .role-pill { display: inline-block; background: #e0e7ff; color: #3730a3; border-radius: 10px; padding: 0 2.5mm; font-size: 8pt; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — Sites</div>
+  <div class="meta">
+    <p>Módulo: Sites (menu lateral → Sites · <code>/sites</code>)</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que são Sites</h2>
+<p>Um <b>Site</b> no NEXORA é um <b>portal interno</b> — o equivalente a um site do SharePoint. Serve para <b>agregar e apresentar conteúdo</b> de toda a plataforma num sítio temático: páginas compostas por blocos («widgets») que puxam dados vivos de documentos, listas e notícias.</p>
+<p><b>A ideia central:</b> Documentos, Listas e Notícias são os <i>dados</i>; os Sites são a <i>apresentação organizada</i> desses dados para uma audiência — a «homepage» de um departamento, projeto ou equipa, em vez de cada pessoa andar a procurar conteúdo espalhado.</p>
+
+<h2>2. Anatomia de um site</h2>
+<table>
+  <thead><tr><th>Elemento</th><th>O que é</th></tr></thead>
+  <tbody>
+    <tr><td><b>Site</b></td><td>O portal: nome, descrição, tipo, visibilidade, ícone e cor</td></tr>
+    <tr><td><b>Sub-site</b></td><td>Um site pode ter <b>sites filhos</b> (hierarquia) — ex.: «Empresa» → «RH», «Comercial»</td></tr>
+    <tr><td><b>Página</b></td><td>Uma página dentro do site, composta por widgets ordenados; tem slug próprio e estado Rascunho/Publicada</td></tr>
+    <tr><td><b>Página inicial</b></td><td>A página marcada <code>isHome</code> — o que se vê no separador «Início»</td></tr>
+    <tr><td><b>Widget</b></td><td>Um bloco de conteúdo na página (ver §4)</td></tr>
+    <tr><td><b>Membros do site</b></td><td>Lista própria de membros com <b>papéis locais</b> — independentes do papel na organização</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Tipos, visibilidade e papéis locais</h2>
+<h3>3.1 Tipos de site</h3>
+<table>
+  <thead><tr><th>Tipo</th><th>Uso</th></tr></thead>
+  <tbody>
+    <tr><td><b>Departamento</b></td><td>Portal de uma área funcional (RH, Comercial, Financeiro)</td></tr>
+    <tr><td><b>Projeto</b></td><td>Espaço de um projeto com prazo e equipa própria</td></tr>
+    <tr><td><b>Equipa</b></td><td>Página de uma equipa permanente</td></tr>
+    <tr><td><b>Hub</b></td><td>Ponto de agregação transversal — ex.: intranet geral</td></tr>
+  </tbody>
+</table>
+<h3>3.2 Visibilidade</h3>
+<table>
+  <thead><tr><th>Visibilidade</th><th>Quem vê</th></tr></thead>
+  <tbody>
+    <tr><td><b>Organização</b> (ORG)</td><td>Todos os membros da organização</td></tr>
+    <tr><td><b>Privado</b> (PRIVATE)</td><td>Só os membros do site — não aparece na lista dos outros</td></tr>
+  </tbody>
+</table>
+<h3>3.3 Papéis de site (locais)</h3>
+<p>Cada site tem a sua própria gestão de membros — <b>independente do papel global</b> na organização. Um <code>Member</code> da organização pode ser <b>Administrador deste site</b>.</p>
+<table>
+  <thead><tr><th>Papel local</th><th>Capacidade no site</th></tr></thead>
+  <tbody>
+    <tr><td><b>Administrador</b></td><td>Tudo: definições, membros, páginas, eliminar o site</td></tr>
+    <tr><td><b>Gestor</b></td><td>Gerir páginas e membros</td></tr>
+    <tr><td><b>Editor</b></td><td>Criar e editar páginas</td></tr>
+    <tr><td><b>Contribuidor</b></td><td>Contribui conteúdo dentro dos limites definidos</td></tr>
+    <tr><td><b>Leitor</b></td><td>Só consulta</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Widgets — os blocos das páginas</h2>
+<table>
+  <thead><tr><th>Widget</th><th>O que mostra</th><th>Exemplo de uso</th></tr></thead>
+  <tbody>
+    <tr><td><b>Hero</b></td><td>Banner de destaque com título e subtítulo</td><td>«Bem-vindos ao portal de RH»</td></tr>
+    <tr><td><b>Título</b></td><td>Cabeçalho de secção</td><td>«Documentos importantes»</td></tr>
+    <tr><td><b>Texto</b></td><td>Bloco de texto livre</td><td>Instruções, avisos, contexto</td></tr>
+    <tr><td><b>Documentos recentes</b></td><td>Lista viva dos últimos documentos da organização</td><td>«Últimos contratos»</td></tr>
+    <tr><td><b>Notícias</b></td><td>Últimas notícias — <b>filtradas por este site</b> quando a notícia está associada</td><td>Notícias de RH no site de RH</td></tr>
+    <tr><td><b>Lista</b></td><td>Os registos de uma lista NEXORA que escolhe</td><td>«Fornecedores», «Benefícios»</td></tr>
+    <tr><td><b>KPI</b></td><td>Número/métrica em destaque</td><td>«12 pedidos pendentes»</td></tr>
+    <tr><td><b>Link</b></td><td>Botão para URL externo</td><td>«Abrir portal de faturação»</td></tr>
+    <tr><td><b>HTML</b></td><td>Conteúdo HTML livre</td><td>Embeds e formatação avançada</td></tr>
+  </tbody>
+</table>
+<div class="tip"><b>Os widgets são dinâmicos:</b> «Documentos recentes», «Notícias» e «Lista» mostram dados <b>em tempo real</b> — a página atualiza-se sozinha quando o conteúdo muda, sem editar a página.</div>
+
+<h2>5. Criar e construir — passo a passo</h2>
+<h3>5.1 Criar o site</h3>
+<ol class="steps">
+  <li><b>Sites → «Novo site»</b>.</li>
+  <li>Preencher: <b>nome</b>, descrição, <b>tipo</b> (Departamento/Projeto/Equipa/Hub), <b>visibilidade</b>, ícone e cor.</li>
+  <li>Opcional: escolher um <b>site pai</b> para criar um sub-site.</li>
+  <li><span class="exp">Site criado — o criador fica como Administrador do site.</span></li>
+</ol>
+<h3>5.2 Construir páginas</h3>
+<ol class="steps">
+  <li>Dentro do site → separador <b>«Conteúdo»</b> → criar página (nasce com um widget Hero).</li>
+  <li>Editar a página: adicionar/ordenar widgets, configurar cada um (título do hero, lista a mostrar, URL do link…).</li>
+  <li>Definir o <b>slug</b> (URL amigável) e mudar o estado para <b>Publicada</b>.</li>
+  <li>Marcar <b>«página inicial»</b> para que apareça no separador «Início» do site.</li>
+</ol>
+<h3>5.3 Gerir membros</h3>
+<ol class="steps">
+  <li>Separador <b>«Membros»</b> → adicionar membros da organização com o papel local adequado.</li>
+  <li>Para sites <b>privados</b>, esta lista é quem controla o acesso — quem não está aqui nem vê o site.</li>
+</ol>
+<h3>5.4 Definições e zona de perigo</h3>
+<ol class="steps">
+  <li>Separador <b>«Definições»</b> (só gestores): renomear, mudar visibilidade, cor/ícone.</li>
+  <li><b>Zona de perigo</b> → eliminar o site (confirmação obrigatória; remove páginas e associações).</li>
+</ol>
+
+<h2>6. Exemplos práticos</h2>
+
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Portal de RH (Departamento, Organização)</div>
+  <ul>
+    <li><b>Hero:</b> «Recursos Humanos — tudo o que precisa num só lugar»</li>
+    <li><b>Notícias:</b> últimas notícias associadas ao site de RH</li>
+    <li><b>Lista:</b> «Benefícios» (lista NEXORA)</li>
+    <li><b>Link:</b> «Pedir férias» → aponta para o formulário interno</li>
+    <li><b>Documentos recentes:</b> políticas e procedimentos atualizados</li>
+  </ul>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Projeto confidencial (Projeto, Privado)</div>
+  <p>Site privado «Projeto Alfa»: só os 5 membros da equipa o veem. Página inicial com Hero + KPI do progresso + lista «Tarefas do projeto». A membresia do site controla quem entra — um Admin da organização sem ser membro do site privado não o vê na lista.</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Intranet com hierarquia (Hub)</div>
+  <p>Site «Intranet» (Hub, Organização) como entrada geral, com sub-sites «RH», «Comercial» e «Operações» pendurados — cada departamento gere o seu sub-site com os seus membros e páginas.</p>
+</div>
+
+<h2>7. Permissões</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver sites e páginas</td><td><code>sites.view</code> / <code>pages.view</code></td><td>Todos</td></tr>
+    <tr><td>Criar/eliminar sites, mudar visibilidade, gerir membros do site</td><td><code>sites.manage</code></td><td>Admin, Manager, Editor</td></tr>
+    <tr><td>Criar e editar páginas dentro de sites</td><td><code>pages.manage</code></td><td>Admin, Manager, Editor</td></tr>
+    <tr><td>Member / Viewer</td><td>—</td><td>Só leitura (mas podem ter papéis <b>locais</b> elevados num site específico)</td></tr>
+  </tbody>
+</table>
+<div class="note"><b>Dupla camada:</b> a permissão global (<code>sites.manage</code>) controla quem pode <i>criar</i> sites; os papéis locais controlam o que cada membro faz <i>dentro</i> de cada site. Um Member global pode ser Administrador de um site privado.</div>
+
+<h2>8. Boas práticas e resolução de problemas</h2>
+<ul>
+  <li><b>Pense na audiência:</b> quem vai usar este site e o que procura? Organize a página inicial por essa lógica.</li>
+  <li><b>Prefira widgets dinâmicos</b> (documentos recentes, notícias, listas) a texto estático — a página mantém-se atualizada sozinha.</li>
+  <li><b>Sites privados precisam de membros:</b> criar um site privado sem adicionar membros deixa-o invisível para todos exceto o criador.</li>
+  <li><b>Associe as notícias ao site</b> — o widget «Notícias» de um site mostra as notícias ligadas a ele.</li>
+  <li><b>Publicar ≠ visível sem página inicial:</b> um site sem página inicial publicada mostra «Início» vazio.</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>Sem «Novo site»</td><td>Member/Viewer — falta <code>sites.manage</code></td></tr>
+    <tr><td>Site privado não aparece a um colega</td><td>Não é membro do site — adicione-o em «Membros»</td></tr>
+    <tr><td>Separador «Início» vazio</td><td>Falta uma página publicada marcada como inicial</td></tr>
+    <tr><td>Widget «Lista» vazio</td><td>Falta configurar <code>listId</code> com uma lista real</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>

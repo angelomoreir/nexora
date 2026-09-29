@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia do Caso de Estudo XPTO</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  .persona { border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; border-radius: 2px; padding: 2.5mm 3mm; margin: 2mm 0; page-break-inside: avoid; }
+  .persona h3 { margin: 0 0 1mm; }
+  .tag { display: inline-block; font-size: 7.5pt; font-weight: 700; letter-spacing: 1px; padding: 0.5mm 2mm; border-radius: 3px; background: #eef2ff; color: #3730a3; vertical-align: middle; margin-right: 1.5mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Apêndice — Caso de Estudo: a empresa XPTO</div>
+  <div class="meta">
+    <p>A narrativa da empresa fictícia com os 5 utilizadores</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. A empresa XPTO e os seus 5 utilizadores</h2>
+<p>A <b>XPTO, Lda.</b> é uma pequena empresa de consultoria. Usa o NEXORA para gerir documentos de clientes, acompanhar tarefas, aprovar despesas e manter um portal interno. Tem 5 funcionários — <b>um por cada função do sistema</b> — e são as contas de demonstração usadas em todos os testes (password comum: <code>XPTOdemo2024!</code>).</p>
+
+<div class="persona">
+  <h3><span class="tag">ADMIN</span> Ana Silva — Diretora-Geral</h3>
+  <p><b>Email:</b> ana@xpto.pt · <b>Função:</b> Admin</p>
+  <p>Foi ela que registou a empresa no NEXORA — ficou automaticamente administradora. Gere utilizadores, convites, funções, configurações, faturação, auditoria e todo o conteúdo. É a «dona» da organização.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag">MANAGER</span> Bruno Costa — Gestor de Operações</h3>
+  <p><b>Email:</b> bruno@xpto.pt · <b>Função:</b> Manager</p>
+  <p>Responsável pela operação diária: cria e gere listas de clientes, formulários, workflows e sites. Cria utilizadores (papel Member), consulta auditoria e análise, mas não muda papéis, não elimina utilizadores nem gere funções personalizadas.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag">EDITOR</span> Diana Rocha — Gestora de Conteúdos</h3>
+  <p><b>Email:</b> diana@xpto.pt · <b>Função:</b> Editor</p>
+  <p>Produz e gere o conteúdo: cria e apaga documentos, estrutura listas, formulários, workflows, sites e notícias, e cria webhooks. Não partilha documentos externamente, não convida utilizadores nem vê auditoria ou análise.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag">MEMBER</span> Carla Mendes — Consultora</h3>
+  <p><b>Email:</b> carla@xpto.pt · <b>Função:</b> Member</p>
+  <p>Trabalhadora operacional: carrega e edita documentos, consulta listas, executa as suas tarefas e decide aprovações que lhe são atribuídas. Não cria listas, formulários, workflows, sites nem notícias.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag">VIEWER</span> Eduardo Santos — Diretor Financeiro</h3>
+  <p><b>Email:</b> eduardo@xpto.pt · <b>Função:</b> Viewer</p>
+  <p>Só consulta: vê documentos, listas, tarefas, workflows, aprovações, sites e notícias, sem criar nem alterar nada. Ideal para quem precisa de visibilidade total sem risco — direção, auditoria externa, consultores.</p>
+</div>
+
+<div class="tip"><b>Porquê estas funções?</b> Princípio do menor privilégio: cada pessoa recebe apenas o acesso de que precisa. As 5 funções de sistema cobrem a maioria dos casos; se nenhuma servir, a Ana cria funções personalizadas em Administração → Funções.</div>
+
+<h2>2. Matriz rápida de funções</h2>
+<table>
+  <thead><tr><th>Capacidade</th><th>Viewer<br>(Eduardo)</th><th>Member<br>(Carla)</th><th>Editor<br>(Diana)</th><th>Manager<br>(Bruno)</th><th>Admin<br>(Ana)</th></tr></thead>
+  <tbody>
+    <tr><td>Ver todo o conteúdo</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Criar/editar documentos e tarefas</td><td>—</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Apagar documentos</td><td>—</td><td>—</td><td>✔</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Partilhar documentos externamente</td><td>—</td><td>—</td><td>—</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Gerir listas, formulários, workflows, páginas, notícias</td><td>—</td><td>—</td><td>✔</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Gerir sites</td><td>—</td><td>—</td><td>✔</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Criar utilizadores (papel Member)</td><td>—</td><td>—</td><td>—</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Ver auditoria e análise, gerir definições e webhooks</td><td>—</td><td>—</td><td>só webhooks</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Mudar papéis, apagar utilizadores, funções personalizadas</td><td>—</td><td>—</td><td>—</td><td>—</td><td>✔</td></tr>
+    <tr><td>Decidir aprovações</td><td colspan="5">Só as que lhes são atribuídas/delegadas — a decisão é por atribuição</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Um dia na XPTO — cenários completos de colaboração</h2>
+<p>Cinco fluxos reais que mostram como os 5 utilizadores trabalham em conjunto, de ponta a ponta — cada um dentro do que a sua função permite.</p>
+
+<h3>Cenário A — Nova proposta para o cliente ABC</h3>
+<table>
+  <thead><tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Bruno</td><td>Cria a pasta <code>Clientes/ABC S.A./Propostas</code> e instancia o template «Modelo — Proposta Comercial».</td><td>Documentos</td></tr>
+    <tr><td>2</td><td>Bruno</td><td>Atribui tarefa à Carla: «Redigir proposta ABC» — prioridade Alta, prazo sexta-feira.</td><td>Tarefas</td></tr>
+    <tr><td>3</td><td>Carla</td><td>Recebe notificação, abre a tarefa, faz check-out do documento e redige a proposta.</td><td>Notificações → Documentos</td></tr>
+    <tr><td>4</td><td>Carla</td><td>Faz check-in (nova versão) e comenta: «Versão pronta para revisão».</td><td>Documento</td></tr>
+    <tr><td>5</td><td>Carla</td><td>Pede à IA um resumo para verificar os pontos-chave.</td><td>Documento → IA</td></tr>
+    <tr><td>6</td><td>Bruno</td><td>Reve o documento, comenta «falta tabela de preços» → Carla adiciona → Bruno aprova internamente.</td><td>Comentários</td></tr>
+    <tr><td>7</td><td>Diana</td><td>Reve a formatação final e atualiza o registo «ABC, S.A.» na lista de Clientes (estado → Ativo).</td><td>Documentos → Listas</td></tr>
+    <tr><td>8</td><td>Bruno</td><td>Cria link de partilha externa com expiração de 7 dias e envia ao cliente.</td><td>Partilha</td></tr>
+    <tr><td>9</td><td>Eduardo</td><td>Abre a proposta em modo leitura para acompanhar o negócio — não consegue editar, apagar nem partilhar.</td><td>Documentos</td></tr>
+    <tr><td>10</td><td>Ana</td><td>No fim do dia vê na atividade recente todo o percurso — e na auditoria o acesso do cliente via link.</td><td>Dashboard → Auditoria</td></tr>
+  </tbody>
+</table>
+
+<h3>Cenário B — Despesa da Carla aprovada por workflow</h3>
+<table>
+  <thead><tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Carla</td><td>Preenche o formulário «Pedido de Despesa»: 230€, categoria Viagem, anexa a fatura.</td><td>Formulários</td></tr>
+    <tr><td>2</td><td>Sistema</td><td>Inicia a instância do workflow «Aprovação de Despesas» → passo de aprovação do Bruno.</td><td>Processos</td></tr>
+    <tr><td>3</td><td>Bruno</td><td>Vê a aprovação pendente, consulta o pedido e aprova com comentário «OK — entra no projeto ABC».</td><td>Aprovações</td></tr>
+    <tr><td>4</td><td>Sistema</td><td>Como 230€ &lt; 500€, a instância termina aprovada; a Carla é notificada e a notificação de pedido do Bruno fica lida automaticamente.</td><td>Processos → Notificações</td></tr>
+    <tr><td>5</td><td>Ana</td><td>Exporta a lista de despesas para CSV no fim do mês para a contabilidade.</td><td>Listas</td></tr>
+  </tbody>
+</table>
+<div class="tip">Se a despesa fosse 800€, depois do Bruno passava à Ana — o passo <b>Condição</b> do workflow encaminha valores altos para uma segunda aprovação. O Eduardo consegue <i>ver</i> a aprovação na fila, mas não decide — não é o aprovador designado.</div>
+
+<h3>Cenário C — Um consultor externo recebe acesso de leitura</h3>
+<table>
+  <thead><tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Ana</td><td>Convida <code>duarte@xpto.pt</code> (contabilista externo) com função <b>Viewer</b> — fica pendente na tabela de convites.</td><td>Administração → Utilizadores</td></tr>
+    <tr><td>2</td><td>Duarte</td><td>Aceita o convite, cria a conta — no Dashboard vê o checklist de onboarding.</td><td>Aceitar convite</td></tr>
+    <tr><td>3</td><td>Bruno</td><td>Adiciona-o como membro leitor do site «Portal XPTO» para consultar as notícias internas.</td><td>Sites</td></tr>
+    <tr><td>4</td><td>Duarte</td><td>Consulta a lista de despesas e os documentos financeiros — tudo em modo leitura.</td><td>Listas → Documentos</td></tr>
+    <tr><td>5</td><td>Duarte</td><td>Lê a notícia de boas-vindas e explora a Ajuda.</td><td>Notícias → Ajuda</td></tr>
+  </tbody>
+</table>
+<div class="note">Como Viewer, o Duarte não consegue editar, criar, partilhar ou aprovar nada — o acesso é estritamente de consulta. Se precisar de colaborar, a Ana muda-lhe a função em Administração → Utilizadores.</div>
+
+<h3>Cenário D — A Diana atualiza o portal interno</h3>
+<table>
+  <thead><tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Diana</td><td>Edita a página «Boas-vindas» do site interno com as novas regras de despesas.</td><td>Sites → Páginas</td></tr>
+    <tr><td>2</td><td>Diana</td><td>Publica a notícia «Novas regras de despesas em vigor» na categoria Comunicação interna.</td><td>Notícias</td></tr>
+    <tr><td>3</td><td>Sistema</td><td>Os utilizadores recebem a notificação da nova notícia.</td><td>Notificações</td></tr>
+    <tr><td>4</td><td>Carla, Eduardo</td><td>Lêem a notícia — a Carla pode comentar, o Eduardo só lê.</td><td>Notícias</td></tr>
+    <tr><td>5</td><td>Diana</td><td>Cria um novo campo «NIF» na lista Clientes e ajusta o formulário de pedido de despesa.</td><td>Listas → Formulários</td></tr>
+  </tbody>
+</table>
+<div class="note">O que a Diana <b>não</b> consegue fazer (e pediria ao Bruno ou à Ana): partilhar documentos por link externo, convidar utilizadores, ver auditoria e análise, mexer nas definições da organização. Consegue, no entanto, criar e gerir <b>sites</b> inteiros — tem <code>sites.manage</code>.</div>
+
+<h3>Cenário E — A Ana prepara a empresa para crescer</h3>
+<ul>
+  <li>Cria a função personalizada <b>«Comercial»</b> (documentos + listas, sem administração).</li>
+  <li>Configura <b>SSO</b> com o Google Workspace — todos passam a entrar com a conta Google.</li>
+  <li>Define política de <b>retenção</b>: documentos da reciclagem purgados após 90 dias.</li>
+  <li>Ativa um <b>webhook</b> para o sistema de faturação externo receber eventos de aprovação de despesas.</li>
+  <li>Faz upgrade para o plano <b>Professional</b> via Stripe quando a equipa passa de 5 pessoas.</li>
+  <li>Reve a <b>Análise</b> mensal: adoção por módulo, tendência de tarefas, gargalos.</li>
+</ul>
+
+</body>
+</html>

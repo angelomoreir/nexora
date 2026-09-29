@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de Processos</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  h4 { font-size: 10pt; color: #0f172a; margin: 3.5mm 0 1.5mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .deny { color: #b91c1c; }
+  .deny::before { content: "→ Esperado (negado): "; font-weight: 600; color: #b91c1c; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — Processos (Workflows)</div>
+  <div class="meta">
+    <p>Módulo: Processos (menu lateral → Processos · <code>/workflows</code>)</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que são Processos</h2>
+<p>Um <b>Processo</b> (na API: <i>workflow</i>) é uma <b>sequência de passos automatizada</b> que corre dentro da organização — o motor de automação do NEXORA. Desenha-se uma cadeia de ações no construtor visual, publica-se, e cada <b>execução</b> (instância) percorre os passos sozinha: cria tarefas, pede aprovações, envia notificações e emails, move documentos — sem intervenção manual.</p>
+<p><b>Diferença chave:</b> Tarefas, Listas e Documentos guardam <i>dados</i>; Processos executam <i>lógica</i> — ligam todos os módulos numa sequência automática e auditável.</p>
+
+<h2>2. Conceitos fundamentais</h2>
+<table>
+  <thead><tr><th>Conceito</th><th>O que é</th></tr></thead>
+  <tbody>
+    <tr><td><b>Processo</b></td><td>A definição: nome, descrição e a sequência de passos</td></tr>
+    <tr><td><b>Passo</b></td><td>Uma ação do fluxo — com tipo, nome e configuração própria</td></tr>
+    <tr><td><b>Instância / Execução</b></td><td>Uma corrida concreta do processo, com contexto e histórico passo a passo</td></tr>
+    <tr><td><b>Contexto</b></td><td>As variáveis da execução — o JSON passado ao iniciar + o que os passos vão produzindo (ex.: <code>context.taskId</code>)</td></tr>
+    <tr><td><b>Variáveis</b></td><td>Em qualquer campo de configuração, <code>{{nome}}</code> é substituído pelo valor do contexto — ex.: <code>{{documentId}}</code></td></tr>
+    <tr><td><b>Salto</b></td><td>Desvio do fluxo linear: condições e rejeições podem saltar para outro passo</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Ciclo de vida do processo</h2>
+<table>
+  <thead><tr><th>Estado</th><th>Significado</th></tr></thead>
+  <tbody>
+    <tr><td><b>Rascunho</b></td><td>Em construção — o construtor está editável; não pode ser iniciado</td></tr>
+    <tr><td><b>Publicado</b></td><td>Pronto a executar — validado pela API; o construtor fica bloqueado</td></tr>
+    <tr><td><b>Arquivado</b></td><td>Retirado de uso — mantém o histórico das execuções</td></tr>
+  </tbody>
+</table>
+<div class="tip"><b>Corrigir um processo publicado:</b> na página do processo → <b>«Retirar publicação»</b> → volta a Rascunho → editar no Construtor → Guardar → Publicar de novo.</div>
+
+<h2>4. Tipos de passo</h2>
+<table>
+  <thead><tr><th>Categoria</th><th>Passo</th><th>O que faz / configuração</th></tr></thead>
+  <tbody>
+    <tr><td rowspan="3"><b>Controlo</b></td><td><b>Iniciar</b> (START)</td><td>Entrada obrigatória — todo o processo começa aqui</td></tr>
+    <tr><td><b>Condição</b></td><td>Avalia uma variável do contexto (variável + operador + valor); <b>se verdadeira, salta</b> para o passo configurado — senão segue em frente</td></tr>
+    <tr><td><b>Terminar</b> (END)</td><td>Saída obrigatória — marca a execução como concluída</td></tr>
+    <tr><td rowspan="2"><b>Trabalho</b></td><td><b>Criar tarefa</b></td><td>Gera uma tarefa (título, descrição, responsável, prioridade, prazo) — guarda o id em <code>context.taskId</code></td></tr>
+    <tr><td><b>Aprovação</b></td><td><b>Pára</b> a execução até o aprovador designado decidir; configura aprovador, título/mensagem e <b>salto de rejeição</b> (para onde ir se rejeitado)</td></tr>
+    <tr><td rowspan="2"><b>Comunicação</b></td><td><b>Enviar notificação</b></td><td>Notificação in-app a um membro (destinatário, título, corpo)</td></tr>
+    <tr><td><b>Enviar email</b></td><td>Email real (destinatário, assunto, corpo) — <b>exige SMTP configurado</b></td></tr>
+    <tr><td rowspan="4"><b>Dados</b></td><td><b>Alterar estado</b></td><td>Muda o estado da instância ou de um recurso (ex.: fechar a tarefa criada antes)</td></tr>
+    <tr><td><b>Atribuir utilizador</b></td><td>Atribui a execução/recurso a um membro</td></tr>
+    <tr><td><b>Alterar campo</b></td><td>Modifica um campo/dado</td></tr>
+    <tr><td><b>Mover documento</b></td><td>Move um documento para outra pasta (documento + pasta de destino — aceita <code>{{variável}}</code>)</td></tr>
+  </tbody>
+</table>
+
+<h2>5. Criar e executar — passo a passo</h2>
+<h3>5.1 Criar (com templates)</h3>
+<ol class="steps">
+  <li><b>Processos → «Novo processo»</b> → seletor de templates: <i>Aprovação de tarefa, Pedido de compra, Onboarding de membro, Aprovação de documento, Resposta a incidente</i> — ou «Em branco» (START + END).</li>
+  <li>O template cria a sequência completa de passos — os IDs de pessoas/documentos vêm como placeholders por preencher.</li>
+</ol>
+<h3>5.2 Construir</h3>
+<ol class="steps">
+  <li>Abrir o <b>Construtor</b> — paleta de passos à esquerda, fluxo à direita.</li>
+  <li>Clicar num passo → configurar (aprovador, destinatário, título, IDs, variável da condição, salto…).</li>
+  <li>O <b>aviso amarelo de validação</b> lista o que falta — o botão <b>Guardar</b> só ativa quando não há problemas.</li>
+  <li>«Alterações por guardar» avisa antes de sair sem gravar; «Repor alterações» descarta a edição.</li>
+</ol>
+<h3>5.3 Publicar e executar</h3>
+<ol class="steps">
+  <li><b>«Publicar»</b> — a API valida: começa em Iniciar, acaba em Terminar, passos ordenados, configuração obrigatória preenchida, saltos válidos.</li>
+  <li><b>«Iniciar»</b> → diálogo de <b>dados de entrada</b> em JSON — o que escrever vira o contexto (ex.: <code>{"documentId": "abc"}</code>, <code>{"valorAlto": "true"}</code>). Vazio (<code>{}</code>) usa só os valores fixos do construtor.</li>
+  <li>A instância corre passo a passo — nas «Aprovações» pára até à decisão.</li>
+</ol>
+<h3>5.4 Acompanhar</h3>
+<ol class="steps">
+  <li>Separador <b>«Instâncias»</b> na página do processo: cada execução com estado (em execução, a aguardar aprovação, concluída, falhada).</li>
+  <li>Expandir → histórico passo a passo: o que correu, resultado, erros.</li>
+  <li>Erros de configuração (ex.: ID de documento inexistente) falham a instância com a mensagem do passo que falhou.</li>
+</ol>
+
+<h2>6. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Aprovação de documento</div>
+  <p><b>Iniciar → Aprovação (gestor) → Mover documento para «Aprovados» → Notificar autor → Fim.</b><br>
+  Aprovado: o documento muda de pasta e o autor é notificado. Rejeitado: salta direto para o Fim. Com <code>{{documentId}}</code> no passo de mover, cada execução trata o documento indicado nos dados de entrada.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Pedido de compra com ramificação</div>
+  <p><b>Iniciar → Criar tarefa → Aprovação do gestor → Condição (valorAlto = "true"?) → [salta para] Aprovação da direção → Notificar → Fechar tarefa → Fim.</b><br>
+  Valores baixos saltam a aprovação extra; valores altos passam por dois níveis de aprovação.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Onboarding de membro</div>
+  <p><b>Iniciar → Criar tarefa «preparar acessos» → Email de boas-vindas → Notificar equipa → Fim.</b><br>
+  Um clique em «Iniciar» executa o onboarding inteiro.</p>
+</div>
+
+<h2>7. Permissões</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver processos e instâncias</td><td><code>workflows.view</code></td><td>Todos</td></tr>
+    <tr><td>Criar, construir, publicar, iniciar, arquivar</td><td><code>workflows.manage</code></td><td>Admin, Manager, Editor</td></tr>
+    <tr><td>Decidir uma aprovação</td><td>Por atribuição</td><td>O aprovador designado (qualquer papel)</td></tr>
+  </tbody>
+</table>
+
+<h2>8. Boas práticas e resolução de problemas</h2>
+<ul>
+  <li><b>Use templates</b> — a parte difícil é a estrutura; ajuste os placeholders aos seus IDs reais.</li>
+  <li><b>Variáveis em vez de IDs fixos</b> — <code>{{documentId}}</code> torna o processo reutilizável.</li>
+  <li><b>Nomeie os passos</b> — «Aprovação do gestor financeiro» &gt; «Aprovação».</li>
+  <li><b>Sempre configure o salto de rejeição</b> nas aprovações — decida o que acontece quando é rejeitado.</li>
+  <li><b>Email precisa de SMTP</b> — sem configuração, o passo de email falha a execução.</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>«Guardar» desativado no construtor</td><td>Validação com problemas — ver o aviso amarelo</td></tr>
+    <tr><td>«Publicar» falha</td><td>Estrutura inválida — tem de começar em Iniciar e acabar em Terminar, campos obrigatórios preenchidos</td></tr>
+    <tr><td>Instância falhou a meio</td><td>Erro num passo — ex.: documento inexistente, SMTP em falta; ver o histórico da instância</td></tr>
+    <tr><td>Sem botão «Iniciar»</td><td>Processo não está Publicado (ou falta <code>workflows.manage</code>)</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>

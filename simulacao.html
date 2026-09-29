@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXORA — Plataforma Empresarial SaaS</title>
+    <!-- Tailwind CSS para Estilização Moderna -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .sidebar-transition { transition: all 0.25s ease-in-out; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 h-screen flex overflow-hidden">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="w-64 bg-slate-900 text-slate-300 flex flex-col justify-between sidebar-transition z-20 border-r border-slate-800">
+        <div>
+            <!-- Logo / Header -->
+            <div class="h-16 flex items-center px-6 border-b border-slate-800 gap-3">
+                <div class="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-600/30">N</div>
+                <div>
+                    <span class="text-white font-bold text-lg tracking-wide">NEXORA</span>
+                    <span class="block text-[10px] text-blue-400 font-medium uppercase tracking-widest">Enterprise SaaS</span>
+                </div>
+            </div>
+
+            <!-- Navegação -->
+            <nav class="p-4 space-y-1">
+                <p class="px-3 text-[11px] font-semibold uppercase text-slate-500 tracking-wider mb-2">Módulos</p>
+                <button onclick="switchTab('dashboard')" id="btn-dashboard" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-blue-600 text-white shadow-md shadow-blue-600/20">
+                    <i data-lucide="layout-dashboard" class="w-4 h-4"></i> Painel Executivo
+                </button>
+                <button onclick="switchTab('dms')" id="btn-dms" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-slate-800 text-slate-400 hover:text-white">
+                    <i data-lucide="folder-kanban" class="w-4 h-4"></i> Gestão Documental
+                </button>
+                <button onclick="switchTab('lists')" id="btn-lists" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-slate-800 text-slate-400 hover:text-white">
+                    <i data-lucide="table" class="w-4 h-4"></i> Listas Dinâmicas
+                </button>
+                <button onclick="switchTab('workflows')" id="btn-workflows" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-slate-800 text-slate-400 hover:text-white">
+                    <i data-lucide="git-branch" class="w-4 h-4"></i> Workflows & Processos
+                </button>
+                <button onclick="switchTab('tasks')" id="btn-tasks" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-slate-800 text-slate-400 hover:text-white">
+                    <i data-lucide="check-square" class="w-4 h-4"></i> Tarefas & Kanban
+                </button>
+                
+                <p class="px-3 text-[11px] font-semibold uppercase text-slate-500 tracking-wider mt-6 mb-2">Sistema</p>
+                <button onclick="switchTab('ai')" id="btn-ai" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-slate-800 text-slate-400 hover:text-white">
+                    <i data-lucide="bot" class="w-4 h-4 text-purple-400"></i> Nexora AI Assistant
+                </button>
+                <button onclick="switchTab('settings')" id="btn-settings" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-slate-800 text-slate-400 hover:text-white">
+                    <i data-lucide="settings" class="w-4 h-4"></i> Configurações & RBAC
+                </button>
+            </nav>
+        </div>
+
+        <!-- User Profile Footer -->
+        <div class="p-4 border-t border-slate-800 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-500 flex items-center justify-center text-white font-semibold text-xs">AM</div>
+                <div class="text-xs">
+                    <p class="text-white font-medium">Américo Moreira</p>
+                    <p class="text-slate-400 text-[10px]">Super Admin</p>
+                </div>
+            </div>
+            <button onclick="alert('Sessão terminada com sucesso.')" class="text-slate-400 hover:text-white"><i data-lucide="log-out" class="w-4 h-4"></i></button>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTAINER -->
+    <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+        
+        <!-- TOPBAR -->
+        <header class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 z-10">
+            <div class="flex items-center gap-4">
+                <button onclick="toggleSidebar()" class="text-slate-500 hover:text-slate-700"><i data-lucide="menu" class="w-5 h-5"></i></button>
+                <h1 id="page-title" class="text-lg font-bold text-slate-800">Painel Executivo</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="relative hidden sm:block">
+                    <i data-lucide="search" class="w-4 h-4 absolute left-3 top-2.5 text-slate-400"></i>
+                    <input type="text" placeholder="Pesquisar documentos, tarefas..." class="pl-9 pr-4 py-1.5 text-sm bg-slate-100 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white w-64">
+                </div>
+                <button class="relative p-2 text-slate-500 hover:bg-slate-100 rounded-lg">
+                    <i data-lucide="bell" class="w-5 h-5"></i>
+                    <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+                </button>
+                <div class="h-6 w-px bg-slate-200"></div>
+                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5 animate-pulse"></span> Sistema Operacional
+                </span>
+            </div>
+        </header>
+
+        <!-- VIEW AREA -->
+        <main class="flex-1 overflow-y-auto p-6 bg-slate-50 relative">
+
+            <!-- 1. DASHBOARD VIEW -->
+            <div id="view-dashboard" class="space-y-6 view-section">
+                <!-- Welcome Banner -->
+                <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white rounded-2xl p-6 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <span class="bg-blue-600/40 text-blue-200 text-xs font-semibold px-3 py-1 rounded-full border border-blue-400/30">Ambiente Multi-Tenant Ativo</span>
+                        <h2 class="text-2xl font-bold mt-2">Bem-vindo de volta, Américo</h2>
+                        <p class="text-blue-100 text-sm mt-1">O ecossistema Nexora está a operar com 99.9% de eficiência. Tem 3 aprovações pendentes.</p>
+                    </div>
+                    <button onclick="switchTab('workflows')" class="bg-white text-blue-900 font-semibold px-4 py-2.5 rounded-xl text-sm shadow hover:bg-blue-50 transition">Ver Aprovações</button>
+                </div>
+
+                <!-- Metrics Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Documentos DMS</p>
+                            <h3 class="text-2xl font-bold text-slate-800 mt-1">1,428</h3>
+                            <span class="text-emerald-600 text-xs font-medium flex items-center mt-1"><i data-lucide="trending-up" class="w-3 h-3 mr-1"></i> +12% este mês</span>
+                        </div>
+                        <div class="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center text-blue-600"><i data-lucide="folder" class="w-6 h-6"></i></div>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Tarefas Ativas</p>
+                            <h3 class="text-2xl font-bold text-slate-800 mt-1">38</h3>
+                            <span class="text-amber-600 text-xs font-medium flex items-center mt-1"><i data-lucide="clock" class="w-3 h-3 mr-1"></i> 5 urgentes</span>
+                        </div>
+                        <div class="w-12 h-12 bg-amber-50 rounded-xl flex items-center justify-center text-amber-600"><i data-lucide="check-square" class="w-6 h-6"></i></div>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Workflows em Curso</p>
+                            <h3 class="text-2xl font-bold text-slate-800 mt-1">12</h3>
+                            <span class="text-blue-600 text-xs font-medium flex items-center mt-1"><i data-lucide="zap" class="w-3 h-3 mr-1"></i> Automação ativa</span>
+                        </div>
+                        <div class="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center text-purple-600"><i data-lucide="git-branch" class="w-6 h-6"></i></div>
+                    </div>
+                    <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+                        <div>
+                            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Armazenamento Nuvem</p>
+                            <h3 class="text-2xl font-bold text-slate-800 mt-1">45.2 GB</h3>
+                            <span class="text-slate-500 text-xs font-medium flex items-center mt-1">De 500 GB atribuídos</span>
+                        </div>
+                        <div class="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600"><i data-lucide="cloud" class="w-6 h-6"></i></div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity Feed & Quick Actions -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="lg:col-span-2 bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-bold text-slate-800">Atividade Recente no Sistema</h3>
+                            <button class="text-xs text-blue-600 font-semibold hover:underline">Ver auditoria completa</button>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex items-start gap-3 pb-3 border-b border-slate-100">
+                                <div class="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mt-0.5"><i data-lucide="file-text" class="w-4 h-4"></i></div>
+                                <div class="flex-1">
+                                    <p class="text-sm text-slate-800"><span class="font-semibold">José Silva</span> enviou novo contrato <span class="font-medium text-blue-600">Contrato_Q3_TriunPT.pdf</span></p>
+                                    <span class="text-xs text-slate-400">Há 14 minutos • DMS / Jurídico</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 pb-3 border-b border-slate-100">
+                                <div class="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 mt-0.5"><i data-lucide="bot" class="w-4 h-4"></i></div>
+                                <div class="flex-1">
+                                    <p class="text-sm text-slate-800"><span class="font-semibold">Nexora AI</span> classificou automaticamente 14 faturas recebidas.</p>
+                                    <span class="text-xs text-slate-400">Há 45 minutos • Inteligência Artificial</span>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 mt-0.5"><i data-lucide="check-circle" class="w-4 h-4"></i></div>
+                                <div class="flex-1">
+                                    <p class="text-sm text-slate-800"><span class="font-semibold">Maria Santos</span> concluiu o workflow de <span class="font-medium">Aprovação de Orçamento</span></p>
+                                    <span class="text-xs text-slate-400">Há 2 horas • Processos</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-800 mb-3">Ações Rápidas</h3>
+                            <div class="space-y-2">
+                                <button onclick="switchTab('dms')" class="w-full text-left px-4 py-2.5 rounded-lg bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 text-sm font-medium flex items-center justify-between transition">
+                                    <span><i data-lucide="upload" class="w-4 h-4 inline mr-2"></i> Carregar Documento</span>
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                                </button>
+                                <button onclick="switchTab('lists')" class="w-full text-left px-4 py-2.5 rounded-lg bg-slate-50 hover:bg-blue-50 text-slate-700 hover:text-blue-700 text-sm font-medium flex items-center justify-between transition">
+                                    <span><i data-lucide="plus" class="w-4 h-4 inline mr-2"></i> Nova Lista Dinâmica</span>
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                                </button>
+                                <button onclick="switchTab('ai')" class="w-full text-left px-4 py-2.5 rounded-lg bg-slate-50 hover:bg-purple-50 text-slate-700 hover:text-purple-700 text-sm font-medium flex items-center justify-between transition">
+                                    <span><i data-lucide="sparkles" class="w-4 h-4 inline mr-2 text-purple-600"></i> Perguntar à Nexora AI</span>
+                                    <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 mt-4">
+                            <p class="text-xs text-blue-800 font-semibold">💡 Dica Pro:</p>
+                            <p class="text-xs text-blue-700 mt-1">Pode criar listas relacionais avançadas com mais de 14 tipos de campos personalizados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. DMS VIEW -->
+            <div id="view-dms" class="space-y-6 view-section hidden">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">Gestão Documental (DMS)</h2>
+                        <p class="text-xs text-slate-500">Repositório hierárquico encriptado com histórico de versões.</p>
+                    </div>
+                    <button onclick="alert('Caixa de diálogo de upload aberta.')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 shadow transition">
+                        <i data-lucide="upload" class="w-4 h-4"></i> Novo Ficheiro
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead class="bg-slate-100 border-b border-slate-200 text-slate-600 text-xs font-semibold uppercase">
+                            <tr>
+                                <th class="p-4">Nome do Ficheiro</th>
+                                <th class="p-4">Categoria</th>
+                                <th class="p-4">Versão</th>
+                                <th class="p-4">Atualizado por</th>
+                                <th class="p-4">Data</th>
+                                <th class="p-4 text-right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-slate-700">
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 font-medium flex items-center gap-3"><i data-lucide="file-text" class="w-4 h-4 text-blue-600"></i> Contrato_Prestacao_Servicos.pdf</td>
+                                <td class="p-4"><span class="bg-blue-50 text-blue-700 px-2.5 py-1 rounded-md text-xs font-medium">Jurídico</span></td>
+                                <td class="p-4">v2.1</td>
+                                <td class="p-4">Américo Moreira</td>
+                                <td class="p-4 text-slate-500">Ontem, 16:45</td>
+                                <td class="p-4 text-right">
+                                    <button onclick="alert('A descarregar documento...')" class="p-1 hover:bg-slate-200 rounded text-slate-600"><i data-lucide="download" class="w-4 h-4"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 font-medium flex items-center gap-3"><i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-600"></i> Balancete_Financeiro_Q2.xlsx</td>
+                                <td class="p-4"><span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-md text-xs font-medium">Financeiro</span></td>
+                                <td class="p-4">v1.0</td>
+                                <td class="p-4">Ana Costa</td>
+                                <td class="p-4 text-slate-500">08 Set 2026</td>
+                                <td class="p-4 text-right">
+                                    <button onclick="alert('A descarregar documento...')" class="p-1 hover:bg-slate-200 rounded text-slate-600"><i data-lucide="download" class="w-4 h-4"></i></button>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 font-medium flex items-center gap-3"><i data-lucide="file-code" class="w-4 h-4 text-purple-600"></i> Arquitetura_TriunPT_v3.docx</td>
+                                <td class="p-4"><span class="bg-purple-50 text-purple-700 px-2.5 py-1 rounded-md text-xs font-medium">Desenvolvimento</span></td>
+                                <td class="p-4">v3.4</td>
+                                <td class="p-4">Américo Moreira</td>
+                                <td class="p-4 text-slate-500">05 Set 2026</td>
+                                <td class="p-4 text-right">
+                                    <button onclick="alert('A descarregar documento...')" class="p-1 hover:bg-slate-200 rounded text-slate-600"><i data-lucide="download" class="w-4 h-4"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 3. DYNAMIC LISTS VIEW -->
+            <div id="view-lists" class="space-y-6 view-section hidden">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">Listas Dinâmicas Personalizadas</h2>
+                        <p class="text-xs text-slate-500">Tabelas relacionais avançadas com campos customizáveis.</p>
+                    </div>
+                    <button onclick="alert('Nova lista criada com sucesso.')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 shadow transition">
+                        <i data-lucide="plus" class="w-4 h-4"></i> Nova Tabela
+                    </button>
+                </div>
+
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
+                    <div class="p-4 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+                        <span class="font-semibold text-sm text-slate-700">Diretório de Clientes Corporativos (TriunPT)</span>
+                        <span class="text-xs bg-blue-100 text-blue-800 px-2.5 py-1 rounded-full font-medium">3 Registos Ativos</span>
+                    </div>
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead class="bg-slate-100 border-b border-slate-200 text-slate-600 text-xs font-semibold uppercase">
+                            <tr>
+                                <th class="p-4">Empresa / Cliente</th>
+                                <th class="p-4">Setor</th>
+                                <th class="p-4">Estado</th>
+                                <th class="p-4">Volume Anual</th>
+                                <th class="p-4 text-right">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-slate-700">
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 font-medium">Inovação Norte Lda.</td>
+                                <td class="p-4">Tecnologia</td>
+                                <td class="p-4"><span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-md text-xs font-medium">Ativo</span></td>
+                                <td class="p-4 font-semibold text-slate-900">45.000 €</td>
+                                <td class="p-4 text-right"><button class="text-blue-600 hover:underline text-xs font-semibold">Editar</button></td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 font-medium">Porto Indústria SA</td>
+                                <td class="p-4">Manufatura</td>
+                                <td class="p-4"><span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-md text-xs font-medium">Ativo</span></td>
+                                <td class="p-4 font-semibold text-slate-900">120.000 €</td>
+                                <td class="p-4 text-right"><button class="text-blue-600 hover:underline text-xs font-semibold">Editar</button></td>
+                            </tr>
+                            <tr class="hover:bg-slate-50">
+                                <td class="p-4 font-medium">Douro Logística Global</td>
+                                <td class="p-4">Transportes</td>
+                                <td class="p-4"><span class="bg-amber-50 text-amber-700 px-2.5 py-1 rounded-md text-xs font-medium">Em Negociação</span></td>
+                                <td class="p-4 font-semibold text-slate-900">85.000 €</td>
+                                <td class="p-4 text-right"><button class="text-blue-600 hover:underline text-xs font-semibold">Editar</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 4. WORKFLOWS VIEW -->
+            <div id="view-workflows" class="space-y-6 view-section hidden">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">Motor de Workflows & Processos</h2>
+                        <p class="text-xs text-slate-500">Automações visuais com saltos condicionais (Se/Então).</p>
+                    </div>
+                    <button onclick="alert('Editor de workflow aberto.')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 shadow transition">
+                        <i data-lucide="plus" class="w-4 h-4"></i> Criar Workflow
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-bold text-slate-800">Aprovação de Faturas & Orçamentos</h3>
+                            <span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full text-xs font-semibold">Ativo</span>
+                        </div>
+                        <p class="text-sm text-slate-600 mb-4">Quando um documento é inserido na pasta 'Financeiro', notifica o gestor e aguarda validação em 24h.</p>
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs flex items-center justify-between text-slate-600">
+                            <span>Disparadores: 14 execuções hoje</span>
+                            <span class="text-blue-600 font-semibold cursor-pointer" onclick="alert('Configurações do workflow abertas.')">Configurar</span>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                        <div class="flex items-center justify-between mb-3">
+                            <h3 class="font-bold text-slate-800">Validação de Contratos Comerciais</h3>
+                            <span class="bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full text-xs font-semibold">Ativo</span>
+                        </div>
+                        <p class="text-sm text-slate-600 mb-4">Encaminha contratos acima de 10.000€ para validação jurídica automática via IA.</p>
+                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200 text-xs flex items-center justify-between text-slate-600">
+                            <span>Disparadores: 3 execuções hoje</span>
+                            <span class="text-blue-600 font-semibold cursor-pointer" onclick="alert('Configurações do workflow abertas.')">Configurar</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. TASKS / KANBAN VIEW -->
+            <div id="view-tasks" class="space-y-6 view-section hidden">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">Tarefas e Kanban</h2>
+                        <p class="text-xs text-slate-500">Gestão ágil de entregáveis por equipa.</p>
+                    </div>
+                    <button onclick="alert('Nova tarefa criada.')" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold flex items-center gap-2 shadow transition">
+                        <i data-lucide="plus" class="w-4 h-4"></i> Nova Tarefa
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Column 1 -->
+                    <div class="bg-slate-100 rounded-xl p-4 border border-slate-200">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-bold text-slate-700 text-sm">Por Fazer (2)</h3>
+                            <span class="bg-slate-200 text-slate-700 text-xs px-2 py-0.5 rounded-full font-semibold">2</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white p-3.5 rounded-lg border border-slate-200 shadow-sm">
+                                <span class="bg-blue-50 text-blue-700 text-[10px] px-2 py-0.5 rounded font-semibold">TriunPT</span>
+                                <h4 class="text-sm font-semibold text-slate-800 mt-1">Implementar módulo de contabilidade</h4>
+                                <p class="text-xs text-slate-500 mt-1">Prazo: 15 Set 2026</p>
+                            </div>
+                            <div class="bg-white p-3.5 rounded-lg border border-slate-200 shadow-sm">
+                                <span class="bg-purple-50 text-purple-700 text-[10px] px-2 py-0.5 rounded font-semibold">IA</span>
+                                <h4 class="text-sm font-semibold text-slate-800 mt-1">Treinar modelo de resumo de PDFs</h4>
+                                <p class="text-xs text-slate-500 mt-1">Prazo: 18 Set 2026</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column 2 -->
+                    <div class="bg-slate-100 rounded-xl p-4 border border-slate-200">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-bold text-slate-700 text-sm">Em Curso (1)</h3>
+                            <span class="bg-blue-200 text-blue-800 text-xs px-2 py-0.5 rounded-full font-semibold">1</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white p-3.5 rounded-lg border border-slate-200 shadow-sm">
+                                <span class="bg-emerald-50 text-emerald-700 text-[10px] px-2 py-0.5 rounded font-semibold">SaaS</span>
+                                <h4 class="text-sm font-semibold text-slate-800 mt-1">Otimizar painel executivo da Nexora</h4>
+                                <p class="text-xs text-slate-500 mt-1">Prazo: Hoje</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Column 3 -->
+                    <div class="bg-slate-100 rounded-xl p-4 border border-slate-200">
+                        <div class="flex justify-between items-center mb-3">
+                            <h3 class="font-bold text-slate-700 text-sm">Concluída (2)</h3>
+                            <span class="bg-emerald-200 text-emerald-800 text-xs px-2 py-0.5 rounded-full font-semibold">2</span>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="bg-white p-3.5 rounded-lg border border-slate-200 shadow-sm opacity-75">
+                                <span class="bg-slate-100 text-slate-600 text-[10px] px-2 py-0.5 rounded font-semibold">Geral</span>
+                                <h4 class="text-sm font-semibold text-slate-800 mt-1 line-through">Revisão de contratos Q3</h4>
+                                <p class="text-xs text-emerald-600 mt-1">Concluído ontem</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. AI ASSISTANT VIEW -->
+            <div id="view-ai" class="space-y-6 view-section hidden">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">Nexora AI Assistant</h2>
+                    <p class="text-xs text-slate-500">Assistente inteligente para análise documental e automação por linguagem natural.</p>
+                </div>
+
+                <div class="bg-white rounded-xl border border-slate-200 flex flex-col h-[500px] shadow-sm">
+                    <div class="p-4 border-b border-slate-200 bg-slate-50 flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-purple-600 flex items-center justify-center text-white"><i data-lucide="bot" class="w-4 h-4"></i></div>
+                        <div>
+                            <p class="text-sm font-bold text-slate-800">Nexora Intelligence Core</p>
+                            <p class="text-[10px] text-emerald-600 font-medium">Ligado ao repositório documental e base de dados</p>
+                        </div>
+                    </div>
+                    <div id="chat-messages" class="flex-1 p-4 overflow-y-auto space-y-4 text-sm">
+                        <div class="flex items-start gap-3">
+                            <div class="w-7 h-7 rounded-full bg-purple-600 flex items-center justify-center text-white text-xs mt-0.5">AI</div>
+                            <div class="bg-slate-100 p-3.5 rounded-xl text-slate-800 max-w-lg">
+                                Olá Américo! Como posso ajudar na gestão da Nexora hoje? Pode pedir-me para resumir contratos, analisar métricas financeiras ou criar novos workflows.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-4 border-t border-slate-200 flex gap-2">
+                        <input type="text" id="chat-input" placeholder="Escreva uma instrução para a IA (ex: 'Resumir contratos do Q3')..." class="flex-1 px-4 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        <button onclick="sendAiMessage()" class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-lg text-sm font-semibold shadow transition">Enviar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. SETTINGS VIEW -->
+            <div id="view-settings" class="space-y-6 view-section hidden">
+                <div>
+                    <h2 class="text-xl font-bold text-slate-800">Configurações & Governança (RBAC)</h2>
+                    <p class="text-xs text-slate-500">Gestão de papéis, permissões de utilizadores e parâmetros da organização.</p>
+                </div>
+
+                <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm space-y-6">
+                    <h3 class="font-bold text-slate-800 text-sm border-b border-slate-100 pb-3">Controlo de Acessos Baseado em Papéis</h3>
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead class="bg-slate-100 border-b border-slate-200 text-slate-600 text-xs font-semibold uppercase">
+                            <tr>
+                                <th class="p-3">Papel</th>
+                                <th class="p-3">Âmbito</th>
+                                <th class="p-3">Permissões Principais</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100 text-slate-700">
+                            <tr>
+                                <td class="p-3 font-semibold text-blue-600">Super Admin</td>
+                                <td class="p-3">Global / Organização</td>
+                                <td class="p-3">Controlo total, auditoria, chaves de API e gestão de utilizadores.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-800">Manager (Gestor)</td>
+                                <td class="p-3">Departamento</td>
+                                <td class="p-3">Aprovação de processos, relatórios e gestão de equipas.</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-semibold text-slate-800">Editor / Member</td>
+                                <td class="p-3">Colaborador</td>
+                                <td class="p-3">Criação de documentos, preenchimento de formulários e tarefas.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Scripts de Navegação e Ícones -->
+    <script>
+        // Inicializar Lucide Icons
+        lucide.createIcons();
+
+        function switchTab(tabId) {
+            // Ocultar todas as secções
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            // Mostrar a secção selecionada
+            document.getElementById('view-' + tabId).classList.remove('hidden');
+
+            // Atualizar classes dos botões da sidebar
+            const buttons = ['dashboard', 'dms', 'lists', 'workflows', 'tasks', 'ai', 'settings'];
+            buttons.forEach(b => {
+                const btn = document.getElementById('btn-' + b);
+                if (b === tabId) {
+                    btn.className = "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors bg-blue-600 text-white shadow-md shadow-blue-600/20";
+                } else {
+                    btn.className = "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-slate-800 text-slate-400 hover:text-white";
+                }
+            });
+
+            // Atualizar título no cabeçalho
+            const titles = {
+                'dashboard': 'Painel Executivo',
+                'dms': 'Gestão Documental (DMS)',
+                'lists': 'Listas Dinâmicas Personalizadas',
+                'workflows': 'Workflows & Processos',
+                'tasks': 'Tarefas e Kanban',
+                'ai': 'Nexora AI Assistant',
+                'settings': 'Configurações & Governança'
+            };
+            document.getElementById('page-title').innerText = titles[tabId];
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('w-64');
+            sidebar.classList.toggle('w-20');
+        }
+
+        function sendAiMessage() {
+            const input = document.getElementById('chat-input');
+            const chatMessages = document.getElementById('chat-messages');
+            if (!input.value.trim()) return;
+
+            const userText = input.value;
+            
+            // Adicionar mensagem do utilizador
+            chatMessages.innerHTML += `
+                <div class="flex items-start justify-end gap-3">
+                    <div class="bg-blue-600 text-white p-3.5 rounded-xl max-w-lg">
+                        ${userText}
+                    </div>
+                    <div class="w-7 h-7 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs mt-0.5">AM</div>
+                </div>
+            `;
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Simular resposta da IA após 1 segundo
+            setTimeout(() => {
+                chatMessages.innerHTML += `
+                    <div class="flex items-start gap-3">
+                        <div class="w-7 h-7 rounded-full bg-purple-600 flex items-center justify-center text-white text-xs mt-0.5">AI</div>
+                        <div class="bg-slate-100 p-3.5 rounded-xl text-slate-800 max-w-lg">
+                            Compreendido. Analisei os registos associados a "${userText}" no repositório Nexora. Todos os parâmetros encontram-se conformes e registados no sistema de auditoria.
+                        </div>
+                    </div>
+                `;
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

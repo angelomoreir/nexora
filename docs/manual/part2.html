@@ -1,0 +1,68 @@
+<!-- ============ 3. ONBOARDING ============ -->
+<h1 id="onboarding">3. Começar: registo e convites</h1>
+<p>Este é o fluxo exato que a XPTO seguiu para pôr os 5 funcionários a trabalhar.</p>
+
+<h2>Passo 1 — A Ana regista a empresa</h2>
+<ol class="steps">
+  <li>Ana abre a página <strong>/register</strong> e preenche: nome, <strong>organização "XPTO"</strong>, email e palavra-passe (mínimo 12 caracteres).</li>
+  <li>Ao submeter, o sistema cria a organização XPTO e a conta da Ana como <strong>Admin</strong> — e entra diretamente no dashboard.</li>
+</ol>
+
+<h2>Passo 2 — A Ana convida os 4 colegas</h2>
+<ol class="steps">
+  <li>Na barra lateral, grupo <strong>Gerir</strong> → <strong>Administração</strong> → cartão <strong>Utilizadores</strong>.</li>
+  <li>Clica em <strong>"Convidar utilizador"</strong>.</li>
+  <li>Introduz <code>bruno@xpto.pt</code> e escolhe a função <strong>Manager</strong> → <strong>"Enviar convite"</strong>.</li>
+  <li>Repete para os restantes: <code>diana@xpto.pt</code> como <strong>Editor</strong>, <code>carla@xpto.pt</code> como <strong>Member</strong> e <code>eduardo@xpto.pt</code> como <strong>Viewer</strong>.</li>
+</ol>
+<p>O sistema gera um convite seguro com validade de <strong>7 dias</strong>. Com servidor de email configurado, o convidado recebe o link por email. Sem email configurado, a página mostra o link com botão <strong>"Copiar"</strong> — a Ana envia-o por qualquer canal.</p>
+<div class="box"><strong>Convites pendentes:</strong> na mesma página, a Ana vê uma tabela com cada convite, o estado (Pendente / Aceite / Revogado / Expirado), quem convidou e a data de expiração — e pode <strong>revogar</strong> um convite a qualquer momento.</div>
+
+<h2>Passo 3 — Os colegas aceitam</h2>
+<ol class="steps">
+  <li>Cada um abre o link do convite → página de aceitação mostra <em>"Foste convidado para a XPTO por Ana Silva"</em>.</li>
+  <li><strong>Sem conta:</strong> definem o nome e a palavra-passe → conta criada e já membro da XPTO.</li>
+  <li><strong>Com conta existente</strong> (ex.: conta noutra organização): fazem login e a XPTO é adicionada — passam a ter as duas organizações no seletor junto ao topo.</li>
+</ol>
+<div class="box tip"><strong>Nunca partilhar credenciais:</strong> ninguém fica a conhecer a palavra-passe de outra pessoa — nem a Ana. É por isso que o convite é o método recomendado (a alternativa "criar diretamente" existe, mas quem cria fica a saber a password do colega).</div>
+
+<h2>Checklist de boas-vindas</h2>
+<p>No primeiro acesso, o dashboard mostra um <strong>checklist de onboarding</strong> com 5 passos: carregar o primeiro documento, criar a primeira lista, criar a primeira tarefa, convidar a equipa (só aparece a quem tem permissão) e criar o primeiro workflow. Cada passo liga diretamente à ação correspondente.</p>
+
+<!-- ============ 4. NAVEGAÇÃO ============ -->
+<h1 id="navegacao">4. Navegação e interface geral</h1>
+<h2>Barra lateral</h2>
+<table>
+  <tr><th>Grupo</th><th>Itens</th></tr>
+  <tr><td>(topo)</td><td>Dashboard, Pesquisa</td></tr>
+  <tr><td><strong>Trabalho</strong></td><td>Tarefas, Aprovações, Workflows, Notificações (com contador de não lidas)</td></tr>
+  <tr><td><strong>Conteúdo</strong></td><td>Sites, Notícias, Documentos, Listas, Formulários</td></tr>
+  <tr><td><strong>Ferramentas</strong></td><td>IA, Ajuda</td></tr>
+  <tr><td><strong>Gerir</strong></td><td>Administração (só Ana e Bruno), Faturação, Definições, Perfil</td></tr>
+</table>
+<p>Em ecrãs pequenos a barra colapsa atrás do botão ☰.</p>
+<h2>Cabeçalho</h2>
+<ul>
+  <li><strong>Seletor de organização</strong> — aparece quando o utilizador pertence a mais do que uma (ex.: o Bruno pode ter a conta pessoal noutra empresa).</li>
+  <li><strong>Botão de pesquisa</strong> <span class="kbd">Ctrl K</span> — abre a paleta de comandos.</li>
+  <li><strong>Tema</strong> claro/escuro, <strong>seletor de idioma</strong> (5 línguas), <strong>notificações</strong> com contador, menu do <strong>utilizador</strong> (perfil / sair).</li>
+</ul>
+<h2>Paleta de comandos <span class="kbd">Ctrl K</span></h2>
+<p>Pesquisa instantânea: escrever texto pesquisa em documentos, tarefas, listas e mais; sem texto, mostra todos os destinos de navegação. Setas <span class="kbd">↑</span><span class="kbd">↓</span> para navegar, <span class="kbd">Enter</span> para abrir.</p>
+<h2>Central de Ajuda</h2>
+<p>Disponível na barra lateral (Ajuda): ~80 artigos organizados por categoria, pesquisa, artigos relacionados e botões de ajuda contextual em várias páginas — incluindo o guia "Convidar a equipa" que descreve este mesmo fluxo.</p>
+
+<!-- ============ 5. DASHBOARD ============ -->
+<h1 id="dashboard">5. Dashboard</h1>
+<p>O ponto de partida diário. Mostra: saudação personalizada, ações rápidas (adicionar documento, criar tarefa, criar workflow), checklist de onboarding, anúncios da empresa, métricas da organização (documentos, utilizadores, equipas, tarefas pendentes, processos ativos, aprovações pendentes, armazenamento), atividade recente, documentos recentes e tarefas relevantes.</p>
+<h2>Atividade recente</h2>
+<p>Timeline das últimas ações na organização, em linguagem natural — ex.: <em>"ana criou o convite"</em>, <em>"bruno aceitou o convite"</em>, <em>"carla carregou o documento"</em>. Cada entrada mostra quem fez, o que fez, o tipo de recurso e a data/hora.</p>
+<h2>Dashboards personalizados</h2>
+<p>Além do dashboard padrão (fixo), qualquer pessoa com a permissão <code>dashboards.manage</code> pode criar <strong>dashboards personalizados</strong> — secções extra por cima do padrão, com widgets à escolha: métricas, documentos recentes, tarefas pendentes, notificações, atividade recente, distribuição de tarefas e links rápidos.</p>
+<ul>
+  <li><strong>Personalizar</strong> → modo de edição: adicionar/remover widgets, criar, renomear ou eliminar dashboards, alternar entre eles.</li>
+  <li><strong>"Dashboard padrão"</strong> no seletor esconde a secção personalizada sem apagar nada — é a forma de "voltar ao original".</li>
+  <li>A escolha fica guardada entre sessões.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>O Bruno criou um dashboard "Operações" com widgets de tarefas pendentes, distribuição de tarefas e atividade recente — a sua vista de gestão diária. A Carla mantém o padrão. A Ana alterna entre "Operações" e um dashboard "Direção" com métricas e notificações.</p>

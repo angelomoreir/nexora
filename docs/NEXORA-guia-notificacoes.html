@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de Notificações</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — Notificações</div>
+  <div class="meta">
+    <p>Módulo: Notificações (menu lateral → Notificações · <code>/notifications</code>)</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que são as Notificações</h2>
+<p>As <b>Notificações</b> são o sistema de alertas in-app do NEXORA — cada evento relevante (tarefa atribuída, aprovação pendente, comentário, partilha, evento de workflow) gera uma notificação ao membro afetado. O <b>sino</b> na barra do topo mostra o contador de não lidas; a página centraliza o histórico completo e a gestão de subscrições.</p>
+
+<h2>2. Tipos de notificação</h2>
+<table>
+  <thead><tr><th>Origem</th><th>Exemplos</th></tr></thead>
+  <tbody>
+    <tr><td><b>Tarefas</b></td><td>«Tarefa atribuída», mudanças de estado relevantes</td></tr>
+    <tr><td><b>Aprovações</b></td><td>«Aprovação necessária», «Aprovação concedida/rejeitada»</td></tr>
+    <tr><td><b>Documentos</b></td><td>Partilhas, comentários, novos ficheiros em pastas seguidas</td></tr>
+    <tr><td><b>Processos</b></td><td>Passos «Enviar notificação» dos workflows, falhas de execução</td></tr>
+    <tr><td><b>Sistema</b></td><td>Comunicados e eventos administrativos</td></tr>
+  </tbody>
+</table>
+
+<h2>3. A página de Notificações</h2>
+<table>
+  <thead><tr><th>Elemento</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><b>Filtro Todas / Não lidas</b></td><td>Alterna entre o histórico completo e só o pendente</td></tr>
+    <tr><td><b>Cartão de notificação</b></td><td>Ícone por tipo, título, corpo, tempo relativo — e ligação ao item de origem (documento, tarefa, aprovação…)</td></tr>
+    <tr><td><b>Marcar como lida</b></td><td>Por notificação ou <b>«Marcar tudo como lido»</b> em massa</td></tr>
+    <tr><td><b>Subscrições</b></td><td>Secção própria: os recursos que está a seguir (ver §4)</td></tr>
+  </tbody>
+</table>
+<div class="tip"><b>Contador do sino:</b> o badge no sino do topo mostra as não lidas em tempo real — clicar na notificação marca-a como lida e leva ao item.</div>
+
+<h2>4. Subscrições — seguir recursos</h2>
+<p>Além das notificações automáticas, pode <b>subscrever recursos</b> para ser avisado de mudanças:</p>
+<ol class="steps">
+  <li>Subscrever um documento, pasta, lista ou outro recurso suportado.</li>
+  <li>Passa a receber notificação quando esse item muda (nova versão, edição, comentário…).</li>
+  <li>A secção <b>Subscrições</b> na página lista o que segue — com remoção individual.</li>
+</ol>
+
+<h2>5. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Aprovação de workflow</div>
+  <p>É aprovador num processo → recebe «Aprovação necessária» → decide em Aprovações → a notificação de pedido é marcada como lida automaticamente. Quem iniciou o processo recebe «Aprovação concedida/rejeitada».</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Seguir um contrato</div>
+  <p>Subscreve <code>contrato-abc.pdf</code> → é notificado de cada nova versão ou comentário — sem ter de verificar manualmente.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Limpeza rápida</div>
+  <p>Depois de férias com 40 notificações: abrir «Não lidas» → tratar as importantes → «Marcar tudo como lido» para o resto.</p>
+</div>
+
+<h2>6. Permissões e notas</h2>
+<p>As notificações são <b>pessoais</b> — cada utilizador vê apenas as suas (<code>notifications.view</code>, presente em todos os papéis). Não há como ver as notificações de outro membro.</p>
+<ul>
+  <li>Clicar numa notificação leva ao item — se não tiver permissão sobre ele, o destino mostra acesso negado.</li>
+  <li>Decidir uma aprovação marca automaticamente a notificação de pedido correspondente como lida.</li>
+  <li>Notificações informativas (resultado de aprovação, por exemplo) ficam até serem marcadas como lidas.</li>
+</ul>
+
+</body>
+</html>

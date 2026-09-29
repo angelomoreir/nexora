@@ -1,0 +1,27 @@
+{
+  "name": "nexora",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n api,web -c cyan,blue \"npm run dev -w @nexora/api\" \"npm run dev -w @nexora/web\"",
+    "build": "npm run build -w @nexora/contracts && npm run build -w @nexora/api && npm run build -w @nexora/web",
+    "test": "npm run test -w @nexora/api && npm run test -w @nexora/web",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "db:generate": "npm run db:generate -w @nexora/api",
+    "db:migrate": "npm run db:migrate -w @nexora/api",
+    "db:studio": "npm run db:studio -w @nexora/api"
+  },
+  "devDependencies": {
+    "concurrently": "9.2.4",
+    "typescript": "5.9.2"
+  },
+  "engines": {
+    "node": ">=22.12.0",
+    "npm": ">=10.0.0"
+  }
+}

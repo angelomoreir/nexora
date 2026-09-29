@@ -1,0 +1,1 @@
+ALTER TABLE "Document" ADD COLUMN "documentKind" TEXT NOT NULL DEFAULT 'FILE';

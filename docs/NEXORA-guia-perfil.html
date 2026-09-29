@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de Perfil</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — Perfil</div>
+  <div class="meta">
+    <p>Módulo: Perfil (menu lateral → Perfil · <code>/profile</code>)</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que é a página de Perfil</h2>
+<p>A página de <b>Perfil</b> é a sua área pessoal — onde gere <b>a sua identidade</b> na plataforma (nome, avatar, cargo), <b>a sua palavra-passe</b> e <b>as suas sessões ativas</b> em todos os dispositivos. Tudo aqui é <b>seu</b>: nenhum outro utilizador, nem um Admin, pode editar o seu perfil (só o Super Admin da plataforma).</p>
+
+<h2>2. As três secções</h2>
+<h3>2.1 Informação pessoal</h3>
+<table>
+  <thead><tr><th>Campo</th><th>Notas</th></tr></thead>
+  <tbody>
+    <tr><td><b>Nome</b></td><td>O nome mostrado em todo o lado (tarefas, aprovações, comentários)</td></tr>
+    <tr><td><b>Cargo</b></td><td>Função profissional — aparece na listagem de utilizadores</td></tr>
+    <tr><td><b>Avatar</b></td><td><b>URL</b> de uma imagem — não há upload de ficheiro; deixe vazio para iniciais</td></tr>
+  </tbody>
+</table>
+<p>«Guardar perfil» atualiza imediatamente — incluindo o avatar no canto superior da app.</p>
+
+<h3>2.2 Alterar palavra-passe</h3>
+<ol class="steps">
+  <li><b>Palavra-passe atual</b> — prova de identidade.</li>
+  <li><b>Nova palavra-passe</b> — <b>mínimo 12 caracteres</b>.</li>
+  <li>Submeter → <b>todas as sessões são terminadas</b> em todos os dispositivos e é redirecionado para o login — entre de novo com a nova password.</li>
+</ol>
+<div class="note"><b>Porque termina tudo?</b> Se a password antiga foi comprometida, invalidar todas as sessões garante que quem a tinha perde o acesso imediatamente — é uma medida de segurança deliberada, não um bug.</div>
+
+<h3>2.3 Sessões ativas</h3>
+<p>Lista de todos os dispositivos/browsers com sessão aberta na sua conta:</p>
+<table>
+  <thead><tr><th>Informação</th><th>Detalhe</th></tr></thead>
+  <tbody>
+    <tr><td><b>Dispositivo</b></td><td>Browser identificado pelo user-agent (Chrome, Edge, Firefox, Safari…) com ícone desktop/mobile</td></tr>
+    <tr><td><b>IP</b></td><td>Endereço da sessão</td></tr>
+    <tr><td><b>Última utilização</b></td><td>Data/hora da última atividade</td></tr>
+    <tr><td><b>«Atual»</b></td><td>Badge na sessão corrente — <b>não pode ser revogada</b> por aqui (use «Terminar sessão» no menu do avatar)</td></tr>
+  </tbody>
+</table>
+<p><b>«Revogar»</b> (com confirmação) mata a sessão desse dispositivo imediatamente — o browser afetado perde o acesso na próxima ação.</p>
+
+<h2>3. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Dispositivo perdido</div>
+  <p>Perdeu o portátil? Perfil → Sessões → identificar a sessão do portátil (browser + IP) → <b>Revogar</b> → acesso cortado, mesmo que alguém o tenha aberto.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Suspeita de comprometimento</div>
+  <p>Atividade estranha na conta? Altere a palavra-passe — todas as sessões morrem de uma vez, incluindo a do intruso. Depois reveja a lista de sessões para confirmar que só ficam as suas.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Foto de perfil</div>
+  <p>Colar o URL público da sua foto (Gravatar, CDN da empresa…) no campo Avatar → Guardar → o avatar aparece em comentários, atribuições e no canto superior.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 4 — Manutenção de sessões</div>
+  <p>Revisão mensal: veja sessões antigas (browser que já não usa, IP de hotel de uma viagem) e revogue-as — quanto menos sessões, menor a superfície de ataque.</p>
+</div>
+
+<h2>4. Permissões e notas</h2>
+<p>O Perfil é <b>pessoal e disponível a todos os papéis</b> — não há permissões especiais. Algumas regras importantes:</p>
+<ul>
+  <li>Só <b>você</b> edita o seu perfil — um Admin não muda o seu nome/cargo/avatar (campos globais do utilizador).</li>
+  <li>A sessão corrente não pode revogar-se a si própria nesta lista — para sair, use «Terminar sessão».</li>
+  <li>Após mudar a password, vai para o login — <b>não é um erro</b>, é a invalidação de sessões a funcionar.</li>
+  <li>Se revogar uma sessão e ela continuar ativa uns segundos, é o cache do token de acesso — resolve em instantes.</li>
+</ul>
+
+</body>
+</html>

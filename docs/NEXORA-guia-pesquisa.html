@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de Pesquisa</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — Pesquisa</div>
+  <div class="meta">
+    <p>Módulo: Pesquisa (menu lateral → Pesquisa · <code>/search</code> · atalho Ctrl+K)</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que é a Pesquisa</h2>
+<p>A <b>Pesquisa</b> é o motor de busca global da organização — procura <b>em todos os módulos ao mesmo tempo</b> e devolve resultados agrupados por tipo, com excertos do conteúdo encontrado. É a forma mais rápida de encontrar «aquele documento», «aquela tarefa» ou «aquele cliente» sem saber onde vive.</p>
+
+<h2>2. O que a pesquisa cobre</h2>
+<table>
+  <thead><tr><th>Tipo</th><th>O que encontra</th></tr></thead>
+  <tbody>
+    <tr><td><b>Documentos</b></td><td>Nome, descrição e conteúdo extraído dos ficheiros</td></tr>
+    <tr><td><b>Pastas</b></td><td>Pastas de documentos por nome</td></tr>
+    <tr><td><b>Listas</b></td><td>Listas por nome/descrição</td></tr>
+    <tr><td><b>Registos</b></td><td>Linhas dentro das listas (valores dos campos)</td></tr>
+    <tr><td><b>Tarefas</b></td><td>Título e descrição</td></tr>
+    <tr><td><b>Processos</b></td><td>Workflows por nome/descrição</td></tr>
+    <tr><td><b>Utilizadores</b></td><td>Membros da organização</td></tr>
+    <tr><td><b>Sites</b></td><td>Sites e páginas</td></tr>
+    <tr><td><b>Notícias</b></td><td>Título, resumo e corpo dos artigos</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Duas formas de pesquisar</h2>
+<h3>3.1 Página de Pesquisa (<code>/search</code>)</h3>
+<ol class="steps">
+  <li>Escrever pelo menos <b>2 caracteres</b> e submeter.</li>
+  <li>Resultados <b>agrupados por tipo</b> com contagem e excerto (snippet) do texto encontrado.</li>
+  <li>Clicar num resultado → navega diretamente para o item.</li>
+</ol>
+<h3>3.2 Paleta de comandos (Ctrl+K)</h3>
+<ol class="steps">
+  <li><b>Ctrl+K</b> em qualquer página (ou o botão de pesquisa na barra do topo).</li>
+  <li>Escrever — sugere comandos de navegação <b>e</b> resultados de conteúdo.</li>
+  <li>Enter → vai direto ao destino. Ideal para power users: navegar sem tirar as mãos do teclado.</li>
+</ol>
+
+<h2>4. Filtros</h2>
+<ol class="steps">
+  <li>Botão <b>«Filtros»</b> na página de pesquisa.</li>
+  <li><b>Tipo:</b> restringir a um ou vários tipos (ex.: só Documentos + Listas).</li>
+  <li><b>Estado:</b> filtrar por estado do item (ex.: <code>TODO</code>, <code>RUNNING</code>, <code>COMPLETED</code>).</li>
+  <li>O badge no botão mostra quantos filtros estão ativos.</li>
+</ol>
+
+<h2>5. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — «Onde está o contrato da ABC?»</div>
+  <p>Pesquisar <code>ABC</code> → resultados agrupados: o documento <code>contrato-abc.pdf</code>, o registo «ABC, S.A.» na lista Clientes, a tarefa «Revisar proposta ABC» e o projeto «Onboarding ABC». Um clique em cada.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Só documentos</div>
+  <p>Muitos resultados? Abrir Filtros → selecionar só «Documentos» → a lista limpa-se para o tipo que interessa.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Encontrar uma pessoa</div>
+  <p>Pesquisar <code>carla</code> → tipo «Utilizadores» → abre o perfil dela na organização.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 4 — Conteúdo dentro de ficheiros</div>
+  <p>A pesquisa olha para o <b>conteúdo extraído</b> dos documentos — procurar «cláusula de rescisão» encontra o PDF que contém esse texto, não só o nome do ficheiro.</p>
+</div>
+
+<h2>6. Boas práticas e notas</h2>
+<ul>
+  <li><b>Mínimo 2 caracteres</b> — pesquisas de 1 letra não disparam.</li>
+  <li><b>A pesquisa respeita permissões</b> — só aparece o que o utilizador pode ver (isolamento de dados por papel e partilha).</li>
+  <li><b>Metadados ajudam a pesquisa</b> — documentos/listas com boas descrições e etiquetas são mais fáceis de encontrar.</li>
+  <li><b>Ctrl+K para navegação rápida</b> — «tarefas», «admin», «perfil» levam direto às páginas sem pesquisar conteúdo.</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>«Sem resultados»</td><td>Termo com &lt;2 caracteres, item noutro tipo, ou falta de permissão sobre o item</td></tr>
+    <tr><td>Documento que sei existir não aparece</td><td>Pode estar no lixo, sem permissão de partilha, ou conteúdo ainda não indexado</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>

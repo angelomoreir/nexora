@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<title>NEXORA — Manual do Utilizador</title>
+<style>
+  @page { size: A4; margin: 2cm 1.8cm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", system-ui, sans-serif; color: #1a2332; font-size: 10.5pt; line-height: 1.55; margin: 0; }
+  h1 { font-size: 22pt; color: #0f1f38; border-bottom: 3px solid #2563eb; padding-bottom: 8px; margin-top: 0; page-break-before: always; }
+  h1.first { page-break-before: avoid; }
+  h2 { font-size: 14pt; color: #1e40af; margin-top: 22px; }
+  h3 { font-size: 11.5pt; color: #334155; margin-top: 16px; }
+  p { margin: 6px 0; }
+  ul, ol { margin: 6px 0 6px 20px; padding: 0; }
+  li { margin: 3px 0; }
+  table { border-collapse: collapse; width: 100%; margin: 10px 0; font-size: 9.5pt; }
+  th { background: #eff6ff; color: #1e3a8a; text-align: left; padding: 6px 8px; border: 1px solid #bfdbfe; }
+  td { padding: 5px 8px; border: 1px solid #dbe3ee; vertical-align: top; }
+  code { font-family: Consolas, monospace; background: #f1f5f9; padding: 1px 4px; border-radius: 3px; font-size: 9pt; }
+  .cover { text-align: center; padding-top: 220px; }
+  .cover .logo { font-size: 40pt; font-weight: 800; letter-spacing: 0.25em; color: #1e40af; }
+  .cover .subtitle { font-size: 14pt; color: #475569; margin-top: 14px; }
+  .cover .meta { margin-top: 60px; color: #64748b; font-size: 10pt; }
+  .box { border: 1px solid #bfdbfe; background: #eff6ff; border-radius: 6px; padding: 10px 14px; margin: 10px 0; }
+  .box.warn { border-color: #fcd34d; background: #fffbeb; }
+  .box.tip { border-color: #86efac; background: #f0fdf4; }
+  .box strong { color: #1e3a8a; }
+  .persona { border: 1px solid #dbe3ee; border-left: 4px solid #2563eb; border-radius: 6px; padding: 10px 14px; margin: 8px 0; }
+  .persona h3 { margin: 0 0 4px 0; }
+  .toc a { color: #1e40af; text-decoration: none; }
+  .toc li { margin: 4px 0; }
+  .steps { counter-reset: step; list-style: none; margin-left: 0; }
+  .steps li { counter-increment: step; margin: 7px 0; padding-left: 30px; position: relative; }
+  .steps li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 20px; height: 20px; background: #2563eb; color: #fff; border-radius: 50%; font-size: 9pt; font-weight: 700; display: grid; place-items: center; }
+  .kbd { font-family: Consolas, monospace; font-size: 8.5pt; border: 1px solid #94a3b8; border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; background: #f8fafc; }
+  .tag { display: inline-block; font-size: 8pt; font-weight: 700; padding: 1px 7px; border-radius: 10px; }
+  .tag.admin { background: #fee2e2; color: #b91c1c; }
+  .tag.manager { background: #fef3c7; color: #b45309; }
+  .tag.member { background: #dcfce7; color: #15803d; }
+  .tag.editor { background: #ffedd5; color: #c2410c; }
+  .tag.viewer { background: #e0e7ff; color: #4338ca; }
+  .tag.all { background: #f1f5f9; color: #475569; }
+  .pagebreak { page-break-before: always; }
+  footer { font-size: 8pt; color: #94a3b8; }
+  figure.shot { margin: 14px 0; page-break-inside: avoid; }
+  figure.shot img { width: 100%; border: 1px solid #cbd5e1; border-radius: 6px; }
+  figure.shot figcaption { font-size: 8.5pt; color: #64748b; margin-top: 5px; font-style: italic; }
+  .shotgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .shotgrid figure.shot { margin: 6px 0; }
+</style>
+</head>
+<body>
+
+<!-- ============ CAPA ============ -->
+<div class="cover">
+  <div class="logo">NEXORA</div>
+  <div class="subtitle">Plataforma Empresarial de Gestão, Documentos e Processos</div>
+  <div class="subtitle" style="font-size:18pt; color:#0f1f38; margin-top:40px;">Manual do Utilizador</div>
+  <div class="meta">
+    <p>Caso de estudo: empresa <strong>XPTO, Lda.</strong> com 5 utilizadores</p>
+    <p>Versão 1.0 — Documento gerado para demonstração funcional</p>
+  </div>
+</div>
+
+<!-- ============ ÍNDICE ============ -->
+<h1>Índice</h1>
+<div class="toc">
+<ol>
+  <li><a href="#intro">Introdução — o que é o NEXORA</a></li>
+  <li><a href="#personas">A empresa XPTO e os seus 5 utilizadores</a></li>
+  <li><a href="#onboarding">Começar: registo e convites</a></li>
+  <li><a href="#navegacao">Navegação e interface geral</a></li>
+  <li><a href="#dashboard">Dashboard</a></li>
+  <li><a href="#documentos">Documentos</a></li>
+  <li><a href="#listas">Listas</a></li>
+  <li><a href="#formularios">Formulários</a></li>
+  <li><a href="#tarefas">Tarefas e projetos</a></li>
+  <li><a href="#workflows">Workflows (processos)</a></li>
+  <li><a href="#aprovacoes">Aprovações</a></li>
+  <li><a href="#sites">Sites e páginas</a></li>
+  <li><a href="#noticias">Notícias</a></li>
+  <li><a href="#pesquisa">Pesquisa e paleta de comandos</a></li>
+  <li><a href="#notificacoes">Notificações</a></li>
+  <li><a href="#ia">Assistente de IA</a></li>
+  <li><a href="#admin">Administração (área da Ana)</a></li>
+  <li><a href="#faturacao">Faturação e planos</a></li>
+  <li><a href="#conta">Perfil e conta</a></li>
+  <li><a href="#cenarios">Um dia na XPTO — cenários completos de colaboração</a></li>
+  <li><a href="#glossario">Glossário e FAQ</a></li>
+</ol>
+</div>
+
+<!-- ============ 1. INTRODUÇÃO ============ -->
+<h1 id="intro">1. Introdução — o que é o NEXORA</h1>
+<p>O NEXORA é uma plataforma empresarial que centraliza o trabalho de uma equipa num único espaço: <strong>documentos</strong>, <strong>listas de dados</strong>, <strong>formulários</strong>, <strong>tarefas</strong>, <strong>processos de aprovação (workflows)</strong>, <strong>sites internos</strong>, <strong>notícias</strong>, <strong>pesquisa global</strong> e um <strong>assistente de IA</strong>. Foi desenhado para substituir ferramentas como o SharePoint com uma interface moderna e simples.</p>
+<h2>Conceitos fundamentais</h2>
+<table>
+  <tr><th>Conceito</th><th>Descrição</th></tr>
+  <tr><td><strong>Organização</strong></td><td>O espaço de trabalho da empresa (ex.: "XPTO"). Todos os dados — documentos, listas, workflows — pertencem a uma organização e são isolados das outras.</td></tr>
+  <tr><td><strong>Utilizador</strong></td><td>Uma pessoa com a sua própria conta (email + palavra-passe). Cada pessoa deve ter a sua conta — nunca se partilham credenciais, porque a auditoria, permissões e notificações são individuais.</td></tr>
+  <tr><td><strong>Função (role)</strong></td><td>Um conjunto de permissões atribuído ao utilizador dentro da organização: Viewer, Member, Editor, Manager ou Admin (ou funções personalizadas criadas pelo admin).</td></tr>
+  <tr><td><strong>Permissão</strong></td><td>Uma capacidade concreta, ex.: <code>documents.edit</code>, <code>users.create</code>, <code>workflows.manage</code>. As funções agrupam permissões.</td></tr>
+  <tr><td><strong>Auditoria</strong></td><td>Registo de todas as ações relevantes (quem fez o quê e quando), visível na atividade recente do dashboard e em Administração → Auditoria.</td></tr>
+</table>
+<h2>Idiomas e aparência</h2>
+<p>A interface está disponível em <strong>Português (PT-PT), English, Español, Français e Deutsch</strong> — selecionável no seletor de idioma no topo da página. Tema claro/escuro também disponível.</p>
+
+<!-- ============ 2. PERSONAS ============ -->
+<figure class="shot"><img src="shots/02-landing.png" alt="Página pública da NEXORA — o primeiro contacto de um cliente com a plataforma."><figcaption>Página pública da NEXORA — o primeiro contacto de um cliente com a plataforma.</figcaption></figure>
+<h1 id="personas">2. A empresa XPTO e os seus 5 utilizadores</h1>
+<p>A <strong>XPTO, Lda.</strong> é uma pequena empresa de consultoria. Vai usar o NEXORA para gerir documentos de clientes, acompanhar tarefas, aprovar despesas e manter um portal interno. Tem 5 funcionários — um por cada função do sistema:</p>
+
+<div class="persona">
+  <h3><span class="tag admin">ADMIN</span> Ana Silva — Diretora-Geral</h3>
+  <p><strong>Email:</strong> ana@xpto.pt &nbsp;•&nbsp; <strong>Função:</strong> Admin</p>
+  <p>Foi ela que registou a empresa no NEXORA — ficou automaticamente como administradora. Gere utilizadores, convites, funções, configurações, faturação, auditoria e todo o conteúdo. É a "dona" da organização.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag manager">MANAGER</span> Bruno Costa — Gestor de Operações</h3>
+  <p><strong>Email:</strong> bruno@xpto.pt &nbsp;•&nbsp; <strong>Função:</strong> Manager</p>
+  <p>Responsável pela operação diária: cria e gere listas de clientes, formulários, workflows e o site interno. Pode convidar novos utilizadores e consultar a auditoria, mas não pode apagar utilizadores nem gerir funções ou a faturação.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag editor">EDITOR</span> Diana Rocha — Gestora de Conteúdos</h3>
+  <p><strong>Email:</strong> diana@xpto.pt &nbsp;•&nbsp; <strong>Função:</strong> Editor</p>
+  <p>Produz e gere o conteúdo da empresa: cria e apaga documentos, estrutura listas e formulários, edita workflows, páginas e notícias do site. Não partilha documentos externamente, não convida utilizadores nem vê a auditoria.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag member">MEMBER</span> Carla Mendes — Consultora</h3>
+  <p><strong>Email:</strong> carla@xpto.pt &nbsp;•&nbsp; <strong>Função:</strong> Member</p>
+  <p>Trabalhadora operacional: carrega e edita documentos, preenche itens de listas, executa as suas tarefas e submete coisas para aprovação. Não gere estruturas (não cria listas, workflows nem sites) nem administra nada.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag viewer">VIEWER</span> Eduardo Santos — Diretor Financeiro</h3>
+  <p><strong>Email:</strong> eduardo@xpto.pt &nbsp;•&nbsp; <strong>Função:</strong> Viewer</p>
+  <p>Só consulta: vê documentos, listas, tarefas, workflows, aprovações, sites e notícias, mas não cria nem altera nada. Ideal para quem precisa de visibilidade total sem risco de modificar conteúdo — direção, auditoria externa ou consultores.</p>
+</div>
+
+<div class="box tip"><strong>Porquê estas funções?</strong> Princípio do menor privilégio: cada pessoa recebe apenas o acesso de que precisa. As 5 funções de sistema cobrem a maioria dos casos; se nenhuma servir, a Ana pode criar funções personalizadas em Administração → Funções combinando as permissões disponíveis.</div>
+
+<h2>Matriz rápida de funções</h2>
+<table>
+  <tr><th>Capacidade</th><th>Viewer<br>(Eduardo)</th><th>Member<br>(Carla)</th><th>Editor<br>(Diana)</th><th>Manager<br>(Bruno)</th><th>Admin<br>(Ana)</th></tr>
+  <tr><td>Ver todo o conteúdo</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Criar/editar documentos e tarefas</td><td>—</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Apagar documentos</td><td>—</td><td>—</td><td>✔</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Partilhar documentos externamente</td><td>—</td><td>—</td><td>—</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Gerir listas, formulários, workflows, páginas, notícias</td><td>—</td><td>—</td><td>✔</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Gerir sites</td><td>—</td><td>—</td><td>—</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Convidar/editar utilizadores</td><td>—</td><td>—</td><td>—</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Ver auditoria, gerir definições e webhooks</td><td>—</td><td>—</td><td>—</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Apagar utilizadores, gerir funções, organização e faturação</td><td>—</td><td>—</td><td>—</td><td>—</td><td>✔</td></tr>
+</table>
+
+<!-- ============ 3. ONBOARDING ============ -->
+<h1 id="onboarding">3. Começar: registo e convites</h1>
+<p>Este é o fluxo exato que a XPTO seguiu para pôr os 5 funcionários a trabalhar.</p>
+
+<h2>Passo 1 — A Ana regista a empresa</h2>
+<ol class="steps">
+  <li>Ana abre a página <strong>/register</strong> e preenche: nome, <strong>organização "XPTO"</strong>, email e palavra-passe (mínimo 12 caracteres).</li>
+  <li>Ao submeter, o sistema cria a organização XPTO e a conta da Ana como <strong>Admin</strong> — e entra diretamente no dashboard.</li>
+</ol>
+
+<h2>Passo 2 — A Ana convida os 4 colegas</h2>
+<ol class="steps">
+  <li>Na barra lateral, grupo <strong>Gerir</strong> → <strong>Administração</strong> → cartão <strong>Utilizadores</strong>.</li>
+  <li>Clica em <strong>"Convidar utilizador"</strong>.</li>
+  <li>Introduz <code>bruno@xpto.pt</code> e escolhe a função <strong>Manager</strong> → <strong>"Enviar convite"</strong>.</li>
+  <li>Repete para os restantes: <code>diana@xpto.pt</code> como <strong>Editor</strong>, <code>carla@xpto.pt</code> como <strong>Member</strong> e <code>eduardo@xpto.pt</code> como <strong>Viewer</strong>.</li>
+</ol>
+<p>O sistema gera um convite seguro com validade de <strong>7 dias</strong>. Com servidor de email configurado, o convidado recebe o link por email. Sem email configurado, a página mostra o link com botão <strong>"Copiar"</strong> — a Ana envia-o por qualquer canal.</p>
+<div class="box"><strong>Convites pendentes:</strong> na mesma página, a Ana vê uma tabela com cada convite, o estado (Pendente / Aceite / Revogado / Expirado), quem convidou e a data de expiração — e pode <strong>revogar</strong> um convite a qualquer momento.</div>
+
+<h2>Passo 3 — Os colegas aceitam</h2>
+<ol class="steps">
+  <li>Cada um abre o link do convite → página de aceitação mostra <em>"Foste convidado para a XPTO por Ana Silva"</em>.</li>
+  <li><strong>Sem conta:</strong> definem o nome e a palavra-passe → conta criada e já membro da XPTO.</li>
+  <li><strong>Com conta existente</strong> (ex.: conta noutra organização): fazem login e a XPTO é adicionada — passam a ter as duas organizações no seletor junto ao topo.</li>
+</ol>
+<div class="box tip"><strong>Nunca partilhar credenciais:</strong> ninguém fica a conhecer a palavra-passe de outra pessoa — nem a Ana. É por isso que o convite é o método recomendado (a alternativa "criar diretamente" existe, mas quem cria fica a saber a password do colega).</div>
+
+<h2>Checklist de boas-vindas</h2>
+<p>No primeiro acesso, o dashboard mostra um <strong>checklist de onboarding</strong> com 5 passos: carregar o primeiro documento, criar a primeira lista, criar a primeira tarefa, convidar a equipa (só aparece a quem tem permissão) e criar o primeiro workflow. Cada passo liga diretamente à ação correspondente.</p>
+
+<!-- ============ 4. NAVEGAÇÃO ============ -->
+<figure class="shot"><img src="shots/01-register.png" alt="Passo 1 — a Ana regista a empresa XPTO, Lda. na página de registo."><figcaption>Passo 1 — a Ana regista a empresa XPTO, Lda. na página de registo.</figcaption></figure>
+<figure class="shot"><img src="shots/00-login.png" alt="Página de login — cada utilizador entra com o seu próprio email e palavra-passe."><figcaption>Página de login — cada utilizador entra com o seu próprio email e palavra-passe.</figcaption></figure>
+<h1 id="navegacao">4. Navegação e interface geral</h1>
+<h2>Barra lateral</h2>
+<table>
+  <tr><th>Grupo</th><th>Itens</th></tr>
+  <tr><td>(topo)</td><td>Dashboard, Pesquisa</td></tr>
+  <tr><td><strong>Trabalho</strong></td><td>Tarefas, Aprovações, Workflows, Notificações (com contador de não lidas)</td></tr>
+  <tr><td><strong>Conteúdo</strong></td><td>Sites, Notícias, Documentos, Listas, Formulários</td></tr>
+  <tr><td><strong>Ferramentas</strong></td><td>IA, Ajuda</td></tr>
+  <tr><td><strong>Gerir</strong></td><td>Administração (só Ana e Bruno), Faturação, Definições, Perfil</td></tr>
+</table>
+<p>Em ecrãs pequenos a barra colapsa atrás do botão ☰.</p>
+<h2>Cabeçalho</h2>
+<ul>
+  <li><strong>Seletor de organização</strong> — aparece quando o utilizador pertence a mais do que uma (ex.: o Bruno pode ter a conta pessoal noutra empresa).</li>
+  <li><strong>Botão de pesquisa</strong> <span class="kbd">Ctrl K</span> — abre a paleta de comandos.</li>
+  <li><strong>Tema</strong> claro/escuro, <strong>seletor de idioma</strong> (5 línguas), <strong>notificações</strong> com contador, menu do <strong>utilizador</strong> (perfil / sair).</li>
+</ul>
+<h2>Paleta de comandos <span class="kbd">Ctrl K</span></h2>
+<p>Pesquisa instantânea: escrever texto pesquisa em documentos, tarefas, listas e mais; sem texto, mostra todos os destinos de navegação. Setas <span class="kbd">↑</span><span class="kbd">↓</span> para navegar, <span class="kbd">Enter</span> para abrir.</p>
+<h2>Central de Ajuda</h2>
+<p>Disponível na barra lateral (Ajuda): ~80 artigos organizados por categoria, pesquisa, artigos relacionados e botões de ajuda contextual em várias páginas — incluindo o guia "Convidar a equipa" que descreve este mesmo fluxo.</p>
+
+<!-- ============ 5. DASHBOARD ============ -->
+<figure class="shot"><img src="shots/28-help.png" alt="Central de Ajuda — artigos organizados por categorias, pesquisa integrada."><figcaption>Central de Ajuda — artigos organizados por categorias, pesquisa integrada.</figcaption></figure>
+<h1 id="dashboard">5. Dashboard</h1>
+<p>O ponto de partida diário. Mostra: saudação personalizada, ações rápidas (adicionar documento, criar tarefa, criar workflow), checklist de onboarding, anúncios da empresa, métricas da organização (documentos, utilizadores, equipas, tarefas pendentes, processos ativos, aprovações pendentes, armazenamento), atividade recente, documentos recentes e tarefas relevantes.</p>
+<h2>Atividade recente</h2>
+<p>Timeline das últimas ações na organização, em linguagem natural — ex.: <em>"ana criou o convite"</em>, <em>"bruno aceitou o convite"</em>, <em>"carla carregou o documento"</em>. Cada entrada mostra quem fez, o que fez, o tipo de recurso e a data/hora.</p>
+<h2>Dashboards personalizados</h2>
+<p>Além do dashboard padrão (fixo), qualquer pessoa com a permissão <code>dashboards.manage</code> pode criar <strong>dashboards personalizados</strong> — secções extra por cima do padrão, com widgets à escolha: métricas, documentos recentes, tarefas pendentes, notificações, atividade recente, distribuição de tarefas e links rápidos.</p>
+<ul>
+  <li><strong>Personalizar</strong> → modo de edição: adicionar/remover widgets, criar, renomear ou eliminar dashboards, alternar entre eles.</li>
+  <li><strong>"Dashboard padrão"</strong> no seletor esconde a secção personalizada sem apagar nada — é a forma de "voltar ao original".</li>
+  <li>A escolha fica guardada entre sessões.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>O Bruno criou um dashboard "Operações" com widgets de tarefas pendentes, distribuição de tarefas e atividade recente — a sua vista de gestão diária. A Carla mantém o padrão. A Ana alterna entre "Operações" e um dashboard "Direção" com métricas e notificações.</p>
+<figure class="shot"><img src="shots/10-dashboard-ana.png" alt="Dashboard — perspetiva da Ana (Admin): ações rápidas, primeiros passos e métricas."><figcaption>Dashboard — perspetiva da Ana (Admin): ações rápidas, primeiros passos e métricas.</figcaption></figure>
+<figure class="shot"><img src="shots/40-dashboard-carla.png" alt="Dashboard — perspetiva da Carla (Member): a sua tarefa atribuída em destaque."><figcaption>Dashboard — perspetiva da Carla (Member): a sua tarefa atribuída em destaque.</figcaption></figure>
+
+<!-- ============ 6. DOCUMENTOS ============ -->
+<h1 id="documentos">6. Documentos</h1>
+<p>O coração do NEXORA — uma biblioteca de documentos com pastas, versões, permissões finas e partilha. Na XPTO é onde vivem os contratos, propostas e relatórios de clientes.</p>
+
+<h2>Carregar e organizar</h2>
+<ul>
+  <li><strong>Upload</strong> — botão "Adicionar documento" (também no dashboard); o ficheiro fica disponível na biblioteca com nome, tipo, tamanho e autor.</li>
+  <li><strong>Pastas</strong> — estrutura em árvore (ex.: <code>Clientes / ABC S.A. / Contratos</code>), com navegação por breadcrumb e atalhos para pastas recentes e favoritas.</li>
+  <li><strong>Mover, renomear, duplicar</strong> documentos e pastas.</li>
+  <li><strong>Templates</strong> — qualquer documento ou pasta pode ser marcado como modelo e depois "instanciado" (criar uma cópia pronta a usar). Na XPTO, a pasta "Modelo — Proposta Comercial" é reutilizada em cada novo cliente.</li>
+  <li><strong>Vistas guardadas</strong> — filtros de pesquisa dentro da biblioteca (tipo, pasta, autor) que podem ser gravados para acesso rápido.</li>
+</ul>
+
+<h2>Versões</h2>
+<p>Cada edição/carregamento cria uma nova <strong>versão</strong> com histórico completo: quem alterou, quando, e download de qualquer versão anterior. É possível <strong>restaurar</strong> uma versão antiga — o histórico nunca se perde. Na XPTO, o "Contrato ABC v3" foi restaurado depois de uma edição errada da Carla.</p>
+
+<h2>Comentários</h2>
+<p>Discussão por documento: a Carla comenta <em>"falta a cláusula de confidencialidade"</em> e o Bruno responde — sem sair da página do documento.</p>
+
+<h2>Check-out / Check-in</h2>
+<p>Para evitar edições em conflito, um documento pode ser <strong>bloqueado para edição</strong> (check-out) — fica marcado como "a ser editado por X" — e depois <strong>devolvido</strong> (check-in) com a nova versão.</p>
+
+<h2>Metadados</h2>
+<p>Campos adicionais além do ficheiro: a organização pode definir <strong>esquemas de metadados</strong> por pasta (ex.: pasta "Contratos" exige Nº de contrato, Cliente, Data de vencimento). A IA pode também <strong>sugerir metadados</strong> automaticamente (ver secção IA).</p>
+
+<h2>Permissões (ACL) — gerir acesso</h2>
+<p>Cada documento e pasta tem uma lista de acesso:</p>
+<table>
+  <tr><th>Concessão</th><th>Significa</th></tr>
+  <tr><td><strong>Proprietário</strong></td><td>Quem criou — controlo total.</td></tr>
+  <tr><td><strong>Por utilizador</strong></td><td>Ex.: "a Carla pode editar este contrato".</td></tr>
+  <tr><td><strong>Por equipa</strong></td><td>Ex.: "a equipa Comercial pode ver a pasta Propostas".</td></tr>
+  <tr><td><strong>Toda a organização</strong></td><td>Visível a todos os membros da XPTO.</td></tr>
+</table>
+<p>As permissões herdam das pastas pai. A IA e a pesquisa respeitam esta lista — ninguém vê (nem a IA lê) documentos a que não tenha acesso.</p>
+
+<h2>Partilha externa — links</h2>
+<p>Com a permissão <code>documents.share</code> (Bruno e Ana), é possível criar <strong>links públicos</strong> para um documento ou pasta — com expiração e, opcionalmente, permissão de upload/edição. Ideal para enviar um contrato a um cliente fora da empresa. O link pode ser revogado a qualquer momento e cada acesso fica auditado.</p>
+
+<h2>Reciclagem</h2>
+<p>Documentos e pastas eliminados vão para a <strong>reciclagem</strong> (Documentos → Reciclagem): podem ser <strong>restaurados</strong> ou eliminados definitivamente. Existe também purga automática por retenção (ver Governação).</p>
+
+<h2>Governação documental</h2>
+<p>Para conformidade (Administração → Governação): <strong>retenção legal</strong> (legal hold impede eliminação), políticas de retenção com purga automática, e marcação de documentos como <strong>registos</strong> (records) oficiais.</p>
+
+<h2>Download em massa</h2>
+<p>Seleção de vários documentos → download conjunto (fica registado na auditoria).</p>
+
+<h3>Quem faz o quê na XPTO</h3>
+<table>
+  <tr><th>Ação</th><th>Carla (Member)</th><th>Bruno (Manager)</th><th>Ana (Admin)</th></tr>
+  <tr><td>Carregar e editar documentos</td><td>✔</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Apagar / gerir acesso / check-out</td><td>—</td><td>✔</td><td>✔</td></tr>
+  <tr><td>Criar links de partilha externa</td><td>—</td><td>✔</td><td>✔</td></tr>
+</table>
+
+<!-- ============ 7. LISTAS ============ -->
+<figure class="shot"><img src="shots/11-documents.png" alt="Documentos — vista da Ana: pastas «Clientes» e «Documentos», filtros e ações."><figcaption>Documentos — vista da Ana: pastas «Clientes» e «Documentos», filtros e ações.</figcaption></figure>
+<h1 id="listas">7. Listas</h1>
+<p>Listas são bases de dados simples — tabelas com colunas à medida, tipo "mini-Excel" dentro da organização. Na XPTO existem duas: <strong>"Clientes"</strong> (Nome, NIF, Email, Setor, Estado) e <strong>"Fornecedores"</strong>.</p>
+<h2>Criar uma lista</h2>
+<ol class="steps">
+  <li>Listas → <strong>"Nova lista"</strong>: nome, descrição e colunas.</li>
+  <li>Cada coluna tem um tipo (texto, número, data, seleção, etc.).</li>
+  <li>A lista fica disponível a toda a organização (quem tem <code>lists.view</code>); criar/editar estrutura exige <code>lists.manage</code> (Bruno e Ana).</li>
+</ol>
+<h2>Trabalhar com itens</h2>
+<ul>
+  <li>Adicionar, editar e eliminar registos dentro da lista.</li>
+  <li><strong>Duplicar</strong> uma lista inteira (estrutura + dados) como ponto de partida.</li>
+  <li><strong>Exportar para CSV</strong> — levar os dados para Excel ou outro sistema.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>O Bruno desenhou a estrutura da lista "Clientes". A Carla adiciona e atualiza os registos dos clientes que acompanha. A Ana exporta o CSV mensalmente para a contabilidade externa.</p>
+
+<!-- ============ 8. FORMULÁRIOS ============ -->
+<figure class="shot"><img src="shots/31-lists.png" alt="Listas — vista do Bruno (Manager): a lista «Clientes» criada para a carteira comercial."><figcaption>Listas — vista do Bruno (Manager): a lista «Clientes» criada para a carteira comercial.</figcaption></figure>
+<figure class="shot"><img src="shots/32-list-detail.png" alt="Detalhe da lista «Clientes» — campos personalizados e registos da carteira XPTO."><figcaption>Detalhe da lista «Clientes» — campos personalizados e registos da carteira XPTO.</figcaption></figure>
+<h1 id="formularios">8. Formulários</h1>
+<p>Formulários personalizados para recolher dados estruturados — internos ou partilháveis.</p>
+<h2>Construtor de formulários</h2>
+<ol class="steps">
+  <li>Formulários → "Novo formulário" → <strong>builder visual</strong>: arrastar campos (texto, número, data, seleção, opções múltiplas, etc.), ordenar e configurar obrigatoriedade.</li>
+  <li>Publicar o formulário — fica disponível para recolha de respostas.</li>
+  <li>Cada submissão fica registada e pode ser consultada/guida por quem gere o formulário.</li>
+</ol>
+<h3>Na XPTO</h3>
+<p>O Bruno criou o formulário <strong>"Pedido de Despesa"</strong> com campos: valor, categoria, justificação e fatura anexa. A Carla submete os pedidos dela — cada submissão alimenta depois o workflow de aprovação de despesas (secção 10). Um segundo formulário, "Novo Cliente", recolhe os dados iniciais que depois entram na lista de Clientes.</p>
+<figure class="shot"><img src="shots/33-forms.png" alt="Formulários — vista do Bruno (Manager)."><figcaption>Formulários — vista do Bruno (Manager).</figcaption></figure>
+
+<!-- ============ 9. TAREFAS ============ -->
+<h1 id="tarefas">9. Tarefas e projetos</h1>
+<p>Gestão de trabalho do dia a dia: tarefas com título, descrição, prioridade (Baixa, Normal, Alta, Urgente), data-limite, responsável e estado — agrupáveis em <strong>projetos</strong>.</p>
+<h2>Criar e gerir</h2>
+<ul>
+  <li><strong>Criar</strong> — no dashboard ("Criar tarefa") ou em Tarefas → novo.</li>
+  <li><strong>Atribuir</strong> a um membro — a pessoa vê-a nas suas tarefas e recebe notificação.</li>
+  <li><strong>Vistas</strong> — filtros por estado, prioridade, responsável e prazo; tarefas atrasadas são assinaladas.</li>
+  <li><strong>Comentários</strong> por tarefa para discussão em contexto.</li>
+  <li><strong>Projetos</strong> — agrupam tarefas relacionadas (ex.: projeto "Implementação Cliente ABC" com 8 tarefas).</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>O Bruno distribui trabalho: <em>"Carla — rever proposta ABC (Alta, até sexta)"</em>. A Carla vê-a no topo das suas tarefas, comenta dúvidas e marca-a como concluída. A Ana acompanha a distribuição de tarefas no widget do dashboard.</p>
+
+<!-- ============ 10. WORKFLOWS ============ -->
+<figure class="shot"><img src="shots/41-tasks-carla.png" alt="Tarefas — vista da Carla (Member): «Rever proposta ABC» atribuída a ela, com prioridade Alta."><figcaption>Tarefas — vista da Carla (Member): «Rever proposta ABC» atribuída a ela, com prioridade Alta.</figcaption></figure>
+<h1 id="workflows">10. Workflows (processos)</h1>
+<p>Workflows automatizam processos de negócio: sequências de passos por onde um pedido passa até ser concluído — aprovações, revisões, notificações.</p>
+<h2>Construtor de workflows</h2>
+<ol class="steps">
+  <li>Workflows → "Novo workflow" → <strong>builder</strong>: adicionar passos ordenados.</li>
+  <li>Tipos de passo: <strong>Início</strong>, <strong>Aprovação</strong> (alguém decide), passos de ação e <strong>Fim</strong>.</li>
+  <li>Em cada passo de aprovação define-se <strong>quem decide</strong> (utilizador ou função).</li>
+  <li>O workflow pode ficar em rascunho e ser <strong>publicado</strong> quando pronto — também pode ser despublicado.</li>
+</ol>
+<h2>Executar (instâncias)</h2>
+<p>Cada vez que o processo é iniciado cria-se uma <strong>instância</strong>: segue os passos em ordem, regista quem decidiu o quê e quando, e pode ser <strong>cancelada</strong>. O histórico da instância mostra o percurso completo.</p>
+<h3>O workflow da XPTO: "Aprovação de Despesas"</h3>
+<table>
+  <tr><th>#</th><th>Passo</th><th>Responsável</th></tr>
+  <tr><td>1</td><td>Início — submissão do pedido (do formulário "Pedido de Despesa")</td><td>Qualquer membro</td></tr>
+  <tr><td>2</td><td>Aprovação do gestor</td><td>Bruno</td></tr>
+  <tr><td>3</td><td>Aprovação final (valores &gt; 500€)</td><td>Ana</td></tr>
+  <tr><td>4</td><td>Fim — despesa aprovada ou rejeitada</td><td>—</td></tr>
+</table>
+<p>A Carla submete uma despesa de 200€ → o Bruno recebe a aprovação → aprova → a instância termina como aprovada. Se fosse 800€, depois do Bruno ainda passaria pela Ana.</p>
+
+<!-- ============ 11. APROVAÇÕES ============ -->
+<figure class="shot"><img src="shots/34-workflows.png" alt="Workflows — vista do Bruno: o processo «Aprovação de Despesas» publicado."><figcaption>Workflows — vista do Bruno: o processo «Aprovação de Despesas» publicado.</figcaption></figure>
+<figure class="shot"><img src="shots/35-workflow-detail.png" alt="Detalhe do workflow — os 4 passos: submissão, aprovação do gestor, notificação e fecho."><figcaption>Detalhe do workflow — os 4 passos: submissão, aprovação do gestor, notificação e fecho.</figcaption></figure>
+<h1 id="aprovacoes">11. Aprovações</h1>
+<p>A caixa de entrada de decisões. Cada passo de aprovação pendente aparece aqui, atribuído a quem deve decidir.</p>
+<ul>
+  <li><strong>Aprovar ou rejeitar</strong> com comentário justificativo.</li>
+  <li><strong>Delegar</strong> — transferir a decisão para outra pessoa (ex.: o Bruno delega na Ana quando está de férias).</li>
+  <li><strong>Comentários</strong> na aprovação para pedir esclarecimentos antes de decidir.</li>
+  <li>Histórico completo: quem decidiu, quando, e a decisão tomada.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>O Bruno abre Aprovações todas as manhãs: vê as despesas pendentes da equipa, aprova duas, rejeita uma (<em>"falta a fatura — reenviar"</em>) e delega na Ana uma decisão que ultrapassa a sua alçada. A Carla recebe notificação do resultado de cada decisão sobre os seus pedidos.</p>
+
+<!-- ============ 12. SITES ============ -->
+<figure class="shot"><img src="shots/36-approvals.png" alt="Aprovações — caixa de entrada de aprovações do Bruno (Manager)."><figcaption>Aprovações — caixa de entrada de aprovações do Bruno (Manager).</figcaption></figure>
+<h1 id="sites">12. Sites e páginas</h1>
+<p>Sites internos — mini-portais da organização com páginas e widgets. Na XPTO existe o <strong>"Portal XPTO"</strong>: página inicial com as notícias, documentos-chave e links rápidos da empresa.</p>
+<ul>
+  <li><strong>Sites</strong> — criar e gerir portais; cada site tem membros com papéis (proprietário/editor/leitor).</li>
+  <li><strong>Páginas</strong> — dentro de cada site, páginas com conteúdo estruturado em <strong>widgets</strong> (texto, documentos, listas, notícias, links).</li>
+  <li><strong>Membros do site</strong> — controla quem pode editar cada site, independente da função global.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>O Bruno mantém o Portal XPTO: uma página "Bem-vindo" com os procedimentos internos, uma página "Clientes" com um widget ligado à lista de Clientes, e outra "Recursos" com os templates de documentos. A Carla consulta-o diariamente; a Ana tem direitos de edição mas raramente precisa de os usar.</p>
+
+<!-- ============ 13. NOTÍCIAS ============ -->
+<figure class="shot"><img src="shots/37-sites.png" alt="Sites — gestão de sites/portais internos da organização."><figcaption>Sites — gestão de sites/portais internos da organização.</figcaption></figure>
+<h1 id="noticias">13. Notícias</h1>
+<p>Comunicação interna: artigos publicados na organização — avisos, novidades, comunicados.</p>
+<ul>
+  <li>Criar, editar, publicar e eliminar notícias (<code>news.manage</code> — Bruno e Ana).</li>
+  <li>Comentários nas notícias (a equipa pode reagir — comentários podem ser moderados).</li>
+  <li>As notícias publicadas aparecem também no feed do dashboard e podem ser expostas em widgets de sites.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>A Ana publica <em>"Novo processo de despesas — ler antes de submeter"</em>. Toda a equipa vê a notícia no feed e pode comentar.</p>
+
+<!-- ============ 14. PESQUISA ============ -->
+<figure class="shot"><img src="shots/38-news.png" alt="Notícias — o post «Bem-vindos à NEXORA» publicado pelo Bruno."><figcaption>Notícias — o post «Bem-vindos à NEXORA» publicado pelo Bruno.</figcaption></figure>
+<figure class="shot"><img src="shots/39-news-detail.png" alt="Artigo de notícia — conteúdo completo com categoria e etiquetas."><figcaption>Artigo de notícia — conteúdo completo com categoria e etiquetas.</figcaption></figure>
+<h1 id="pesquisa">14. Pesquisa e paleta de comandos</h1>
+<p>Pesquisa global em toda a organização — documentos, pastas, tarefas, listas, formulários, workflows, sites, notícias.</p>
+<ul>
+  <li><strong>Página de pesquisa</strong> (/search): resultados agrupados por tipo, com subtítulos e ligações diretas; filtros por tipo de recurso.</li>
+  <li><strong>Paleta de comandos</strong> <span class="kbd">Ctrl K</span>: a mesma pesquisa a partir de qualquer página — resultados remotos misturados com atalhos de navegação.</li>
+  <li>A pesquisa <strong>respeita permissões</strong>: só aparece o que o utilizador pode ver.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>A Carla escreve "ABC" — encontra a pasta do cliente, o contrato, a tarefa de revisão e a lista onde está o contacto. Sem sair do teclado: <span class="kbd">Ctrl K</span> → "ABC" → <span class="kbd">↓</span> <span class="kbd">Enter</span>.</p>
+<figure class="shot"><img src="shots/12-search.png" alt="Pesquisa global — resultados de todos os módulos num único ecrã."><figcaption>Pesquisa global — resultados de todos os módulos num único ecrã.</figcaption></figure>
+
+<!-- ============ 15. NOTIFICAÇÕES ============ -->
+<h1 id="notificacoes">15. Notificações</h1>
+<p>Centro de notificações por utilizador: atribuições de tarefas, aprovações a decidir, resultados de aprovações, menções e alertas do sistema.</p>
+<ul>
+  <li><strong>Contador de não lidas</strong> na barra lateral e no sino do cabeçalho (atualiza automaticamente).</li>
+  <li><strong>Marcar como lida</strong> individualmente ou todas de uma vez.</li>
+  <li><strong>Subscrições e alertas</strong> — o utilizador pode subscrever recursos para ser notificado de alterações.</li>
+  <li><strong>Anúncios</strong> — mensagens globais do admin aparecem em destaque no dashboard (feed de anúncios).</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>Quando o Bruno aprova a despesa da Carla, ela recebe notificação imediata. Quando a Ana atribui uma tarefa ao Bruno, o contador dele incrementa.</p>
+
+<!-- ============ 16. IA ============ -->
+<figure class="shot"><img src="shots/14-notifications.png" alt="Notificações — a Ana vê a atividade recente da organização."><figcaption>Notificações — a Ana vê a atividade recente da organização.</figcaption></figure>
+<h1 id="ia">16. Assistente de IA</h1>
+<p>O NEXORA inclui um assistente de IA integrado e <strong>consciente das permissões</strong> — só acede ao que o utilizador pode ver. Na XPTO está configurado com um modelo externo (Groq/OpenAI-compatible); sem chave configurada funciona um modo local baseado em regras.</p>
+
+<h2>Conversação</h2>
+<ul>
+  <li>Chat persistente por utilizador (histórico de conversas guardado).</li>
+  <li>Perguntas sobre a organização: <em>"quantos documentos temos?", "que tarefas estão atrasadas?"</em>.</li>
+  <li>Respostas no idioma da organização.</li>
+</ul>
+
+<h2>Operações em documentos</h2>
+<p>Na página de um documento, a IA pode (sempre respeitando o acesso do utilizador):</p>
+<table>
+  <tr><th>Operação</th><th>O que faz</th></tr>
+  <tr><td><strong>Resumir</strong></td><td>Gera resumo + palavras-chave + classificação do documento.</td></tr>
+  <tr><td><strong>Classificar</strong></td><td>Sugere categoria (Contrato, Fatura, RH...) e keywords.</td></tr>
+  <tr><td><strong>Perguntas (Q&amp;A)</strong></td><td>Responde a perguntas sobre o conteúdo do documento.</td></tr>
+  <tr><td><strong>Sugerir metadados</strong></td><td>Propõe valores para os campos de metadados.</td></tr>
+</table>
+
+<h2>Criação assistida</h2>
+<p>A IA pode propor e depois <strong>materializar</strong> estruturas completas:</p>
+<ul>
+  <li><em>"cria uma lista de Clientes com Nome, NIF e Email"</em> → propõe a estrutura → aplicar cria a lista real.</li>
+  <li><em>"cria um workflow de aprovação de férias"</em> → propõe os passos → aplicar cria o workflow.</li>
+  <li><em>"cria uma app para gestão de stock"</em> → scaffold completo: lista + formulário + workflow + página de site.</li>
+  <li><strong>Relatórios</strong>: <em>"relatório do estado da organização"</em> — narrativa sobre dados reais (tarefas, documentos, processos).</li>
+</ul>
+
+<h2>Governança e custos da IA</h2>
+<ul>
+  <li><strong>Permissões verificadas em cada operação</strong> — a IA não lê documentos fora do acesso do utilizador.</li>
+  <li><strong>Auditoria</strong> — cada operação regista provider, modelo, tokens, custo e resultado.</li>
+  <li><strong>Limites</strong> — controlo de custo diário por organização e limite por plano.</li>
+  <li><strong>Usage</strong> — a Ana pode consultar o consumo de IA (tokens/custo) da organização.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>A Carla usa a IA para resumir contratos longos antes de os rever. O Bruno criou a lista "Fornecedores" com uma frase no chat. A Ana pede um relatório mensal de atividade ao assistente.</p>
+
+<!-- ============ 17. ADMINISTRAÇÃO ============ -->
+<figure class="shot"><img src="shots/13-ai.png" alt="Assistente IA — chat contextual que opera sobre o conteúdo da organização."><figcaption>Assistente IA — chat contextual que opera sobre o conteúdo da organização.</figcaption></figure>
+<h1 id="admin">17. Administração (área da Ana)</h1>
+<p>Entrada: barra lateral → Gerir → <strong>Administração</strong> (visível apenas a quem tem permissões administrativas). Página-hub com 9 áreas:</p>
+
+<h2>Utilizadores</h2>
+<ul>
+  <li><strong>Convidar</strong> por email com função (fluxo descrito na secção 3) — método recomendado.</li>
+  <li><strong>Criar diretamente</strong> — alternativa em que o admin define a password.</li>
+  <li><strong>Convites pendentes</strong> — listar e revogar.</li>
+  <li><strong>Suspender / reativar</strong> utilizadores — um suspenso perde acesso imediato.</li>
+</ul>
+
+<h2>Equipas</h2>
+<p>Agrupamentos de membros (ex.: "Comercial", "Operações") usados nas permissões de documentos — dar acesso a uma pasta a uma equipa inteira em vez de pessoa a pessoa. A Ana criou a equipa "Consultores" com Bruno e Carla.</p>
+
+<h2>Funções (roles)</h2>
+<ul>
+  <li>As 5 funções de sistema (Viewer, Member, Editor, Manager, Admin) não podem ser eliminadas.</li>
+  <li><strong>Funções personalizadas</strong> — criar novas combinando as 31 permissões disponíveis. Ex.: a Ana pode criar "Contabilidade" com acesso só a documentos e aprovações.</li>
+  <li>Funções personalizadas aparecem no seletor do convite.</li>
+</ul>
+
+<h2>Auditoria</h2>
+<p>Registo completo de ações: data/hora, utilizador, ação, recurso, IP e resultado — com filtros. A Ana vê quem fez o quê: logins, uploads, partilhas, decisões de aprovação, operações de IA.</p>
+
+<h2>Webhooks</h2>
+<p>Notificações automáticas para sistemas externos: quando um evento acontece no NEXORA (documento criado, tarefa concluída...), a organização pode receber um POST HTTP num endpoint configurado — criar, editar, testar e eliminar webhooks.</p>
+
+<h2>Automação</h2>
+<p>Regras automáticas da organização — ações desencadeadas por eventos sem intervenção manual.</p>
+
+<h2>Anúncios</h2>
+<p>Mensagens globais que aparecem no dashboard de todos os membros — a Ana publica avisos importantes ("Migração de dados sexta-feira às 18h").</p>
+
+<h2>Governação</h2>
+<p>Políticas de conformidade: retenção de documentos, legal holds e registos oficiais (ver secção 6).</p>
+
+<h2>Definições da organização</h2>
+<ul>
+  <li>Dados da organização (nome, etc.) e <strong>idioma</strong> — afeta conteúdo gerado pela IA e mensagens do sistema.</li>
+  <li><strong>SSO (Single Sign-On)</strong> — configurar login via OIDC (ex.: Azure AD, Google Workspace): descoberta automática do issuer, e os utilizadores passam a poder entrar com "Entrar com SSO" na página de login.</li>
+  <li>Políticas de palavra-passe e outras configurações.</li>
+</ul>
+
+<!-- ============ 18. FATURAÇÃO ============ -->
+<figure class="shot"><img src="shots/20-admin-hub.png" alt="Administração — o hub com as 9 áreas de gestão, visível apenas para a Ana (Admin)."><figcaption>Administração — o hub com as 9 áreas de gestão, visível apenas para a Ana (Admin).</figcaption></figure>
+<figure class="shot"><img src="shots/21-admin-users.png" alt="Utilizadores — os 3 membros da XPTO e o convite pendente para o Duarte."><figcaption>Utilizadores — os 3 membros da XPTO e o convite pendente para o Duarte.</figcaption></figure>
+<figure class="shot"><img src="shots/22-admin-roles.png" alt="Funções — os roles do sistema e personalizados com as respetivas permissões."><figcaption>Funções — os roles do sistema e personalizados com as respetivas permissões.</figcaption></figure>
+<figure class="shot"><img src="shots/23-admin-teams.png" alt="Equipas — a equipa «Consultores» criada pela Ana."><figcaption>Equipas — a equipa «Consultores» criada pela Ana.</figcaption></figure>
+<figure class="shot"><img src="shots/24-admin-audit.png" alt="Auditoria — registo completo de todas as ações na organização."><figcaption>Auditoria — registo completo de todas as ações na organização.</figcaption></figure>
+<figure class="shot"><img src="shots/25-admin-settings.png" alt="Definições da organização — branding, idioma e opções gerais."><figcaption>Definições da organização — branding, idioma e opções gerais.</figcaption></figure>
+<figure class="shot"><img src="shots/26-admin-governance.png" alt="Governação — políticas de retenção e sensibilidade documental."><figcaption>Governação — políticas de retenção e sensibilidade documental.</figcaption></figure>
+<h1 id="faturacao">18. Faturação e planos</h1>
+<p>Área Faturação (barra lateral → Gerir):</p>
+<ul>
+  <li><strong>Plano atual</strong> — Free, Pro ou Enterprise — com os limites de cada plano (utilizadores, armazenamento, IA, etc.).</li>
+  <li><strong>Upgrade via Stripe Checkout</strong> — escolher plano → redirecionado para pagamento seguro Stripe → webhook confirma e ativa a subscrição.</li>
+  <li><strong>Portal de faturação Stripe</strong> — gerir método de pagamento, faturas e cancelamento.</li>
+  <li><strong>Limites de uso</strong> — a página mostra consumo vs. limites do plano.</li>
+</ul>
+<h3>Na XPTO</h3>
+<p>A XPTO começou no plano Free. Quando chegarem ao limite de utilizadores ou armazenamento, a Ana faz upgrade para o Pro — o SSO e os limites maiores ficam disponíveis no Enterprise.</p>
+
+<!-- ============ 19. CONTA ============ -->
+<figure class="shot"><img src="shots/27-billing.png" alt="Planos e Faturação — gestão da subscrição e métodos de pagamento."><figcaption>Planos e Faturação — gestão da subscrição e métodos de pagamento.</figcaption></figure>
+<h1 id="conta">19. Perfil e conta</h1>
+<ul>
+  <li><strong>Perfil</strong> — nome, cargo (job title), avatar, idioma de interface.</li>
+  <li><strong>Alterar palavra-passe</strong> — password atual + nova (mín. 12 caracteres).</li>
+  <li><strong>Recuperação</strong> — "Esqueci-me da palavra-passe" no login envia link de reposição por email.</li>
+  <li><strong>Multi-organização</strong> — um utilizador pode pertencer a várias organizações e alternar no seletor do cabeçalho; cada uma com a sua função.</li>
+  <li><strong>Sessões</strong> — login com JWT + refresh; logout termina a sessão.</li>
+</ul>
+
+<!-- ============ 20. CENÁRIOS ============ -->
+<h1 id="cenarios">20. Um dia na XPTO — cenários completos de colaboração</h1>
+<p>Cinco fluxos reais que mostram como os 5 utilizadores trabalham em conjunto, de ponta a ponta — cada um dentro do que a sua função permite.</p>
+
+<h2>Cenário A — Nova proposta para o cliente ABC</h2>
+<table>
+  <tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr>
+  <tr><td>1</td><td>Bruno</td><td>Cria a pasta <code>Clientes/ABC S.A./Propostas</code> e instancia o template "Modelo — Proposta Comercial" para dentro dela.</td><td>Documentos</td></tr>
+  <tr><td>2</td><td>Bruno</td><td>Atribui tarefa à Carla: "Redigir proposta ABC" — prioridade Alta, prazo sexta-feira.</td><td>Tarefas</td></tr>
+  <tr><td>3</td><td>Carla</td><td>Recebe notificação, abre a tarefa, faz check-out do documento e redige a proposta.</td><td>Notificações → Documentos</td></tr>
+  <tr><td>4</td><td>Carla</td><td>Faz check-in (nova versão) e comenta: "Versão pronta para revisão".</td><td>Documento</td></tr>
+  <tr><td>5</td><td>Carla</td><td>Pede à IA um resumo para verificar os pontos-chave.</td><td>Documento → IA</td></tr>
+  <tr><td>6</td><td>Bruno</td><td>Reve o documento, comenta "falta tabela de preços" → Carla adiciona → Bruno aprova internamente.</td><td>Comentários</td></tr>
+  <tr><td>7</td><td>Diana</td><td>Reve a formatação final e atualiza o registo "ABC, S.A." na lista de Clientes (estado → Ativo).</td><td>Documentos → Listas</td></tr>
+  <tr><td>8</td><td>Bruno</td><td>Cria link de partilha externa com expiração de 7 dias e envia ao cliente.</td><td>Partilha</td></tr>
+  <tr><td>9</td><td>Eduardo</td><td>Abre a proposta em modo leitura para acompanhar o negócio — não consegue editar, apagar nem partilhar.</td><td>Documentos</td></tr>
+  <tr><td>10</td><td>Ana</td><td>No fim do dia vê na atividade recente todo o percurso — e na auditoria o acesso do cliente via link.</td><td>Dashboard → Auditoria</td></tr>
+</table>
+
+<h2>Cenário B — Despesa da Carla aprovada por workflow</h2>
+<table>
+  <tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr>
+  <tr><td>1</td><td>Carla</td><td>Preenche o formulário "Pedido de Despesa": 230€, categoria Viagem, anexa a fatura.</td><td>Formulários</td></tr>
+  <tr><td>2</td><td>Sistema</td><td>Inicia a instância do workflow "Aprovação de Despesas" → passo de aprovação do Bruno.</td><td>Workflows</td></tr>
+  <tr><td>3</td><td>Bruno</td><td>Vê a aprovação pendente, consulta o pedido e aprova com comentário "OK — entra no projeto ABC".</td><td>Aprovações</td></tr>
+  <tr><td>4</td><td>Sistema</td><td>Como 230€ &lt; 500€, a instância termina aprovada; a Carla é notificada.</td><td>Workflows → Notificações</td></tr>
+  <tr><td>5</td><td>Ana</td><td>Exporta a lista de despesas para CSV no fim do mês para a contabilidade.</td><td>Listas</td></tr>
+</table>
+<div class="box tip">Se a despesa fosse 800€, depois do Bruno passava à Ana — o passo de aprovação final do workflow está configurado para ela. O Eduardo consegue <em>ver</em> a aprovação na lista de Aprovações, mas os botões de decisão não lhe aparecem.</div>
+
+<h2>Cenário C — Um consultor externo recebe acesso de leitura</h2>
+<table>
+  <tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr>
+  <tr><td>1</td><td>Ana</td><td>Convida <code>duarte@xpto.pt</code> (contabilista externo) com função <strong>Viewer</strong> — fica pendente na tabela de convites.</td><td>Administração → Utilizadores</td></tr>
+  <tr><td>2</td><td>Duarte</td><td>Aceita o convite, cria a conta — no dashboard vê o checklist de onboarding.</td><td>Aceitar convite</td></tr>
+  <tr><td>3</td><td>Bruno</td><td>Adiciona-o como leitor no Portal XPTO para consultar as notícias internas.</td><td>Sites</td></tr>
+  <tr><td>4</td><td>Duarte</td><td>Consulta a lista de despesas e os documentos financeiros — tudo em modo leitura.</td><td>Listas → Documentos</td></tr>
+  <tr><td>5</td><td>Duarte</td><td>Lê a notícia de boas-vindas e explora a Central de Ajuda.</td><td>Notícias → Ajuda</td></tr>
+</table>
+<div class="box warn">Como Viewer, o Duarte não consegue editar, criar, partilhar ou aprovar nada — o acesso é estritamente de consulta. Se precisar de colaborar, a Ana muda-lhe a função em Administração → Utilizadores.</div>
+
+<h2>Cenário D — A Diana atualiza o portal interno</h2>
+<table>
+  <tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr>
+  <tr><td>1</td><td>Diana</td><td>Edita a página "Boas-vindas" do site interno com as novas regras de despesas.</td><td>Sites → Páginas</td></tr>
+  <tr><td>2</td><td>Diana</td><td>Publica a notícia "Novas regras de despesas em vigor" na categoria Comunicação interna.</td><td>Notícias</td></tr>
+  <tr><td>3</td><td>Sistema</td><td>Todos os utilizadores recebem a notificação da nova notícia.</td><td>Notificações</td></tr>
+  <tr><td>4</td><td>Carla, Eduardo</td><td>Lêem a notícia — a Carla pode comentar, o Eduardo só lê.</td><td>Notícias</td></tr>
+  <tr><td>5</td><td>Diana</td><td>Cria um novo campo "NIF" na lista Clientes e ajusta o formulário de pedido de despesa.</td><td>Listas → Formulários</td></tr>
+</table>
+<div class="box">O que a Diana <strong>não</strong> consegue fazer (e teria de pedir ao Bruno ou à Ana): partilhar documentos por link externo, convidar utilizadores, gerir sites ao nível da estrutura, ver a auditoria e mexer nas definições.</div>
+
+<h2>Cenário E — A Ana prepara a empresa para crescer</h2>
+<ul>
+  <li>Cria a função personalizada <strong>"Comercial"</strong> (documentos + listas, sem administração).</li>
+  <li>Configura <strong>SSO</strong> com o Google Workspace da empresa — todos passam a entrar com a conta Google.</li>
+  <li>Define política de <strong>retenção</strong>: documentos da reciclagem purgados após 90 dias.</li>
+  <li>Ativa um <strong>webhook</strong> para o sistema de faturação externo receber eventos de aprovação de despesas.</li>
+  <li>Faz upgrade para o plano <strong>Pro</strong> via Stripe quando a equipa passa de 5 pessoas.</li>
+  <li>Pede à IA um <strong>relatório</strong> mensal de atividade da organização.</li>
+</ul>
+
+<!-- ============ 21. GLOSSÁRIO E FAQ ============ -->
+<h1 id="glossario">21. Glossário e FAQ</h1>
+<h2>Glossário</h2>
+<table>
+  <tr><th>Termo</th><th>Significado</th></tr>
+  <tr><td>ACL</td><td>Lista de controlo de acesso — quem pode ver/editar cada documento ou pasta.</td></tr>
+  <tr><td>Check-out / Check-in</td><td>Bloquear um documento para edição exclusiva e devolvê-lo depois.</td></tr>
+  <tr><td>Convite</td><td>Ligação segura (7 dias) para alguém entrar na organização com uma função definida.</td></tr>
+  <tr><td>Instância de workflow</td><td>Uma execução concreta de um processo — o percurso de um pedido.</td></tr>
+  <tr><td>Legal hold</td><td>Retenção legal que impede a eliminação de um documento.</td></tr>
+  <tr><td>Organização</td><td>O espaço isolado da empresa dentro do NEXORA.</td></tr>
+  <tr><td>SSO / OIDC</td><td>Login único via fornecedor de identidade (Google, Azure AD...).</td></tr>
+  <tr><td>Webhook</td><td>Notificação automática HTTP para sistemas externos.</td></tr>
+</table>
+<h2>Perguntas frequentes</h2>
+<p><strong>Cada funcionário precisa da sua conta?</strong> Sim — nunca partilhar credenciais. Contas individuais garantem auditoria, permissões e notificações corretas por pessoa.</p>
+<p><strong>O admin vê as passwords dos utilizadores?</strong> Não — as passwords são guardadas com hash seguro (Argon2id) e ninguém as pode ver. O convite existe precisamente para cada pessoa definir a sua.</p>
+<p><strong>Se alguém sair da empresa?</strong> Administração → Utilizadores → <strong>Suspender</strong> — acesso cortado de imediato, dados e histórico preservados.</p>
+<p><strong>Um convite expirou — e agora?</strong> Enviar um novo convite para o mesmo email; convites expirados não podem ser reutilizados.</p>
+<p><strong>Posso pertencer a duas empresas?</strong> Sim — a mesma conta pode ser membro de várias organizações; alterna no seletor do cabeçalho.</p>
+<p><strong>A IA lê os meus documentos?</strong> Só os que tens permissão para abrir — e cada operação fica auditada. Com provider externo (Groq/OpenAI), o conteúdo é enviado ao fornecedor para processamento.</p>
+<p><strong>Onde está a ajuda dentro da app?</strong> Barra lateral → Ajuda: central com ~80 artigos, pesquisa e guias passo a passo de todas as funcionalidades.</p>
+
+<div class="box" style="margin-top:30px;">
+<strong>NEXORA</strong> — Plataforma Empresarial de Gestão, Documentos e Processos.<br>
+Este manual descreve o comportamento real da aplicação à data da sua geração.
+</div>
+</body>
+</html>
+

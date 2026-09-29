@@ -1,0 +1,91 @@
+<!-- ============ 20. CENÁRIOS ============ -->
+<h1 id="cenarios">20. Um dia na XPTO — cenários completos de colaboração</h1>
+<p>Cinco fluxos reais que mostram como os 5 utilizadores trabalham em conjunto, de ponta a ponta — cada um dentro do que a sua função permite.</p>
+
+<h2>Cenário A — Nova proposta para o cliente ABC</h2>
+<table>
+  <tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr>
+  <tr><td>1</td><td>Bruno</td><td>Cria a pasta <code>Clientes/ABC S.A./Propostas</code> e instancia o template "Modelo — Proposta Comercial" para dentro dela.</td><td>Documentos</td></tr>
+  <tr><td>2</td><td>Bruno</td><td>Atribui tarefa à Carla: "Redigir proposta ABC" — prioridade Alta, prazo sexta-feira.</td><td>Tarefas</td></tr>
+  <tr><td>3</td><td>Carla</td><td>Recebe notificação, abre a tarefa, faz check-out do documento e redige a proposta.</td><td>Notificações → Documentos</td></tr>
+  <tr><td>4</td><td>Carla</td><td>Faz check-in (nova versão) e comenta: "Versão pronta para revisão".</td><td>Documento</td></tr>
+  <tr><td>5</td><td>Carla</td><td>Pede à IA um resumo para verificar os pontos-chave.</td><td>Documento → IA</td></tr>
+  <tr><td>6</td><td>Bruno</td><td>Reve o documento, comenta "falta tabela de preços" → Carla adiciona → Bruno aprova internamente.</td><td>Comentários</td></tr>
+  <tr><td>7</td><td>Diana</td><td>Reve a formatação final e atualiza o registo "ABC, S.A." na lista de Clientes (estado → Ativo).</td><td>Documentos → Listas</td></tr>
+  <tr><td>8</td><td>Bruno</td><td>Cria link de partilha externa com expiração de 7 dias e envia ao cliente.</td><td>Partilha</td></tr>
+  <tr><td>9</td><td>Eduardo</td><td>Abre a proposta em modo leitura para acompanhar o negócio — não consegue editar, apagar nem partilhar.</td><td>Documentos</td></tr>
+  <tr><td>10</td><td>Ana</td><td>No fim do dia vê na atividade recente todo o percurso — e na auditoria o acesso do cliente via link.</td><td>Dashboard → Auditoria</td></tr>
+</table>
+
+<h2>Cenário B — Despesa da Carla aprovada por workflow</h2>
+<table>
+  <tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr>
+  <tr><td>1</td><td>Carla</td><td>Preenche o formulário "Pedido de Despesa": 230€, categoria Viagem, anexa a fatura.</td><td>Formulários</td></tr>
+  <tr><td>2</td><td>Sistema</td><td>Inicia a instância do workflow "Aprovação de Despesas" → passo de aprovação do Bruno.</td><td>Workflows</td></tr>
+  <tr><td>3</td><td>Bruno</td><td>Vê a aprovação pendente, consulta o pedido e aprova com comentário "OK — entra no projeto ABC".</td><td>Aprovações</td></tr>
+  <tr><td>4</td><td>Sistema</td><td>Como 230€ &lt; 500€, a instância termina aprovada; a Carla é notificada.</td><td>Workflows → Notificações</td></tr>
+  <tr><td>5</td><td>Ana</td><td>Exporta a lista de despesas para CSV no fim do mês para a contabilidade.</td><td>Listas</td></tr>
+</table>
+<div class="box tip">Se a despesa fosse 800€, depois do Bruno passava à Ana — o passo de aprovação final do workflow está configurado para ela. O Eduardo consegue <em>ver</em> a aprovação na lista de Aprovações, mas os botões de decisão não lhe aparecem.</div>
+
+<h2>Cenário C — Um consultor externo recebe acesso de leitura</h2>
+<table>
+  <tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr>
+  <tr><td>1</td><td>Ana</td><td>Convida <code>duarte@xpto.pt</code> (contabilista externo) com função <strong>Viewer</strong> — fica pendente na tabela de convites.</td><td>Administração → Utilizadores</td></tr>
+  <tr><td>2</td><td>Duarte</td><td>Aceita o convite, cria a conta — no dashboard vê o checklist de onboarding.</td><td>Aceitar convite</td></tr>
+  <tr><td>3</td><td>Bruno</td><td>Adiciona-o como leitor no Portal XPTO para consultar as notícias internas.</td><td>Sites</td></tr>
+  <tr><td>4</td><td>Duarte</td><td>Consulta a lista de despesas e os documentos financeiros — tudo em modo leitura.</td><td>Listas → Documentos</td></tr>
+  <tr><td>5</td><td>Duarte</td><td>Lê a notícia de boas-vindas e explora a Central de Ajuda.</td><td>Notícias → Ajuda</td></tr>
+</table>
+<div class="box warn">Como Viewer, o Duarte não consegue editar, criar, partilhar ou aprovar nada — o acesso é estritamente de consulta. Se precisar de colaborar, a Ana muda-lhe a função em Administração → Utilizadores.</div>
+
+<h2>Cenário D — A Diana atualiza o portal interno</h2>
+<table>
+  <tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr>
+  <tr><td>1</td><td>Diana</td><td>Edita a página "Boas-vindas" do site interno com as novas regras de despesas.</td><td>Sites → Páginas</td></tr>
+  <tr><td>2</td><td>Diana</td><td>Publica a notícia "Novas regras de despesas em vigor" na categoria Comunicação interna.</td><td>Notícias</td></tr>
+  <tr><td>3</td><td>Sistema</td><td>Todos os utilizadores recebem a notificação da nova notícia.</td><td>Notificações</td></tr>
+  <tr><td>4</td><td>Carla, Eduardo</td><td>Lêem a notícia — a Carla pode comentar, o Eduardo só lê.</td><td>Notícias</td></tr>
+  <tr><td>5</td><td>Diana</td><td>Cria um novo campo "NIF" na lista Clientes e ajusta o formulário de pedido de despesa.</td><td>Listas → Formulários</td></tr>
+</table>
+<div class="box">O que a Diana <strong>não</strong> consegue fazer (e teria de pedir ao Bruno ou à Ana): partilhar documentos por link externo, convidar utilizadores, gerir sites ao nível da estrutura, ver a auditoria e mexer nas definições.</div>
+
+<h2>Cenário E — A Ana prepara a empresa para crescer</h2>
+<ul>
+  <li>Cria a função personalizada <strong>"Comercial"</strong> (documentos + listas, sem administração).</li>
+  <li>Configura <strong>SSO</strong> com o Google Workspace da empresa — todos passam a entrar com a conta Google.</li>
+  <li>Define política de <strong>retenção</strong>: documentos da reciclagem purgados após 90 dias.</li>
+  <li>Ativa um <strong>webhook</strong> para o sistema de faturação externo receber eventos de aprovação de despesas.</li>
+  <li>Faz upgrade para o plano <strong>Pro</strong> via Stripe quando a equipa passa de 5 pessoas.</li>
+  <li>Pede à IA um <strong>relatório</strong> mensal de atividade da organização.</li>
+</ul>
+
+<!-- ============ 21. GLOSSÁRIO E FAQ ============ -->
+<h1 id="glossario">21. Glossário e FAQ</h1>
+<h2>Glossário</h2>
+<table>
+  <tr><th>Termo</th><th>Significado</th></tr>
+  <tr><td>ACL</td><td>Lista de controlo de acesso — quem pode ver/editar cada documento ou pasta.</td></tr>
+  <tr><td>Check-out / Check-in</td><td>Bloquear um documento para edição exclusiva e devolvê-lo depois.</td></tr>
+  <tr><td>Convite</td><td>Ligação segura (7 dias) para alguém entrar na organização com uma função definida.</td></tr>
+  <tr><td>Instância de workflow</td><td>Uma execução concreta de um processo — o percurso de um pedido.</td></tr>
+  <tr><td>Legal hold</td><td>Retenção legal que impede a eliminação de um documento.</td></tr>
+  <tr><td>Organização</td><td>O espaço isolado da empresa dentro do NEXORA.</td></tr>
+  <tr><td>SSO / OIDC</td><td>Login único via fornecedor de identidade (Google, Azure AD...).</td></tr>
+  <tr><td>Webhook</td><td>Notificação automática HTTP para sistemas externos.</td></tr>
+</table>
+<h2>Perguntas frequentes</h2>
+<p><strong>Cada funcionário precisa da sua conta?</strong> Sim — nunca partilhar credenciais. Contas individuais garantem auditoria, permissões e notificações corretas por pessoa.</p>
+<p><strong>O admin vê as passwords dos utilizadores?</strong> Não — as passwords são guardadas com hash seguro (Argon2id) e ninguém as pode ver. O convite existe precisamente para cada pessoa definir a sua.</p>
+<p><strong>Se alguém sair da empresa?</strong> Administração → Utilizadores → <strong>Suspender</strong> — acesso cortado de imediato, dados e histórico preservados.</p>
+<p><strong>Um convite expirou — e agora?</strong> Enviar um novo convite para o mesmo email; convites expirados não podem ser reutilizados.</p>
+<p><strong>Posso pertencer a duas empresas?</strong> Sim — a mesma conta pode ser membro de várias organizações; alterna no seletor do cabeçalho.</p>
+<p><strong>A IA lê os meus documentos?</strong> Só os que tens permissão para abrir — e cada operação fica auditada. Com provider externo (Groq/OpenAI), o conteúdo é enviado ao fornecedor para processamento.</p>
+<p><strong>Onde está a ajuda dentro da app?</strong> Barra lateral → Ajuda: central com ~80 artigos, pesquisa e guias passo a passo de todas as funcionalidades.</p>
+
+<div class="box" style="margin-top:30px;">
+<strong>NEXORA</strong> — Plataforma Empresarial de Gestão, Documentos e Processos.<br>
+Este manual descreve o comportamento real da aplicação à data da sua geração.
+</div>
+</body>
+</html>

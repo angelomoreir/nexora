@@ -1,0 +1,2284 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Manual Completo</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  h4 { font-size: 10pt; color: #0f172a; margin: 3.5mm 0 1.5mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .deny { color: #b91c1c; }
+  .deny::before { content: "→ Esperado (negado): "; font-weight: 600; color: #b91c1c; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+  .no-break { page-break-inside: avoid; }
+
+  .cover { text-align: center; padding-top: 65mm; page-break-after: always; }
+  .cover .brand { font-size: 34pt; font-weight: 800; letter-spacing: 7px; color: #4f46e5; }
+  .cover .sub { font-size: 15pt; color: #475569; margin-top: 5mm; }
+  .cover .meta { margin-top: 24mm; font-size: 10pt; color: #64748b; }
+
+  .toc { page-break-after: always; }
+  .toc h1 { font-size: 20pt; border-bottom: 3px solid #4f46e5; padding-bottom: 2mm; }
+  .toc-part { font-weight: 700; color: #3730a3; font-size: 11pt; margin: 6mm 0 1.5mm; }
+  .toc-list { list-style: none; margin: 0 0 2mm; padding: 0; }
+  .toc-list li { margin: 1.2mm 0; }
+  .toc-list a { display: flex; align-items: baseline; text-decoration: none; color: #1c2430; }
+  .toc-list .cap-label { font-weight: 500; }
+  .toc-list .fill { flex: 1; margin: 0 2mm; border-bottom: 1px dotted #94a3b8; }
+  .toc-list .pg { color: #475569; font-variant-numeric: tabular-nums; min-width: 6mm; text-align: right; }
+
+  .part-divider, .chapter-divider { page-break-before: always; page-break-after: always; text-align: center; padding-top: 90mm; }
+  .part-divider .part-num, .chapter-divider .cap-part { font-size: 11pt; font-weight: 700; letter-spacing: 3px; color: #4f46e5; text-transform: uppercase; }
+  .part-divider h1, .chapter-divider h1 { font-size: 26pt; margin-top: 6mm; }
+  .part-divider .part-desc, .chapter-divider .cap-desc { font-size: 11pt; color: #475569; margin-top: 5mm; }
+  .part-divider .part-toc { list-style: none; margin-top: 10mm; padding: 0; }
+  .part-divider .part-toc li { font-size: 11pt; color: #334155; margin: 2mm 0; }
+  .chapter-divider .cap-num { font-size: 60pt; font-weight: 800; color: #e0e7ff; line-height: 1; margin-top: 10mm; }
+  .chapter-divider .cap-route { margin-top: 12mm; font-size: 9.5pt; color: #64748b; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Manual Completo — Todos os módulos</div>
+  <div class="meta">
+    <p>20 capítulos · um por opção do menu lateral + introdução · apêndice com o caso de estudo XPTO</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<nav class="toc">
+  <h1>Índice</h1>
+  <p class="toc-part">Parte I — Começar</p><ol class="toc-list"><li><a href="#cap-introducao"><span class="cap-label">1 · Introdução e navegação</span><span class="fill"></span><span class="pg">4</span></a></li></ol>
+<p class="toc-part">Parte II — O seu dia a dia</p><ol class="toc-list"><li><a href="#cap-meu-dia"><span class="cap-label">2 · O meu dia</span><span class="fill"></span><span class="pg">9</span></a></li>
+<li><a href="#cap-dashboard"><span class="cap-label">3 · Dashboard</span><span class="fill"></span><span class="pg">12</span></a></li>
+<li><a href="#cap-pesquisa"><span class="cap-label">4 · Pesquisa</span><span class="fill"></span><span class="pg">15</span></a></li>
+<li><a href="#cap-notificacoes"><span class="cap-label">5 · Notificações</span><span class="fill"></span><span class="pg">18</span></a></li></ol>
+<p class="toc-part">Parte III — Conteúdo</p><ol class="toc-list"><li><a href="#cap-documentos"><span class="cap-label">6 · Documentos</span><span class="fill"></span><span class="pg">22</span></a></li>
+<li><a href="#cap-listas"><span class="cap-label">7 · Listas</span><span class="fill"></span><span class="pg">27</span></a></li>
+<li><a href="#cap-formularios"><span class="cap-label">8 · Formulários</span><span class="fill"></span><span class="pg">32</span></a></li>
+<li><a href="#cap-sites"><span class="cap-label">9 · Sites</span><span class="fill"></span><span class="pg">36</span></a></li>
+<li><a href="#cap-noticias"><span class="cap-label">10 · Notícias</span><span class="fill"></span><span class="pg">41</span></a></li></ol>
+<p class="toc-part">Parte IV — Trabalho e automação</p><ol class="toc-list"><li><a href="#cap-tarefas"><span class="cap-label">11 · Tarefas</span><span class="fill"></span><span class="pg">46</span></a></li>
+<li><a href="#cap-aprovacoes"><span class="cap-label">12 · Aprovações</span><span class="fill"></span><span class="pg">51</span></a></li>
+<li><a href="#cap-processos"><span class="cap-label">13 · Processos (Workflows)</span><span class="fill"></span><span class="pg">54</span></a></li>
+<li><a href="#cap-ia"><span class="cap-label">14 · IA (Copilot)</span><span class="fill"></span><span class="pg">59</span></a></li></ol>
+<p class="toc-part">Parte V — Organização</p><ol class="toc-list"><li><a href="#cap-analise"><span class="cap-label">15 · Análise</span><span class="fill"></span><span class="pg">63</span></a></li>
+<li><a href="#cap-administracao"><span class="cap-label">16 · Administração</span><span class="fill"></span><span class="pg">66</span></a></li>
+<li><a href="#cap-planos"><span class="cap-label">17 · Planos (Faturação)</span><span class="fill"></span><span class="pg">70</span></a></li>
+<li><a href="#cap-configuracoes"><span class="cap-label">18 · Configurações</span><span class="fill"></span><span class="pg">73</span></a></li>
+<li><a href="#cap-perfil"><span class="cap-label">19 · Perfil</span><span class="fill"></span><span class="pg">76</span></a></li>
+<li><a href="#cap-ajuda"><span class="cap-label">20 · Ajuda</span><span class="fill"></span><span class="pg">79</span></a></li></ol>
+<p class="toc-part">Apêndice</p><ol class="toc-list"><li><a href="#cap-caso-xpto"><span class="cap-label">A · Caso de Estudo: a empresa XPTO</span><span class="fill"></span><span class="pg">83</span></a></li></ol>
+</nav>
+
+
+<section class="part-divider">
+  <div class="part-num">Parte I</div>
+  <h1>Começar</h1>
+  <p class="part-desc">Leitura obrigatória antes de tudo o resto: o que é o NEXORA, conceitos, entrada na plataforma e navegação.</p>
+  <ul class="part-toc"><li>Introdução e navegação</li></ul>
+</section>
+
+<section class="chapter-divider" id="cap-introducao">
+  <div class="cap-part">Parte I — Começar</div>
+  <div class="cap-num">1</div>
+  <h1>Introdução e navegação</h1>
+  <p class="cap-desc">Conceitos, registo e convites, anatomia da interface, glossário e FAQ.</p>
+  <p class="cap-route">Documento de referência · <code>docs/NEXORA-guia-introducao.html</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que é o NEXORA</h2>
+<p>O NEXORA é uma plataforma empresarial que centraliza o trabalho de uma equipa num único espaço: <b>documentos</b>, <b>listas de dados</b>, <b>formulários</b>, <b>tarefas</b>, <b>processos automatizados (workflows)</b>, <b>sites internos</b>, <b>notícias</b>, <b>pesquisa global</b> e um <b>assistente de IA</b>. Foi desenhado para substituir ferramentas como o SharePoint com uma interface moderna e simples.</p>
+
+<h2>2. Conceitos fundamentais</h2>
+<table>
+  <thead><tr><th>Conceito</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><b>Organização</b></td><td>O espaço de trabalho da empresa (ex.: «xpto»). Todos os dados — documentos, listas, workflows — pertencem a uma organização e são <b>isolados</b> das outras. Uma conta pode pertencer a várias organizações.</td></tr>
+    <tr><td><b>Utilizador</b></td><td>Uma pessoa com a sua própria conta (email + palavra-passe). Nunca se partilham credenciais — auditoria, permissões e notificações são individuais.</td></tr>
+    <tr><td><b>Função (papel/role)</b></td><td>Conjunto de permissões do utilizador dentro da organização: Viewer, Member, Editor, Manager, Admin, Super Admin — ou funções personalizadas criadas pelo Admin.</td></tr>
+    <tr><td><b>Permissão</b></td><td>Uma capacidade concreta, ex.: <code>documents.edit</code>, <code>users.create</code>, <code>workflows.manage</code>. As funções agrupam permissões.</td></tr>
+    <tr><td><b>Auditoria</b></td><td>Registo imutável de ações relevantes (quem fez o quê e quando) — em Administração → Auditoria.</td></tr>
+    <tr><td><b>Instância</b></td><td>Uma execução concreta de um processo — o percurso real de um pedido.</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Idiomas e aparência</h2>
+<p>A interface está disponível em <b>Português (PT-PT), English, Español, Français e Deutsch</b> — selecionável no seletor de idioma do cabeçalho. Tema claro/escuro também disponível. Todas as mensagens, incluindo erros de permissão, seguem o idioma escolhido.</p>
+
+<h2>4. Entrar: registo e convites</h2>
+<h3>4.1 Registar uma organização nova</h3>
+<ol class="steps">
+  <li>Abrir <code>/register</code> → preencher nome, <b>organização</b>, email e palavra-passe (mínimo 12 caracteres).</li>
+  <li>Ao submeter, o sistema cria a organização e a conta como <b>Admin</b> — entra diretamente no Dashboard.</li>
+</ol>
+<h3>4.2 Convidar a equipa (o fluxo recomendado)</h3>
+<ol class="steps">
+  <li>Administração → Utilizadores → <b>«Convidar utilizador»</b>.</li>
+  <li>Introduzir o email e escolher a função → «Enviar convite».</li>
+  <li>O convite tem validade de <b>7 dias</b>. Com servidor de email configurado, chega por email; sem SMTP, a página mostra o link com botão <b>«Copiar»</b> para enviar por outro canal.</li>
+  <li>A tabela de convites mostra o estado de cada um (Pendente / Aceite / Revogado / Expirado) e permite <b>revogar</b>.</li>
+</ol>
+<h3>4.3 Aceitar o convite</h3>
+<ol class="steps">
+  <li>O convidado abre o link → vê «Foste convidado para {organização}».</li>
+  <li><b>Sem conta:</b> define nome e palavra-passe → conta criada já como membro.</li>
+  <li><b>Com conta existente:</b> faz login e a organização é adicionada ao seu seletor.</li>
+</ol>
+<div class="tip"><b>Nunca partilhar credenciais:</b> com convite, ninguém fica a conhecer a password de outra pessoa — nem o Admin. A alternativa «criar utilizador» (Configurações ou Administração) existe, mas quem cria define a password do colega.</div>
+<div class="note"><b>Primeiro acesso:</b> o Dashboard mostra um <b>checklist de onboarding</b> com passos guiados (primeiro documento, primeira lista, primeira tarefa, convidar a equipa, primeiro workflow).</div>
+
+<h2>5. Navegação e interface geral</h2>
+<h3>5.1 Barra lateral</h3>
+<table>
+  <thead><tr><th>Grupo</th><th>Itens</th></tr></thead>
+  <tbody>
+    <tr><td><b>Pessoal</b></td><td>O meu dia, Dashboard, Pesquisa</td></tr>
+    <tr><td><b>Trabalho</b></td><td>Tarefas, Aprovações, Processos, Notificações (com contador de não lidas)</td></tr>
+    <tr><td><b>Análise</b></td><td>Análise — <b>só com <code>analytics.view</code></b> (Admin, Manager)</td></tr>
+    <tr><td><b>Conteúdo</b></td><td>Sites, Notícias, Documentos, Listas, Formulários</td></tr>
+    <tr><td><b>Ferramentas</b></td><td>IA, Ajuda</td></tr>
+    <tr><td><b>Gerir</b></td><td>Administração — <b>só com permissões administrativas</b> · Planos, Configurações, Perfil</td></tr>
+  </tbody>
+</table>
+<p>Em ecrãs pequenos a barra colapsa atrás do botão ☰.</p>
+<h3>5.2 Cabeçalho</h3>
+<ul>
+  <li><b>Seletor de organização</b> — aparece quando pertence a mais do que uma; alterna o tenant inteiro da app.</li>
+  <li><b>Pesquisa</b> <span class="kbd">Ctrl</span>+<span class="kbd">K</span> — abre a paleta de comandos.</li>
+  <li><b>Tema</b> claro/escuro, <b>idioma</b> (5 línguas), <b>sino de notificações</b> com contador, <b>menu do utilizador</b> (perfil / terminar sessão).</li>
+</ul>
+<h3>5.3 Paleta de comandos <span class="kbd">Ctrl</span>+<span class="kbd">K</span></h3>
+<p>Pesquisa instantânea: com texto, procura em documentos, tarefas, listas e mais; sem texto, mostra todos os destinos de navegação. Setas <span class="kbd">↑</span><span class="kbd">↓</span> para navegar, <span class="kbd">Enter</span> para abrir.</p>
+<h3>5.4 Ajuda contextual</h3>
+<p>O botão «?» junto ao título de várias páginas abre o artigo de ajuda <b>daquele módulo</b> — e o menu Ajuda tem o centro completo (~80 artigos por categoria, pesquisa e assistente).</p>
+
+<h2>6. Glossário</h2>
+<table>
+  <thead><tr><th>Termo</th><th>Significado</th></tr></thead>
+  <tbody>
+    <tr><td>ACL / Gerir acesso</td><td>Lista de controlo de acesso — quem pode ver/editar cada documento ou pasta.</td></tr>
+    <tr><td>Check-out / Check-in</td><td>Bloquear um documento para edição exclusiva e devolvê-lo depois (nova versão).</td></tr>
+    <tr><td>Convite</td><td>Ligação segura (7 dias) para alguém entrar na organização com uma função definida.</td></tr>
+    <tr><td>Legal hold</td><td>Retenção legal que impede a eliminação de um documento.</td></tr>
+    <tr><td>Reciclagem</td><td>Documentos eliminados ficam recuperáveis até à purga (soft delete).</td></tr>
+    <tr><td>SSO / OIDC</td><td>Login único via fornecedor de identidade (Google, Azure AD…) — configurado em Administração.</td></tr>
+    <tr><td>Webhook</td><td>Notificação automática HTTP enviada a sistemas externos quando ocorrem eventos.</td></tr>
+    <tr><td>Widget</td><td>Bloco de conteúdo de uma página de site (hero, texto, documentos recentes, KPI…).</td></tr>
+  </tbody>
+</table>
+
+<h2>7. Perguntas frequentes</h2>
+<p><b>Cada pessoa precisa da sua conta?</b> Sim — contas individuais garantem auditoria, permissões e notificações corretas.</p>
+<p><b>O admin vê as passwords dos utilizadores?</b> Não — são guardadas com hash Argon2id; ninguém as pode ler. É por isso que o convite existe.</p>
+<p><b>Se alguém sair da empresa?</b> Administração → Utilizadores → <b>Suspender</b> — acesso cortado, histórico preservado.</p>
+<p><b>Um convite expirou — e agora?</b> Enviar um novo para o mesmo email; convites expirados não são reutilizáveis.</p>
+<p><b>Posso pertencer a duas organizações?</b> Sim — a mesma conta pode ser membro de várias; alterna no seletor do cabeçalho.</p>
+<p><b>Esqueci-me da password?</b> Página de login → recuperação por email (requer SMTP configurado).</p>
+<p><b>A IA lê os meus documentos?</b> Só os que tem permissão para abrir — e cada operação fica auditada.</p>
+
+
+</section>
+
+<section class="part-divider">
+  <div class="part-num">Parte II</div>
+  <h1>O seu dia a dia</h1>
+  <p class="part-desc">As ferramentas pessoais: o que fazer hoje, o estado da operação, encontrar qualquer item e gerir alertas.</p>
+  <ul class="part-toc"><li>O meu dia</li><li>Dashboard</li><li>Pesquisa</li><li>Notificações</li></ul>
+</section>
+
+<section class="chapter-divider" id="cap-meu-dia">
+  <div class="cap-part">Parte II — O seu dia a dia</div>
+  <div class="cap-num">2</div>
+  <h1>O meu dia</h1>
+  <p class="cap-desc">Painel pessoal de foco: as suas tarefas, aprovações pendentes e notificações.</p>
+  <p class="cap-route">Menu lateral → O meu dia · <code>/my-day</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que é «O meu dia»</h2>
+<p>«O meu dia» é a <b>página de foco diário</b> — o painel pessoal que agrega, num só ecrã, tudo o que precisa da sua atenção <b>hoje</b>: as suas tarefas prioritárias, as aprovações à sua espera e as notificações recentes. É o ponto de partida recomendado para cada dia de trabalho.</p>
+<p>Ao contrário do Dashboard (que mostra métricas da organização), «O meu dia» é <b>pessoal e acionável</b>: cada item pode ser tratado diretamente ali, sem abrir outra página.</p>
+
+<h2>2. O que a página mostra</h2>
+<table>
+  <thead><tr><th>Secção</th><th>Conteúdo</th></tr></thead>
+  <tbody>
+    <tr><td><b>Saudação</b></td><td>«Bom dia / Boa tarde / Boa noite, {nome}» — muda consoante a hora do dia</td></tr>
+    <tr><td><b>Foco</b></td><td>As suas tarefas que pedem atenção — em curso, com prazo próximo ou prioritárias</td></tr>
+    <tr><td><b>Aprovações</b></td><td>Aprovações pendentes <b>atribuídas a si</b> — pode aprovar/rejeitar sem sair da página</td></tr>
+    <tr><td><b>Notificações</b></td><td>As mais recentes — marcar como lidas inline</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Ações diretas na página</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Como</th></tr></thead>
+  <tbody>
+    <tr><td><b>Concluir tarefa</b></td><td>Clicar na ação de concluir junto à tarefa — atualiza o estado para Concluída e refresca Dashboard/Tarefas</td></tr>
+    <tr><td><b>Abrir detalhe</b></td><td>Clicar no título leva à página de detalhe (tarefa, aprovação ou origem da notificação)</td></tr>
+    <tr><td><b>Marcar notificação como lida</b></td><td>Ação junto à notificação — atualiza também o contador do sino</td></tr>
+    <tr><td><b>Decidir aprovação</b></td><td>Aprovar/Rejeitar diretamente no cartão da aprovação</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Quando usar — exemplos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Início do dia</div>
+  <p>Abre «O meu dia» às 9h: vê 3 tarefas em curso com prazo hoje, 1 aprovação de férias pendente e 4 notificações novas. Decide a aprovação, marca as notificações lidas, e começa pela tarefa mais urgente — tudo sem navegar.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — «Tenho 10 minutos»</div>
+  <p>Entre reuniões: abre «O meu dia», conclui a tarefa que acabou de entregar e trata a aprovação pendente — em 2 cliques cada.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Estado vazio</div>
+  <p>Sem tarefas de foco nem aprovações? A página mostra estados vazios amigáveis («Nada em foco») — é o sinal de que o dia está controlado.</p>
+</div>
+
+<h2>5. O meu dia vs Dashboard vs Notificações</h2>
+<table>
+  <thead><tr><th>Página</th><th>Foco</th><th>Para quê</th></tr></thead>
+  <tbody>
+    <tr><td><b>O meu dia</b></td><td>Pessoal, acionável</td><td>«O que tenho de fazer hoje?»</td></tr>
+    <tr><td><b>Dashboard</b></td><td>Organização, métricas</td><td>«Como está a operação?»</td></tr>
+    <tr><td><b>Notificações</b></td><td>Histórico completo</td><td>«O que aconteceu enquanto estive fora?»</td></tr>
+  </tbody>
+</table>
+
+<h2>6. Permissões e notas</h2>
+<p>Disponível para <b>todos os papéis</b> — cada pessoa vê apenas <b>o que lhe pertence</b>: as suas tarefas, as aprovações atribuídas a si, as suas notificações. Um Viewer sem aprovações atribuídas vê a secção vazia; um Member com trabalho atribuído vê a página cheia.</p>
+<ul>
+  <li>A secção de foco só mostra tarefas <b>suas</b> — tarefas da equipa aparecem em Tarefas, não aqui.</li>
+  <li>Aprovações listadas são as <b>atribuídas a si</b> — a decisão é por atribuição, não por permissão global.</li>
+  <li>Se a página mostrar erro de carregamento, há botão de retry — indica problema de API, não de permissões.</li>
+</ul>
+
+
+</section>
+
+<section class="chapter-divider" id="cap-dashboard">
+  <div class="cap-part">Parte II — O seu dia a dia</div>
+  <div class="cap-num">3</div>
+  <h1>Dashboard</h1>
+  <p class="cap-desc">Métricas e atividade da organização, com dashboards personalizados.</p>
+  <p class="cap-route">Menu lateral → Dashboard · <code>/dashboard</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que é o Dashboard</h2>
+<p>O <b>Dashboard</b> é o painel de controlo da organização — métricas, atividade e atalhos num único ecrã. Mostra <b>como está a operação</b>: tarefas, documentos, processos, aprovações e atividade recente, com suporte a <b>múltiplos dashboards personalizados</b> que pode criar, nomear e alternar.</p>
+
+<h2>2. O que a página contém</h2>
+<table>
+  <thead><tr><th>Elemento</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><b>Checklist de onboarding</b></td><td>Para organizações novas — passos sugeridos para começar (criar conteúdo, convidar membros…)</td></tr>
+    <tr><td><b>Recomendação inteligente</b></td><td>Sugestão contextual gerada a partir do estado atual da organização</td></tr>
+    <tr><td><b>KPIs / widgets</b></td><td>Cartões de métrica (tarefas, documentos, workflows, aprovações pendentes, notificações não lidas)</td></tr>
+    <tr><td><b>Comunicados</b></td><td>Anúncios administrativos da organização (criados em Administração → Comunicados)</td></tr>
+    <tr><td><b>Aprovações pessoais</b></td><td>As suas aprovações pendentes — atalho direto</td></tr>
+    <tr><td><b>Seletor de dashboard</b></td><td>Alterna entre o dashboard por defeito e dashboards personalizados (a escolha fica memorizada)</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Dashboards personalizados</h2>
+<ol class="steps">
+  <li>Criar: <b>«Novo dashboard»</b> → dar nome → nasce como dashboard adicional.</li>
+  <li>Renomear/gerir dashboards existentes no seletor do topo.</li>
+  <li>Cada dashboard é uma <b>composição de widgets</b> — a configuração é renderizada pela API (<code>/dashboards/:id/render</code>).</li>
+  <li>Alternar entre «Dashboard» (por defeito) e os personalizados no seletor — a preferência fica gravada no browser.</li>
+</ol>
+<div class="tip"><b>Caso de uso:</b> um dashboard «Operações» com KPIs de tarefas e workflows, e outro «Conteúdo» com documentos e notícias — cada equipa tem o seu painel.</div>
+
+<h2>4. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Reunião de equipa</div>
+  <p>Abrir o Dashboard no início da reunião semanal: quantas tarefas em curso, quantas aprovações paradas, o que foi criado esta semana — contexto imediato para a discussão.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Onboarding de nova organização</div>
+  <p>Organização recém-criada: o checklist guia os primeiros passos (convidar membros, criar primeiro documento/lista) e desaparece quando a organização ganha vida.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Comunicado visível</div>
+  <p>O Admin publica «Sistema em manutenção sexta 18h» em Administração → Comunicados — aparece no Dashboard de <b>todos</b> os membros.</p>
+</div>
+
+<h2>5. Permissões</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver o dashboard</td><td>Sessão ativa</td><td>Todos</td></tr>
+    <tr><td>Criar/gerir dashboards personalizados</td><td><code>dashboards.manage</code></td><td>Admin, Manager, Editor</td></tr>
+  </tbody>
+</table>
+
+<h2>6. Dashboard vs O meu dia vs Análise</h2>
+<table>
+  <thead><tr><th>Página</th><th>Responde a</th><th>Caráter</th></tr></thead>
+  <tbody>
+    <tr><td><b>O meu dia</b></td><td>«O que tenho de fazer hoje?»</td><td>Pessoal, acionável</td></tr>
+    <tr><td><b>Dashboard</b></td><td>«Como está a operação agora?»</td><td>Organização, visão geral</td></tr>
+    <tr><td><b>Análise</b></td><td>«Como evoluímos no tempo?»</td><td>Tendências e gráficos</td></tr>
+  </tbody>
+</table>
+
+<ul class="small">
+  <li>Os dados do Dashboard refletem a organização <b>ativa</b> — mude de organização no seletor do topo para ver outro tenant.</li>
+  <li>Se os cartões aparecerem vazios numa organização nova, é normal — precisam de atividade para mostrar dados.</li>
+</ul>
+
+
+</section>
+
+<section class="chapter-divider" id="cap-pesquisa">
+  <div class="cap-part">Parte II — O seu dia a dia</div>
+  <div class="cap-num">4</div>
+  <h1>Pesquisa</h1>
+  <p class="cap-desc">Busca global em todos os módulos e a paleta de comandos (Ctrl+K).</p>
+  <p class="cap-route">Menu lateral → Pesquisa · <code>/search</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que é a Pesquisa</h2>
+<p>A <b>Pesquisa</b> é o motor de busca global da organização — procura <b>em todos os módulos ao mesmo tempo</b> e devolve resultados agrupados por tipo, com excertos do conteúdo encontrado. É a forma mais rápida de encontrar «aquele documento», «aquela tarefa» ou «aquele cliente» sem saber onde vive.</p>
+
+<h2>2. O que a pesquisa cobre</h2>
+<table>
+  <thead><tr><th>Tipo</th><th>O que encontra</th></tr></thead>
+  <tbody>
+    <tr><td><b>Documentos</b></td><td>Nome, descrição e conteúdo extraído dos ficheiros</td></tr>
+    <tr><td><b>Pastas</b></td><td>Pastas de documentos por nome</td></tr>
+    <tr><td><b>Listas</b></td><td>Listas por nome/descrição</td></tr>
+    <tr><td><b>Registos</b></td><td>Linhas dentro das listas (valores dos campos)</td></tr>
+    <tr><td><b>Tarefas</b></td><td>Título e descrição</td></tr>
+    <tr><td><b>Processos</b></td><td>Workflows por nome/descrição</td></tr>
+    <tr><td><b>Utilizadores</b></td><td>Membros da organização</td></tr>
+    <tr><td><b>Sites</b></td><td>Sites e páginas</td></tr>
+    <tr><td><b>Notícias</b></td><td>Título, resumo e corpo dos artigos</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Duas formas de pesquisar</h2>
+<h3>3.1 Página de Pesquisa (<code>/search</code>)</h3>
+<ol class="steps">
+  <li>Escrever pelo menos <b>2 caracteres</b> e submeter.</li>
+  <li>Resultados <b>agrupados por tipo</b> com contagem e excerto (snippet) do texto encontrado.</li>
+  <li>Clicar num resultado → navega diretamente para o item.</li>
+</ol>
+<h3>3.2 Paleta de comandos (Ctrl+K)</h3>
+<ol class="steps">
+  <li><b>Ctrl+K</b> em qualquer página (ou o botão de pesquisa na barra do topo).</li>
+  <li>Escrever — sugere comandos de navegação <b>e</b> resultados de conteúdo.</li>
+  <li>Enter → vai direto ao destino. Ideal para power users: navegar sem tirar as mãos do teclado.</li>
+</ol>
+
+<h2>4. Filtros</h2>
+<ol class="steps">
+  <li>Botão <b>«Filtros»</b> na página de pesquisa.</li>
+  <li><b>Tipo:</b> restringir a um ou vários tipos (ex.: só Documentos + Listas).</li>
+  <li><b>Estado:</b> filtrar por estado do item (ex.: <code>TODO</code>, <code>RUNNING</code>, <code>COMPLETED</code>).</li>
+  <li>O badge no botão mostra quantos filtros estão ativos.</li>
+</ol>
+
+<h2>5. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — «Onde está o contrato da ABC?»</div>
+  <p>Pesquisar <code>ABC</code> → resultados agrupados: o documento <code>contrato-abc.pdf</code>, o registo «ABC, S.A.» na lista Clientes, a tarefa «Revisar proposta ABC» e o projeto «Onboarding ABC». Um clique em cada.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Só documentos</div>
+  <p>Muitos resultados? Abrir Filtros → selecionar só «Documentos» → a lista limpa-se para o tipo que interessa.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Encontrar uma pessoa</div>
+  <p>Pesquisar <code>carla</code> → tipo «Utilizadores» → abre o perfil dela na organização.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 4 — Conteúdo dentro de ficheiros</div>
+  <p>A pesquisa olha para o <b>conteúdo extraído</b> dos documentos — procurar «cláusula de rescisão» encontra o PDF que contém esse texto, não só o nome do ficheiro.</p>
+</div>
+
+<h2>6. Boas práticas e notas</h2>
+<ul>
+  <li><b>Mínimo 2 caracteres</b> — pesquisas de 1 letra não disparam.</li>
+  <li><b>A pesquisa respeita permissões</b> — só aparece o que o utilizador pode ver (isolamento de dados por papel e partilha).</li>
+  <li><b>Metadados ajudam a pesquisa</b> — documentos/listas com boas descrições e etiquetas são mais fáceis de encontrar.</li>
+  <li><b>Ctrl+K para navegação rápida</b> — «tarefas», «admin», «perfil» levam direto às páginas sem pesquisar conteúdo.</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>«Sem resultados»</td><td>Termo com &lt;2 caracteres, item noutro tipo, ou falta de permissão sobre o item</td></tr>
+    <tr><td>Documento que sei existir não aparece</td><td>Pode estar no lixo, sem permissão de partilha, ou conteúdo ainda não indexado</td></tr>
+  </tbody>
+</table>
+
+
+</section>
+
+<section class="chapter-divider" id="cap-notificacoes">
+  <div class="cap-part">Parte II — O seu dia a dia</div>
+  <div class="cap-num">5</div>
+  <h1>Notificações</h1>
+  <p class="cap-desc">Alertas in-app, ciclo lida/não lida e subscrição de recursos.</p>
+  <p class="cap-route">Menu lateral → Notificações · <code>/notifications</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que são as Notificações</h2>
+<p>As <b>Notificações</b> são o sistema de alertas in-app do NEXORA — cada evento relevante (tarefa atribuída, aprovação pendente, comentário, partilha, evento de workflow) gera uma notificação ao membro afetado. O <b>sino</b> na barra do topo mostra o contador de não lidas; a página centraliza o histórico completo e a gestão de subscrições.</p>
+
+<h2>2. Tipos de notificação</h2>
+<table>
+  <thead><tr><th>Origem</th><th>Exemplos</th></tr></thead>
+  <tbody>
+    <tr><td><b>Tarefas</b></td><td>«Tarefa atribuída», mudanças de estado relevantes</td></tr>
+    <tr><td><b>Aprovações</b></td><td>«Aprovação necessária», «Aprovação concedida/rejeitada»</td></tr>
+    <tr><td><b>Documentos</b></td><td>Partilhas, comentários, novos ficheiros em pastas seguidas</td></tr>
+    <tr><td><b>Processos</b></td><td>Passos «Enviar notificação» dos workflows, falhas de execução</td></tr>
+    <tr><td><b>Sistema</b></td><td>Comunicados e eventos administrativos</td></tr>
+  </tbody>
+</table>
+
+<h2>3. A página de Notificações</h2>
+<table>
+  <thead><tr><th>Elemento</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><b>Filtro Todas / Não lidas</b></td><td>Alterna entre o histórico completo e só o pendente</td></tr>
+    <tr><td><b>Cartão de notificação</b></td><td>Ícone por tipo, título, corpo, tempo relativo — e ligação ao item de origem (documento, tarefa, aprovação…)</td></tr>
+    <tr><td><b>Marcar como lida</b></td><td>Por notificação ou <b>«Marcar tudo como lido»</b> em massa</td></tr>
+    <tr><td><b>Subscrições</b></td><td>Secção própria: os recursos que está a seguir (ver §4)</td></tr>
+  </tbody>
+</table>
+<div class="tip"><b>Contador do sino:</b> o badge no sino do topo mostra as não lidas em tempo real — clicar na notificação marca-a como lida e leva ao item.</div>
+
+<h2>4. Subscrições — seguir recursos</h2>
+<p>Além das notificações automáticas, pode <b>subscrever recursos</b> para ser avisado de mudanças:</p>
+<ol class="steps">
+  <li>Subscrever um documento, pasta, lista ou outro recurso suportado.</li>
+  <li>Passa a receber notificação quando esse item muda (nova versão, edição, comentário…).</li>
+  <li>A secção <b>Subscrições</b> na página lista o que segue — com remoção individual.</li>
+</ol>
+
+<h2>5. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Aprovação de workflow</div>
+  <p>É aprovador num processo → recebe «Aprovação necessária» → decide em Aprovações → a notificação de pedido é marcada como lida automaticamente. Quem iniciou o processo recebe «Aprovação concedida/rejeitada».</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Seguir um contrato</div>
+  <p>Subscreve <code>contrato-abc.pdf</code> → é notificado de cada nova versão ou comentário — sem ter de verificar manualmente.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Limpeza rápida</div>
+  <p>Depois de férias com 40 notificações: abrir «Não lidas» → tratar as importantes → «Marcar tudo como lido» para o resto.</p>
+</div>
+
+<h2>6. Permissões e notas</h2>
+<p>As notificações são <b>pessoais</b> — cada utilizador vê apenas as suas (<code>notifications.view</code>, presente em todos os papéis). Não há como ver as notificações de outro membro.</p>
+<ul>
+  <li>Clicar numa notificação leva ao item — se não tiver permissão sobre ele, o destino mostra acesso negado.</li>
+  <li>Decidir uma aprovação marca automaticamente a notificação de pedido correspondente como lida.</li>
+  <li>Notificações informativas (resultado de aprovação, por exemplo) ficam até serem marcadas como lidas.</li>
+</ul>
+
+
+</section>
+
+<section class="part-divider">
+  <div class="part-num">Parte III</div>
+  <h1>Conteúdo</h1>
+  <p class="part-desc">Os dados e a apresentação: ficheiros, dados estruturados, recolha de informação, portais internos e comunicação.</p>
+  <ul class="part-toc"><li>Documentos</li><li>Listas</li><li>Formulários</li><li>Sites</li><li>Notícias</li></ul>
+</section>
+
+<section class="chapter-divider" id="cap-documentos">
+  <div class="cap-part">Parte III — Conteúdo</div>
+  <div class="cap-num">6</div>
+  <h1>Documentos</h1>
+  <p class="cap-desc">Pastas, upload, versões, partilha, links públicos e governação.</p>
+  <p class="cap-route">Menu lateral → Documentos · <code>/documents</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que é o módulo de Documentos</h2>
+<p>O módulo de <b>Documentos</b> é a biblioteca de ficheiros da organização — o equivalente a um SharePoint/Google Drive interno. Organiza ficheiros em <b>pastas hierárquicas</b>, mantém <b>versões</b>, controla acesso por <b>partilhas</b> e oferece funcionalidades de governação documental (aprovação, check-out, registo e retenção legal).</p>
+
+<h2>2. Conceitos fundamentais</h2>
+<table>
+  <thead><tr><th>Conceito</th><th>O que é</th></tr></thead>
+  <tbody>
+    <tr><td><b>Pasta</b></td><td>Contentor hierárquico — pastas dentro de pastas, sem limite prático de profundidade</td></tr>
+    <tr><td><b>Documento</b></td><td>Um ficheiro carregado + metadados (nome, descrição, etiquetas) + histórico de versões</td></tr>
+    <tr><td><b>Versão</b></td><td>Cada upload novo sobre um documento cria uma versão numerada — as anteriores ficam guardadas e restauráveis</td></tr>
+    <tr><td><b>Check-out / Check-in</b></td><td>Bloqueio de edição: «reservar» o documento para trabalhar sem que outros o alterem</td></tr>
+    <tr><td><b>Partilha (share)</b></td><td>Conceder acesso extra a utilizadores, equipas ou toda a organização, com nível Leitura ou Edição</td></tr>
+    <tr><td><b>Ligação pública</b></td><td>Link externo para descarregar um documento ou pasta sem login</td></tr>
+    <tr><td><b>Registo (record)</b></td><td>Declarar o documento como registo oficial — congela alterações (governação)</td></tr>
+    <tr><td><b>Retenção legal (legal hold)</b></td><td>Marca legal que impede eliminação — para litígios/auditorias</td></tr>
+    <tr><td><b>Lixo</b></td><td>Eliminação é suave — documentos apagados vão para o Lixo e são restauráveis</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Organização em pastas</h2>
+<p>As organizações novas nascem com a pasta <b>«Documentos»</b> e três sub-pastas: <b>Contratos, Faturas, Projetos</b>.</p>
+<ol class="steps">
+  <li>Em Documentos, clicar <b>«Nova pasta»</b> → nome → criada dentro da pasta atual.</li>
+  <li>Navegar clicando nas pastas; usar as <b>breadcrumbs</b> no topo para voltar atrás.</li>
+  <li>As ações de pasta (renomear, copiar, eliminar, metadados, governação) estão no menu «⋯» de cada linha.</li>
+</ol>
+<div class="tip"><b>Estrutura sugerida:</b> Documentos → por departamento → por tema. Ex.: <code>Documentos / Comercial / Propostas / 2026</code>. Estruturas planas demais tornam-se caóticas; demasiado profundas tornam-se lentas de navegar — 3 níveis costuma ser o ideal.</div>
+
+<h2>4. Carregar e gerir ficheiros</h2>
+<h3>4.1 Upload</h3>
+<ol class="steps">
+  <li>Dentro da pasta de destino → <b>«Upload»</b> → escolher o ficheiro.</li>
+  <li>O documento aparece na lista com tipo, tamanho, autor e data.</li>
+</ol>
+<h3>4.2 Editar metadados</h3>
+<ol class="steps">
+  <li>Menu «⋯» ou página de detalhe → editar <b>nome</b>, <b>descrição</b>, <b>etiquetas</b>.</li>
+  <li>Metadados alimentam a Pesquisa global — invista em descrições e etiquetas úteis.</li>
+</ol>
+<h3>4.3 Versões</h3>
+<ol class="steps">
+  <li>Na página do documento → <b>«Nova versão»</b> → carregar o ficheiro atualizado.</li>
+  <li>O histórico lista todas as versões: ver, <b>descarregar</b> qualquer uma, ou <b>«Restaurar»</b> uma versão antiga (que passa a ser a atual).</li>
+</ol>
+<h3>4.4 Check-out / Check-in</h3>
+<ol class="steps">
+  <li><b>«Check-out»</b> bloqueia o documento para edição por outros — aparece «em check-out por {nome}».</li>
+  <li>Trabalhe offline, depois <b>«Check-in»</b> com a nova versão (ou anule o check-out).</li>
+  <li>Se alguém ficar com check-out esquecido, um <b>Admin</b> pode fazer <b>«Forçar check-in»</b>.</li>
+</ol>
+<h3>4.5 Comentários e atividade</h3>
+<p>Na página do documento há um separador de <b>comentários</b> (discussão contextual sobre o ficheiro) e um registo de <b>atividade</b> (quem fez o quê: uploads, versões, partilhas, aprovações).</p>
+<h3>4.6 Pré-visualização</h3>
+<p>Ao abrir um documento, o NEXORA mostra pré-visualização inline para os formatos suportados — incluindo <b>PDF, imagens e DOCX</b> (convertido para leitura via Mammoth). Para formatos não suportados, use «Descarregar».</p>
+<h3>4.7 Download em massa</h3>
+<p>Selecionar vários documentos → <b>download em massa</b> — a API devolve um pacote (ZIP) com todos.</p>
+
+<h2>5. Partilha</h2>
+<h3>5.1 Partilhar com pessoas/equipas/organização</h3>
+<ol class="steps">
+  <li>Documento → <b>«Partilhar»</b> → escolher o destino: <b>utilizador</b>, <b>equipa</b> ou <b>organização inteira</b>.</li>
+  <li>Definir o nível: <b>Leitura</b> (vê e descarrega) ou <b>Edição</b> (pode atualizar versões/metadados).</li>
+  <li><span class="exp">O destino passa a ver o item em <b>«Partilhado comigo»</b> com a permissão concedida.</span></li>
+</ol>
+<h3>5.2 Ligações públicas</h3>
+<ol class="steps">
+  <li>Documento ou pasta → <b>ligações de partilha</b> → criar link público.</li>
+  <li>Qualquer pessoa com o link acede ao conteúdo <b>sem login</b> — use com critério.</li>
+  <li>Os links podem ser <b>revogados</b> individualmente a qualquer momento.</li>
+</ol>
+<div class="note"><b>Atenção:</b> criar partilhas e links públicos exige <code>documents.share</code> — nem todos os papéis o têm (ver §8).</div>
+
+<h2>6. Governação documental</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Efeito</th></tr></thead>
+  <tbody>
+    <tr><td><b>Publicar</b></td><td>Marca o documento como versão oficial publicada</td></tr>
+    <tr><td><b>Aprovar / Rejeitar</b></td><td>Revisão formal: quem tem acesso pode aprovar ou rejeitar o documento publicado</td></tr>
+    <tr><td><b>Declarar registo</b></td><td>Transforma o documento em «record» — registo oficial que não deve ser alterado</td></tr>
+    <tr><td><b>Retenção legal</b></td><td>Legal hold: bloqueia a eliminação enquanto estiver ativa (auditorias, litígios)</td></tr>
+    <tr><td><b>Metadados/governação de pasta</b></td><td>As pastas têm diálogos próprios de metadados e políticas de governação</td></tr>
+  </tbody>
+</table>
+
+<h2>7. Lixo — eliminação segura</h2>
+<ol class="steps">
+  <li><b>Eliminar</b> um documento/pasta → vai para o <b>Lixo</b> (<code>/documents/trash</code>), não desaparece.</li>
+  <li>No Lixo: <b>Restaurar</b> (volta ao sítio original), <b>Eliminar definitivamente</b> (irreversível) ou <b>Esvaziar lixo</b>.</li>
+</ol>
+
+<h2>8. Permissões — quem pode fazer o quê</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver, descarregar, comentar, pré-visualizar</td><td><code>documents.view</code></td><td>Todos</td></tr>
+    <tr><td>Criar pastas, upload, editar metadados, versões, check-out, copiar</td><td><code>documents.edit</code></td><td>Admin, Manager, Editor, Member</td></tr>
+    <tr><td>Eliminar, restaurar do lixo</td><td><code>documents.delete</code></td><td>Admin, Manager, Editor</td></tr>
+    <tr><td>Partilhar, links públicos, registo, legal hold</td><td><code>documents.share</code></td><td>Admin, Manager</td></tr>
+  </tbody>
+</table>
+<p class="small">As partilhas por item podem <b>restringir</b> ainda mais: um documento partilhado «só leitura» consigo não permite edição mesmo que o seu papel global o permita — a permissão efetiva é a interseção (papel × partilha).</p>
+
+<h2>9. Exemplos práticos</h2>
+
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Colaboração num contrato</div>
+  <ul>
+    <li>Upload de <code>contrato-abc-v1.docx</code> em <code>Documentos/Contratos</code></li>
+    <li>Check-out → edita offline → check-in com v2</li>
+    <li>Partilhar com a equipa «Jurídico» em modo Leitura para revisão</li>
+    <li>Jurídico comenta na página do documento → corrige → <b>Publicar</b> → gestor <b>Aprova</b></li>
+  </ul>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Recuperar uma versão errada</div>
+  <p>Alguém carregou a versão errada por cima: abrir histórico de versões → <b>Restaurar</b> a versão correta → ela torna-se a atual (a errada fica no histórico).</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Enviar ficheiro a quem não tem conta</div>
+  <p>Criar <b>ligação pública</b> no documento → enviar o link por email → revogar quando já não for necessário.</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 4 — Eliminação acidental</div>
+  <p>Documento eliminado por engano → <b>Documentos → Lixo</b> → Restaurar. Só desaparece de vez com «Eliminar definitivamente» ou «Esvaziar lixo» — e mesmo assim pode haver <b>retenção legal</b> a impedir.</p>
+</div>
+
+<h2>10. Boas práticas e resolução de problemas</h2>
+<ul>
+  <li><b>Nomeie ficheiros com contexto</b> — <code>proposta-abc-2026-09.docx</code> em vez de <code>doc1.docx</code>.</li>
+  <li><b>Check-out para edições longas</b> — evita conflitos de versões.</li>
+  <li><b>Prefira partilha interna a links públicos</b> — links públicos são para quem não tem conta.</li>
+  <li><b>Etiquetas e descrições</b> alimentam a Pesquisa global — documentos sem metadados são difíceis de encontrar.</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>«Nova pasta»/«Upload» ausentes</td><td>Viewer — falta <code>documents.edit</code></td></tr>
+    <tr><td>Não consigo eliminar</td><td>Falta <code>documents.delete</code> (Member/Viewer) ou retenção legal ativa</td></tr>
+    <tr><td>«em check-out por {nome}»</td><td>Outro utilizador reservou o ficheiro — peça check-in ou um Admin força</td></tr>
+    <tr><td>Sem opção «Partilhar»</td><td>Falta <code>documents.share</code> (só Admin/Manager)</td></tr>
+  </tbody>
+</table>
+
+
+</section>
+
+<section class="chapter-divider" id="cap-listas">
+  <div class="cap-part">Parte III — Conteúdo</div>
+  <div class="cap-num">7</div>
+  <h1>Listas</h1>
+  <p class="cap-desc">Tabelas de dados com 13 tipos de campo, relações, vistas e CSV.</p>
+  <p class="cap-route">Menu lateral → Listas · <code>/lists</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que são Listas</h2>
+<p>Uma <b>Lista</b> no NEXORA é uma <b>mini base de dados estruturada</b> — o equivalente a uma lista do SharePoint ou a uma folha Excel com tipos de coluna fortes. Define-se um esquema de <b>campos</b> (colunas) e depois a equipa mantém <b>registos</b> (linhas) em conjunto: criar, editar, filtrar, ordenar, exportar.</p>
+<p><b>Quando usar uma Lista:</b> dados vivos que a equipa mantém continuamente — inventário, contactos, fornecedores, requisições, pipeline comercial, controlo de equipamento, registo de formações. Se precisa de <i>recolher</i> respostas de várias pessoas (uma submissão por pessoa), use <b>Formulários</b> em vez disso.</p>
+
+<h2>2. Anatomia de uma lista</h2>
+<table>
+  <thead><tr><th>Elemento</th><th>O que é</th></tr></thead>
+  <tbody>
+    <tr><td><b>Lista</b></td><td>O contentor: nome + descrição + esquema de campos</td></tr>
+    <tr><td><b>Campo (field)</b></td><td>Uma coluna com nome, <b>slug</b> (identificador técnico), <b>tipo</b>, obrigatoriedade e opções</td></tr>
+    <tr><td><b>Slug</b></td><td>Identificador único do campo (minúsculas, números e hífens, ex.: <code>valor-anual</code>) — usado nas APIs e em valores de registo</td></tr>
+    <tr><td><b>Registo (item)</b></td><td>Uma linha de dados — valores por slug de campo</td></tr>
+    <tr><td><b>Vista guardada</b></td><td>Combinação de filtros/ordenação gravada para reutilização</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Tipos de campo</h2>
+<table>
+  <thead><tr><th>Tipo</th><th>Guarda</th><th>Exemplo</th></tr></thead>
+  <tbody>
+    <tr><td><b>Texto</b></td><td>Texto curto (uma linha)</td><td>Nome, referência</td></tr>
+    <tr><td><b>Texto longo</b></td><td>Texto multi-linha</td><td>Observações, morada</td></tr>
+    <tr><td><b>Número</b></td><td>Valor numérico</td><td>Quantidade, ordem</td></tr>
+    <tr><td><b>Moeda</b></td><td>Valor monetário</td><td>Preço unitário, valor anual</td></tr>
+    <tr><td><b>Data</b></td><td>Data (dia/mês/ano)</td><td>Data limite, validade</td></tr>
+    <tr><td><b>Data/hora</b></td><td>Data com hora</td><td>Entrega prevista</td></tr>
+    <tr><td><b>Booleano</b></td><td>Sim/Não</td><td>Urgente, ativo</td></tr>
+    <tr><td><b>Escolha</b></td><td>Uma opção de uma lista definida — <i>exige opções</i></td><td>Estado: Ativo/Inativo/Potencial</td></tr>
+    <tr><td><b>Email</b></td><td>Endereço de email validado</td><td>Email do contacto</td></tr>
+    <tr><td><b>URL</b></td><td>Endereço web</td><td>Website do fornecedor</td></tr>
+    <tr><td><b>Utilizador</b></td><td>Membro da organização</td><td>Gestor de conta</td></tr>
+    <tr><td><b>Relação</b></td><td>Ligação a um registo de <b>outra lista</b> — <i>exige lista de destino</i></td><td>Cliente → registo da lista «Clientes»</td></tr>
+    <tr><td><b>Ficheiro</b></td><td>Anexo/documento</td><td>Contrato assinado, foto</td></tr>
+  </tbody>
+</table>
+<div class="note"><b>Campos «Escolha»</b> precisam de pelo menos uma opção (valor + etiqueta). <b>Campos «Relação»</b> precisam de indicar a lista de destino — permitem ligar listas entre si (ex.: lista «Projetos» com campo relação para «Clientes»).</div>
+
+<h2>4. Criar e configurar uma lista — passo a passo</h2>
+<h3>4.1 Criar (com ou sem template)</h3>
+<ol class="steps">
+  <li>Menu <b>Listas</b> → <b>«Nova lista»</b> — abre o <b>seletor de modelos</b>.</li>
+  <li>Escolher <b>«Em branco»</b> ou um template: <i>Clientes, Inventário, Contactos, Fornecedores, Requisições</i> — o template nasce já com os campos preenchidos.</li>
+  <li>Ajustar nome e descrição → Criar. <span class="exp">Lista criada com os campos do modelo, pronta a receber registos.</span></li>
+</ol>
+<h3>4.2 Editar o esquema de campos</h3>
+<ol class="steps">
+  <li>Abrir a lista → modo de edição de campos.</li>
+  <li><b>Adicionar campo</b>: nome, slug (gerado automaticamente a partir do nome, editável), tipo, obrigatório, opções (se Escolha) ou lista de destino (se Relação).</li>
+  <li>Reordenar com as setas; editar ou remover campos existentes.</li>
+  <li><b>Guardar</b>. <span class="exp">Confirmação «Lista guardada»; erros de validação aparecem com mensagem traduzida.</span></li>
+</ol>
+<div class="tip"><b>Cuidado ao remover campos:</b> registos existentes perdem os valores dessa coluna. Prefira renomear/reordenar quando possível.</div>
+<h3>4.3 Gerir registos</h3>
+<ol class="steps">
+  <li><b>«Novo registo»</b> → preencher os campos → criar.</li>
+  <li>Clicar numa linha → editar valores → guardar.</li>
+  <li>Menu de linha → <b>eliminar registo</b>.</li>
+  <li><b>Exportar CSV</b> — descarrega todos os registos para Excel.</li>
+  <li><b>Duplicar lista</b> — cria uma cópia da estrutura (útil para variantes).</li>
+</ol>
+
+<h2>5. Exemplos práticos</h2>
+
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Lista «Clientes» (CRM simples)</div>
+  <table>
+    <thead><tr><th>Campo</th><th>Slug</th><th>Tipo</th><th>Notas</th></tr></thead>
+    <tbody>
+      <tr><td>Nome</td><td><code>nome</code></td><td>Texto</td><td>Obrigatório</td></tr>
+      <tr><td>Empresa</td><td><code>empresa</code></td><td>Texto</td><td></td></tr>
+      <tr><td>Email</td><td><code>email</code></td><td>Email</td><td>Validado</td></tr>
+      <tr><td>Telefone</td><td><code>telefone</code></td><td>Texto</td><td></td></tr>
+      <tr><td>Estado</td><td><code>estado</code></td><td>Escolha</td><td>Ativo / Inativo / Potencial</td></tr>
+      <tr><td>Valor anual</td><td><code>valor-anual</code></td><td>Moeda</td><td></td></tr>
+      <tr><td>Gestor</td><td><code>gestor</code></td><td>Utilizador</td><td>Membro responsável</td></tr>
+    </tbody>
+  </table>
+  <p>Registos de exemplo: «ABC, S.A. — ativo — 18 500 € — gestor: Bruno».</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Inventário com relação a fornecedores</div>
+  <p>Duas listas ligadas: <b>«Fornecedores»</b> (Empresa, NIF, Email, Estado) e <b>«Inventário»</b> (Produto, Referência, Quantidade, Preço, <i>Fornecedor → relação para a lista Fornecedores</i>). Cada artigo aponta para o registo real do fornecedor — sem duplicação de dados.</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Requisições internas</div>
+  <p>Template «Requisições»: Artigo, Quantidade, Urgente (booleano), Data limite, Estado (Pendente/Aprovada/Entregue). Combinar com um <b>Processo</b> de aprovação: novo registo → aprovação do gestor → estado muda para Aprovada.</p>
+</div>
+
+<h2>6. Listas vs Formulários — quando usar cada um</h2>
+<table>
+  <thead><tr><th></th><th>Lista</th><th>Formulário</th></tr></thead>
+  <tbody>
+    <tr><td><b>Propósito</b></td><td>Base de dados mantida pela equipa</td><td>Recolha de respostas (uma por pessoa)</td></tr>
+    <tr><td><b>Quem edita</b></td><td>Quem tem <code>lists.manage</code> edita qualquer registo</td><td>Cada membro submete a sua resposta</td></tr>
+    <tr><td><b>Registos</b></td><td>Linhas editáveis e apagáveis continuamente</td><td>Submissões datadas, ligadas ao autor</td></tr>
+    <tr><td><b>Exemplos</b></td><td>Clientes, inventário, fornecedores</td><td>Pedido de férias, questionário, inscrição</td></tr>
+  </tbody>
+</table>
+
+<h2>7. Permissões</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver listas e registos, exportar</td><td><code>lists.view</code></td><td>Todos</td></tr>
+    <tr><td>Criar lista, editar campos, criar/editar/eliminar registos, duplicar</td><td><code>lists.manage</code></td><td>Admin, Manager, Editor</td></tr>
+    <tr><td>Member / Viewer</td><td>—</td><td>Só leitura — botões de escrita ausentes/desativados</td></tr>
+  </tbody>
+</table>
+
+<h2>8. Boas práticas e resolução de problemas</h2>
+<ul>
+  <li><b>Comece por um template</b> — é mais rápido ajustar do que criar do zero.</li>
+  <li><b>Slugs estáveis:</b> o slug identifica o campo nos dados/API — não o mude depois de ter registos.</li>
+  <li><b>Marque como obrigatório só o essencial</b> — demasiados obrigatórios afastam quem regista.</li>
+  <li><b>Use «Escolha» em vez de texto livre</b> para estados/categorias — evita «Ativo», «activo», «ATIVO».</li>
+  <li><b>Relações</b> em vez de duplicar dados — o fornecedor existe uma vez, é referenciado em todo o lado.</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>«Escolha» não grava</td><td>Falta pelo menos uma opção (valor + etiqueta)</td></tr>
+    <tr><td>«Relação» não grava</td><td>Falta escolher a lista de destino</td></tr>
+    <tr><td>Slug rejeitado</td><td>Só minúsculas, números e hífens — sem espaços nem acentos</td></tr>
+    <tr><td>Sem botões de criar/editar</td><td>Member/Viewer — falta <code>lists.manage</code></td></tr>
+  </tbody>
+</table>
+
+
+</section>
+
+<section class="chapter-divider" id="cap-formularios">
+  <div class="cap-part">Parte III — Conteúdo</div>
+  <div class="cap-num">8</div>
+  <h1>Formulários</h1>
+  <p class="cap-desc">Recolha de dados com construtor visual, publicação e exportação.</p>
+  <p class="cap-route">Menu lateral → Formulários · <code>/forms</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que são Formulários</h2>
+<p>Um <b>Formulário</b> é uma ferramenta de <b>recolha de dados</b> — o equivalente interno a um Google Forms. Quem gere <b>constrói</b> o questionário, <b>publica-o</b>, e os membros da organização <b>respondem</b> — cada pessoa com a sua submissão. As respostas ficam reunidas numa tabela consultável e exportável.</p>
+<p><b>Quando usar:</b> pedidos de férias, inscrições em eventos, questionários de satisfação, registo de ocorrências, requisições, avaliações — sempre que várias pessoas submetem informação de forma estruturada.</p>
+
+<h2>2. Ciclo de vida — os 3 estados</h2>
+<table>
+  <thead><tr><th>Estado</th><th>O que significa</th><th>Quem pode responder</th></tr></thead>
+  <tbody>
+    <tr><td><b>Rascunho</b> (DRAFT)</td><td>Em construção — estado inicial</td><td>Ninguém</td></tr>
+    <tr><td><b>Publicado</b> (PUBLISHED)</td><td>Aberto a respostas</td><td>Todos os membros da organização</td></tr>
+    <tr><td><b>Arquivado</b> (ARCHIVED)</td><td>Fechado — não aceita novas respostas (reativável)</td><td>Ninguém</td></tr>
+  </tbody>
+</table>
+<div class="note"><b>Regras importantes:</b> (1) a API rejeita submissões de formulários não publicados; (2) não é possível publicar um formulário sem campos — precisa de pelo menos um campo de dados (além de títulos/separadores decorativos); (3) as respostas são <b>internas</b> — não existe link público externo.</div>
+
+<h2>3. Tipos de campo</h2>
+<table>
+  <thead><tr><th>Tipo</th><th>Comportamento</th><th>Exemplo</th></tr></thead>
+  <tbody>
+    <tr><td><b>Texto</b></td><td>Resposta curta, uma linha</td><td>Nome, assunto</td></tr>
+    <tr><td><b>Texto longo</b></td><td>Resposta multi-linha</td><td>Observações, descrição</td></tr>
+    <tr><td><b>Número</b></td><td>Valor numérico</td><td>Quantidade, avaliação 1–5</td></tr>
+    <tr><td><b>Moeda</b></td><td>Valor monetário</td><td>Valor do pedido</td></tr>
+    <tr><td><b>Email</b></td><td>Endereço validado</td><td>Email de contacto</td></tr>
+    <tr><td><b>Telefone</b></td><td>Número de telefone</td><td>Contacto direto</td></tr>
+    <tr><td><b>Data</b></td><td>Seletor de data</td><td>Data de início das férias</td></tr>
+    <tr><td><b>Seleção</b> (select)</td><td>Dropdown com opções — <i>exige opções</i></td><td>Departamento</td></tr>
+    <tr><td><b>Escolha única</b> (radio)</td><td>Botões de opção — uma escolha</td><td>Sim/Não, tipo de licença</td></tr>
+    <tr><td><b>Caixas de seleção</b> (checkbox)</td><td>Múltiplas escolhas</td><td>Restrições alimentares</td></tr>
+    <tr><td><b>Upload</b></td><td>Anexo de ficheiro</td><td>Comprovativo, evidência</td></tr>
+    <tr><td><b>Título</b> (heading)</td><td>Cabeçalho decorativo — organiza o formulário em secções</td><td>«Secção 2 — Detalhes»</td></tr>
+    <tr><td><b>Separador</b></td><td>Linha divisória visual</td><td>Separar blocos temáticos</td></tr>
+  </tbody>
+</table>
+<p class="small">Cada campo tem: <b>etiqueta</b> (a pergunta), <b>obrigatório</b> (sim/não), <b>placeholder</b> (texto de ajuda dentro do campo) e <b>valor por defeito</b> opcional. Campos de escolha exigem pelo menos uma opção.</p>
+
+<h2>4. Fluxo completo — passo a passo</h2>
+<h3>4.1 Criar</h3>
+<ol class="steps">
+  <li><b>Formulários → «Novo formulário»</b> → abre o seletor de modelos.</li>
+  <li>Escolher «Em branco» ou um template: <i>Pedido de férias, Questionário de satisfação, Registo de ocorrência, Inscrição em evento, Pedido de contacto</i>.</li>
+  <li>Ajustar nome/descrição → Criar. Nasce em <b>Rascunho</b>.</li>
+</ol>
+<h3>4.2 Construir (Builder)</h3>
+<ol class="steps">
+  <li>Abrir o formulário → <b>«Construtor»</b>.</li>
+  <li><b>«+ Adicionar campo»</b> → escolher tipo → configurar etiqueta, obrigatoriedade, opções.</li>
+  <li>Reordenar com setas; usar <b>Títulos</b> e <b>Separadores</b> para organizar formulários longos.</li>
+  <li><b>Guardar</b> — confirmação «Formulário guardado».</li>
+</ol>
+<h3>4.3 Publicar e recolher</h3>
+<ol class="steps">
+  <li>Na página do formulário → <b>«Publicar»</b>. <span class="exp">Estado passa a Publicado; membros já podem responder.</span></li>
+  <li>Os respondentes abrem <b>Formulários → nome</b>, preenchem e submetem.</li>
+  <li>Na página do formulário, o separador de <b>respostas</b> mostra cada submissão com autor e data; <b>«Exportar CSV»</b> descarrega tudo.</li>
+</ol>
+<h3>4.4 Fechar e reutilizar</h3>
+<ol class="steps">
+  <li><b>«Arquivar»</b> — fecha a novas respostas (as existentes ficam consultáveis). Reativável depois.</li>
+  <li><b>«Duplicar»</b> — copia a estrutura para um novo formulário (questionários recorrentes).</li>
+  <li><b>Eliminar</b> — remove o formulário e as respostas.</li>
+</ol>
+
+<h2>5. Exemplos práticos</h2>
+
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Pedido de férias (template)</div>
+  <ul>
+    <li><b>Texto:</b> Nome do colaborador (obrigatório)</li>
+    <li><b>Data:</b> Data de início · <b>Data:</b> Data de fim (ambas obrigatórias)</li>
+    <li><b>Escolha única:</b> Tipo — Férias / Licença / Outro</li>
+    <li><b>Texto longo:</b> Observações</li>
+  </ul>
+  <p>Publicar → cada membro submete o seu pedido → RH exporta CSV no fim do mês.</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Questionário de satisfação</div>
+  <ul>
+    <li><b>Número:</b> Avaliação geral (1–5)</li>
+    <li><b>Texto longo:</b> O que mais gostou? · <b>Texto longo:</b> Sugestões de melhoria</li>
+  </ul>
+  <p>Arquivar quando terminar o período de resposta → analisar o CSV.</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Registo de ocorrências</div>
+  <ul>
+    <li><b>Texto:</b> Título da ocorrência · <b>Data:</b> Quando aconteceu</li>
+    <li><b>Seleção:</b> Gravidade — Baixa / Média / Alta / Crítica</li>
+    <li><b>Texto longo:</b> Descrição detalhada · <b>Upload:</b> Evidência (foto/ficheiro)</li>
+  </ul>
+</div>
+
+<h2>6. Formulários vs Listas</h2>
+<table>
+  <thead><tr><th></th><th>Formulário</th><th>Lista</th></tr></thead>
+  <tbody>
+    <tr><td><b>Propósito</b></td><td>Recolher respostas — uma por pessoa</td><td>Base de dados viva, mantida em conjunto</td></tr>
+    <tr><td><b>Escrita</b></td><td>Qualquer membro submete (sem precisar de manage)</td><td>Só quem tem <code>lists.manage</code></td></tr>
+    <tr><td><b>Respostas</b></td><td>Submissões datadas por autor, não editáveis por terceiros</td><td>Registos editáveis/apagáveis</td></tr>
+    <tr><td><b>Estados</b></td><td>Rascunho → Publicado → Arquivado</td><td>Sempre ativa</td></tr>
+  </tbody>
+</table>
+
+<h2>7. Permissões</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver formulários e respostas, exportar CSV</td><td><code>forms.view</code></td><td>Todos</td></tr>
+    <tr><td><b>Responder/submeter</b></td><td>Ser membro autenticado</td><td>Todos (incl. Viewer)</td></tr>
+    <tr><td>Criar, editar campos, publicar, arquivar, duplicar, eliminar</td><td><code>forms.manage</code></td><td>Admin, Manager, Editor</td></tr>
+  </tbody>
+</table>
+
+<h2>8. Boas práticas e resolução de problemas</h2>
+<ul>
+  <li><b>Poucos campos, boas respostas:</b> formulários curtos têm mais submissões — corte o que não é essencial.</li>
+  <li><b>Obrigatório com parcimónia:</b> marque só o que inviabiliza a resposta se faltar.</li>
+  <li><b>Placeholders como exemplos:</b> «ex.: 25/09/2026» dentro do campo reduz erros.</li>
+  <li><b>Teste antes de publicar:</b> crie, construa, submeta uma resposta de teste, e só depois divulgue.</li>
+  <li><b>Formulários recorrentes:</b> duplique o anterior em vez de reconstruir.</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>«Publicar» falha</td><td>Formulário sem campos de dados (títulos/separadores não contam)</td></tr>
+    <tr><td>Submissão rejeitada</td><td>Formulário não está Publicado (ou foi arquivado)</td></tr>
+    <tr><td>Campo de escolha não grava</td><td>Falta pelo menos uma opção</td></tr>
+    <tr><td>Não consigo criar/editar formulários</td><td>Member/Viewer — falta <code>forms.manage</code> (mas pode responder)</td></tr>
+  </tbody>
+</table>
+
+
+</section>
+
+<section class="chapter-divider" id="cap-sites">
+  <div class="cap-part">Parte III — Conteúdo</div>
+  <div class="cap-num">9</div>
+  <h1>Sites</h1>
+  <p class="cap-desc">Portais internos com páginas de widgets, hierarquia e papéis locais.</p>
+  <p class="cap-route">Menu lateral → Sites · <code>/sites</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que são Sites</h2>
+<p>Um <b>Site</b> no NEXORA é um <b>portal interno</b> — o equivalente a um site do SharePoint. Serve para <b>agregar e apresentar conteúdo</b> de toda a plataforma num sítio temático: páginas compostas por blocos («widgets») que puxam dados vivos de documentos, listas e notícias.</p>
+<p><b>A ideia central:</b> Documentos, Listas e Notícias são os <i>dados</i>; os Sites são a <i>apresentação organizada</i> desses dados para uma audiência — a «homepage» de um departamento, projeto ou equipa, em vez de cada pessoa andar a procurar conteúdo espalhado.</p>
+
+<h2>2. Anatomia de um site</h2>
+<table>
+  <thead><tr><th>Elemento</th><th>O que é</th></tr></thead>
+  <tbody>
+    <tr><td><b>Site</b></td><td>O portal: nome, descrição, tipo, visibilidade, ícone e cor</td></tr>
+    <tr><td><b>Sub-site</b></td><td>Um site pode ter <b>sites filhos</b> (hierarquia) — ex.: «Empresa» → «RH», «Comercial»</td></tr>
+    <tr><td><b>Página</b></td><td>Uma página dentro do site, composta por widgets ordenados; tem slug próprio e estado Rascunho/Publicada</td></tr>
+    <tr><td><b>Página inicial</b></td><td>A página marcada <code>isHome</code> — o que se vê no separador «Início»</td></tr>
+    <tr><td><b>Widget</b></td><td>Um bloco de conteúdo na página (ver §4)</td></tr>
+    <tr><td><b>Membros do site</b></td><td>Lista própria de membros com <b>papéis locais</b> — independentes do papel na organização</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Tipos, visibilidade e papéis locais</h2>
+<h3>3.1 Tipos de site</h3>
+<table>
+  <thead><tr><th>Tipo</th><th>Uso</th></tr></thead>
+  <tbody>
+    <tr><td><b>Departamento</b></td><td>Portal de uma área funcional (RH, Comercial, Financeiro)</td></tr>
+    <tr><td><b>Projeto</b></td><td>Espaço de um projeto com prazo e equipa própria</td></tr>
+    <tr><td><b>Equipa</b></td><td>Página de uma equipa permanente</td></tr>
+    <tr><td><b>Hub</b></td><td>Ponto de agregação transversal — ex.: intranet geral</td></tr>
+  </tbody>
+</table>
+<h3>3.2 Visibilidade</h3>
+<table>
+  <thead><tr><th>Visibilidade</th><th>Quem vê</th></tr></thead>
+  <tbody>
+    <tr><td><b>Organização</b> (ORG)</td><td>Todos os membros da organização</td></tr>
+    <tr><td><b>Privado</b> (PRIVATE)</td><td>Só os membros do site — não aparece na lista dos outros</td></tr>
+  </tbody>
+</table>
+<h3>3.3 Papéis de site (locais)</h3>
+<p>Cada site tem a sua própria gestão de membros — <b>independente do papel global</b> na organização. Um <code>Member</code> da organização pode ser <b>Administrador deste site</b>.</p>
+<table>
+  <thead><tr><th>Papel local</th><th>Capacidade no site</th></tr></thead>
+  <tbody>
+    <tr><td><b>Administrador</b></td><td>Tudo: definições, membros, páginas, eliminar o site</td></tr>
+    <tr><td><b>Gestor</b></td><td>Gerir páginas e membros</td></tr>
+    <tr><td><b>Editor</b></td><td>Criar e editar páginas</td></tr>
+    <tr><td><b>Contribuidor</b></td><td>Contribui conteúdo dentro dos limites definidos</td></tr>
+    <tr><td><b>Leitor</b></td><td>Só consulta</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Widgets — os blocos das páginas</h2>
+<table>
+  <thead><tr><th>Widget</th><th>O que mostra</th><th>Exemplo de uso</th></tr></thead>
+  <tbody>
+    <tr><td><b>Hero</b></td><td>Banner de destaque com título e subtítulo</td><td>«Bem-vindos ao portal de RH»</td></tr>
+    <tr><td><b>Título</b></td><td>Cabeçalho de secção</td><td>«Documentos importantes»</td></tr>
+    <tr><td><b>Texto</b></td><td>Bloco de texto livre</td><td>Instruções, avisos, contexto</td></tr>
+    <tr><td><b>Documentos recentes</b></td><td>Lista viva dos últimos documentos da organização</td><td>«Últimos contratos»</td></tr>
+    <tr><td><b>Notícias</b></td><td>Últimas notícias — <b>filtradas por este site</b> quando a notícia está associada</td><td>Notícias de RH no site de RH</td></tr>
+    <tr><td><b>Lista</b></td><td>Os registos de uma lista NEXORA que escolhe</td><td>«Fornecedores», «Benefícios»</td></tr>
+    <tr><td><b>KPI</b></td><td>Número/métrica em destaque</td><td>«12 pedidos pendentes»</td></tr>
+    <tr><td><b>Link</b></td><td>Botão para URL externo</td><td>«Abrir portal de faturação»</td></tr>
+    <tr><td><b>HTML</b></td><td>Conteúdo HTML livre</td><td>Embeds e formatação avançada</td></tr>
+  </tbody>
+</table>
+<div class="tip"><b>Os widgets são dinâmicos:</b> «Documentos recentes», «Notícias» e «Lista» mostram dados <b>em tempo real</b> — a página atualiza-se sozinha quando o conteúdo muda, sem editar a página.</div>
+
+<h2>5. Criar e construir — passo a passo</h2>
+<h3>5.1 Criar o site</h3>
+<ol class="steps">
+  <li><b>Sites → «Novo site»</b>.</li>
+  <li>Preencher: <b>nome</b>, descrição, <b>tipo</b> (Departamento/Projeto/Equipa/Hub), <b>visibilidade</b>, ícone e cor.</li>
+  <li>Opcional: escolher um <b>site pai</b> para criar um sub-site.</li>
+  <li><span class="exp">Site criado — o criador fica como Administrador do site.</span></li>
+</ol>
+<h3>5.2 Construir páginas</h3>
+<ol class="steps">
+  <li>Dentro do site → separador <b>«Conteúdo»</b> → criar página (nasce com um widget Hero).</li>
+  <li>Editar a página: adicionar/ordenar widgets, configurar cada um (título do hero, lista a mostrar, URL do link…).</li>
+  <li>Definir o <b>slug</b> (URL amigável) e mudar o estado para <b>Publicada</b>.</li>
+  <li>Marcar <b>«página inicial»</b> para que apareça no separador «Início» do site.</li>
+</ol>
+<h3>5.3 Gerir membros</h3>
+<ol class="steps">
+  <li>Separador <b>«Membros»</b> → adicionar membros da organização com o papel local adequado.</li>
+  <li>Para sites <b>privados</b>, esta lista é quem controla o acesso — quem não está aqui nem vê o site.</li>
+</ol>
+<h3>5.4 Definições e zona de perigo</h3>
+<ol class="steps">
+  <li>Separador <b>«Definições»</b> (só gestores): renomear, mudar visibilidade, cor/ícone.</li>
+  <li><b>Zona de perigo</b> → eliminar o site (confirmação obrigatória; remove páginas e associações).</li>
+</ol>
+
+<h2>6. Exemplos práticos</h2>
+
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Portal de RH (Departamento, Organização)</div>
+  <ul>
+    <li><b>Hero:</b> «Recursos Humanos — tudo o que precisa num só lugar»</li>
+    <li><b>Notícias:</b> últimas notícias associadas ao site de RH</li>
+    <li><b>Lista:</b> «Benefícios» (lista NEXORA)</li>
+    <li><b>Link:</b> «Pedir férias» → aponta para o formulário interno</li>
+    <li><b>Documentos recentes:</b> políticas e procedimentos atualizados</li>
+  </ul>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Projeto confidencial (Projeto, Privado)</div>
+  <p>Site privado «Projeto Alfa»: só os 5 membros da equipa o veem. Página inicial com Hero + KPI do progresso + lista «Tarefas do projeto». A membresia do site controla quem entra — um Admin da organização sem ser membro do site privado não o vê na lista.</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Intranet com hierarquia (Hub)</div>
+  <p>Site «Intranet» (Hub, Organização) como entrada geral, com sub-sites «RH», «Comercial» e «Operações» pendurados — cada departamento gere o seu sub-site com os seus membros e páginas.</p>
+</div>
+
+<h2>7. Permissões</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver sites e páginas</td><td><code>sites.view</code> / <code>pages.view</code></td><td>Todos</td></tr>
+    <tr><td>Criar/eliminar sites, mudar visibilidade, gerir membros do site</td><td><code>sites.manage</code></td><td>Admin, Manager, Editor</td></tr>
+    <tr><td>Criar e editar páginas dentro de sites</td><td><code>pages.manage</code></td><td>Admin, Manager, Editor</td></tr>
+    <tr><td>Member / Viewer</td><td>—</td><td>Só leitura (mas podem ter papéis <b>locais</b> elevados num site específico)</td></tr>
+  </tbody>
+</table>
+<div class="note"><b>Dupla camada:</b> a permissão global (<code>sites.manage</code>) controla quem pode <i>criar</i> sites; os papéis locais controlam o que cada membro faz <i>dentro</i> de cada site. Um Member global pode ser Administrador de um site privado.</div>
+
+<h2>8. Boas práticas e resolução de problemas</h2>
+<ul>
+  <li><b>Pense na audiência:</b> quem vai usar este site e o que procura? Organize a página inicial por essa lógica.</li>
+  <li><b>Prefira widgets dinâmicos</b> (documentos recentes, notícias, listas) a texto estático — a página mantém-se atualizada sozinha.</li>
+  <li><b>Sites privados precisam de membros:</b> criar um site privado sem adicionar membros deixa-o invisível para todos exceto o criador.</li>
+  <li><b>Associe as notícias ao site</b> — o widget «Notícias» de um site mostra as notícias ligadas a ele.</li>
+  <li><b>Publicar ≠ visível sem página inicial:</b> um site sem página inicial publicada mostra «Início» vazio.</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>Sem «Novo site»</td><td>Member/Viewer — falta <code>sites.manage</code></td></tr>
+    <tr><td>Site privado não aparece a um colega</td><td>Não é membro do site — adicione-o em «Membros»</td></tr>
+    <tr><td>Separador «Início» vazio</td><td>Falta uma página publicada marcada como inicial</td></tr>
+    <tr><td>Widget «Lista» vazio</td><td>Falta configurar <code>listId</code> com uma lista real</td></tr>
+  </tbody>
+</table>
+
+
+</section>
+
+<section class="chapter-divider" id="cap-noticias">
+  <div class="cap-part">Parte III — Conteúdo</div>
+  <div class="cap-num">10</div>
+  <h1>Notícias</h1>
+  <p class="cap-desc">Comunicação interna com estados editoriais, agendamento e comentários.</p>
+  <p class="cap-route">Menu lateral → Notícias · <code>/news</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que são as Notícias</h2>
+<p>As <b>Notícias</b> são o canal de <b>comunicação interna</b> da organização — anúncios, atualizações, comunicados e artigos que chegam a todos os membros (ou a um site específico). É o «feed editorial» da empresa: cada notícia é um artigo com título, resumo, corpo, categoria e etiquetas, com estados editoriais e comentários.</p>
+
+<h2>2. Anatomia de uma notícia</h2>
+<table>
+  <thead><tr><th>Campo</th><th>Descrição</th><th>Exemplo</th></tr></thead>
+  <tbody>
+    <tr><td><b>Título</b></td><td>Cabeçalho da notícia (obrigatório)</td><td>«Bem-vindos à NEXORA»</td></tr>
+    <tr><td><b>Resumo</b> (excerpt)</td><td>Texto curto mostrado na listagem/feed</td><td>«A nova plataforma interna já está disponível»</td></tr>
+    <tr><td><b>Corpo</b></td><td>Conteúdo completo do artigo</td><td>O texto integral da comunicação</td></tr>
+    <tr><td><b>Categoria</b></td><td>Classificação editorial livre</td><td>Comunicação, RH, Eventos</td></tr>
+    <tr><td><b>Etiquetas</b></td><td>Palavras-chave (máx. 20)</td><td>onboarding, plataforma</td></tr>
+    <tr><td><b>Cor de capa</b></td><td>Cor do marcador visual no feed</td><td>Índigo, verde, âmbar…</td></tr>
+    <tr><td><b>Destaque</b> (featured)</td><td>Marca a notícia como destacada no feed</td><td>Comunicados importantes</td></tr>
+    <tr><td><b>Site associado</b></td><td>Liga a notícia a um Site — aparece no widget «Notícias» desse site</td><td>Notícia de RH → site «RH»</td></tr>
+    <tr><td><b>Estado</b></td><td>Rascunho / Publicada / Agendada (ver §3)</td><td>Publicada</td></tr>
+    <tr><td><b>Data de publicação</b></td><td>Quando fica visível — define o agendamento</td><td>01/10/2026 09:00</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Ciclo de vida editorial</h2>
+<table>
+  <thead><tr><th>Estado</th><th>Comportamento</th></tr></thead>
+  <tbody>
+    <tr><td><b>Rascunho</b> (DRAFT)</td><td>Só visível para o autor e para quem tem <code>news.manage</code> — não aparece no feed dos outros</td></tr>
+    <tr><td><b>Publicada</b> (PUBLISHED)</td><td>Visível para toda a organização; a data de publicação é registada automaticamente</td></tr>
+    <tr><td><b>Agendada</b> (SCHEDULED)</td><td>Fica invisível <b>até à data de publicação chegar</b> — aí passa a aparecer como publicada, sem intervenção manual</td></tr>
+  </tbody>
+</table>
+<div class="tip"><b>Agendamento real:</b> uma notícia Agendada com <code>publishedAt</code> em 01/10 09:00 torna-se automaticamente visível a partir dessa hora — ideal para preparar comunicados com antecedência.</div>
+
+<h2>4. Notícias globais vs notícias de site</h2>
+<table>
+  <thead><tr><th></th><th>Notícia global</th><th>Notícia de site</th></tr></thead>
+  <tbody>
+    <tr><td><b>Onde aparece</b></td><td>Feed geral de Notícias</td><td>Feed geral <b>+ widget «Notícias» do site associado</b></td></tr>
+    <tr><td><b>Quem pode criar</b></td><td><code>news.manage</code> (Admin, Manager, Editor)</td><td><code>news.manage</code> <b>ou papel local ≥ Contribuidor nesse site</b></td></tr>
+    <tr><td><b>Uso</b></td><td>Comunicados a toda a empresa</td><td>Conteúdo editorial de um departamento/projeto</td></tr>
+  </tbody>
+</table>
+<div class="note"><b>Nuance importante:</b> um <b>Member</b> global sem <code>news.manage</code> pode publicar notícias <i>num site</i> onde seja Contribuidor (ou superior). Os papéis locais do site estendem as permissões de publicação dentro desse contexto.</div>
+
+<h2>5. Criar e gerir — passo a passo</h2>
+<h3>5.1 Criar uma notícia</h3>
+<ol class="steps">
+  <li><b>Notícias → «Nova notícia»</b>.</li>
+  <li>Preencher <b>título</b>, resumo e corpo.</li>
+  <li>Definir <b>categoria</b>, etiquetas, cor de capa, <b>destaque</b> e <b>site associado</b> (opcional).</li>
+  <li>Escolher o estado: <b>Rascunho</b> para continuar a trabalhar, <b>Publicada</b> para sair já, ou <b>Agendada</b> com data futura.</li>
+  <li><span class="exp">Publicada → aparece imediatamente no feed de toda a organização.</span></li>
+</ol>
+<h3>5.2 Interagir</h3>
+<ol class="steps">
+  <li>Abrir a notícia → página de detalhe com corpo completo.</li>
+  <li><b>Comentários</b> — qualquer membro pode comentar; a página recebe <b>atualizações em tempo real</b> (novos comentários aparecem sem refresh).</li>
+  <li>Autor, gestores de conteúdo ou gestores do site podem editar/apagar conforme §6.</li>
+</ol>
+
+<h2>6. Quem pode fazer o quê — em detalhe</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Quem pode</th></tr></thead>
+  <tbody>
+    <tr><td>Ver notícias publicadas/agendadas vencidas, comentar</td><td>Todos (<code>news.view</code>)</td></tr>
+    <tr><td>Criar notícia <b>global</b></td><td><code>news.manage</code> — Admin, Manager, Editor</td></tr>
+    <tr><td>Criar notícia <b>num site</b></td><td><code>news.manage</code> ou papel local ≥ <b>Contribuidor</b> nesse site</td></tr>
+    <tr><td>Editar notícia</td><td>O <b>autor</b>; <code>news.manage</code>; ou papel local ≥ <b>Editor</b> no site associado</td></tr>
+    <tr><td>Eliminar notícia</td><td>O <b>autor</b>; <code>news.manage</code>; ou papel local ≥ <b>Gestor</b> no site associado</td></tr>
+    <tr><td>Ver rascunhos de outros</td><td>Só <code>news.manage</code></td></tr>
+  </tbody>
+</table>
+
+<h2>7. Exemplos práticos</h2>
+
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Comunicado global</div>
+  <ul>
+    <li>Título: «Nova política de teletrabalho» · Categoria: Comunicação</li>
+    <li>Destaque: ligado · Estado: Publicada</li>
+    <li>Aparece no topo do feed de todos com a cor de capa escolhida.</li>
+  </ul>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Notícia de departamento</div>
+  <p>Site «RH» → notícia «Inscrições abertas para a formação de Excel» associada ao site. Um membro da equipa de RH com papel local <b>Contribuidor</b> publica-a — mesmo sendo Member na organização. Aparece no widget «Notícias» do site de RH <b>e</b> no feed geral.</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Campanha agendada</div>
+  <p>«Boas festas» escrita a 15 de dezembro, estado <b>Agendada</b> com publicação a 24/12 00:00 — ninguém a vê antes; a partir dessa hora aparece no feed automaticamente.</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 4 — Discussão editorial</div>
+  <p>Rascunho «Proposta de novo benefício» → visível só ao autor e a quem gere notícias → revisão via comentários → publicar quando aprovado.</p>
+</div>
+
+<h2>8. Boas práticas e resolução de problemas</h2>
+<ul>
+  <li><b>Resumo forte:</b> o excerpt é o que aparece na listagem — escreva-o como um lead de jornal.</li>
+  <li><b>Categorias consistentes:</b> combine uma lista curta (Comunicação, RH, Eventos, Produto) em vez de inventar categorias em cada post.</li>
+  <li><b>Destaque com moderação:</b> se tudo é destaque, nada é destaque — reserve para o que todos devem ler.</li>
+  <li><b>Associe ao site certo:</b> notícias departamentais associadas ao site alimentam o widget desse site.</li>
+  <li><b>Rascunhos não são privados absolutos:</b> quem tem <code>news.manage</code> vê os rascunhos de todos.</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>Sem «Nova notícia»</td><td>Falta <code>news.manage</code> — ou publique <i>num site</i> onde seja Contribuidor+</td></tr>
+    <tr><td>Notícia agendada não aparece</td><td>A data de publicação ainda não chegou — verifique <code>publishedAt</code></td></tr>
+    <tr><td>Colega não vê o meu rascunho</td><td>Rascunhos são do autor + gestores — é comportamento normal</td></tr>
+    <tr><td>Não consigo apagar notícia de outro</td><td>Só autor, <code>news.manage</code> ou Gestor do site associado</td></tr>
+  </tbody>
+</table>
+
+
+</section>
+
+<section class="part-divider">
+  <div class="part-num">Parte IV</div>
+  <h1>Trabalho e automação</h1>
+  <p class="part-desc">Execução e automação: tarefas do dia a dia, decisões humanas e processos que correm sozinhos.</p>
+  <ul class="part-toc"><li>Tarefas</li><li>Aprovações</li><li>Processos (Workflows)</li><li>IA (Copilot)</li></ul>
+</section>
+
+<section class="chapter-divider" id="cap-tarefas">
+  <div class="cap-part">Parte IV — Trabalho e automação</div>
+  <div class="cap-num">11</div>
+  <h1>Tarefas</h1>
+  <p class="cap-desc">Gestão de trabalho: estados, prioridades, responsáveis e prazos.</p>
+  <p class="cap-route">Menu lateral → Tarefas · <code>/tasks</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que são Tarefas</h2>
+<p>As <b>Tarefas</b> são a unidade básica de trabalho do NEXORA: uma ação concreta com responsável, prazo e estado. Servem para distribuir e acompanhar trabalho dentro da organização — pedidos, entregas, revisões, follow-ups.</p>
+<p>As tarefas ligam-se ao resto da plataforma: podem ser <b>atribuídas a pessoas ou equipas</b>, associadas a <b>projetos</b> e a <b>documentos</b>, criadas <b>automaticamente por Processos</b> (workflows) e geram <b>notificações</b> ao responsável.</p>
+
+<h2>2. Anatomia de uma tarefa</h2>
+<table>
+  <thead><tr><th>Campo</th><th>Descrição</th><th>Exemplo</th></tr></thead>
+  <tbody>
+    <tr><td><b>Título</b></td><td>Nome curto e acionável (obrigatório)</td><td>«Revisar proposta ABC»</td></tr>
+    <tr><td><b>Descrição</b></td><td>Detalhe, contexto, critérios de aceitação</td><td>«Verificar cláusulas 4 e 7 com o jurídico»</td></tr>
+    <tr><td><b>Estado</b></td><td>Fase de vida da tarefa (ver §3)</td><td>Em curso</td></tr>
+    <tr><td><b>Prioridade</b></td><td>Baixa, Normal, Alta, Urgente (ver §4)</td><td>Alta</td></tr>
+    <tr><td><b>Responsável</b></td><td>Membro da organização a quem pertence a execução</td><td>Carla Mendes</td></tr>
+    <tr><td><b>Equipa</b></td><td>Alternativa ao responsável individual — a tarefa fica visível para a equipa</td><td>Consultores</td></tr>
+    <tr><td><b>Data de início</b></td><td>Quando o trabalho deve começar</td><td>25/09/2026</td></tr>
+    <tr><td><b>Data limite</b></td><td>Prazo de entrega — alimenta alertas e o «O meu dia»</td><td>30/09/2026</td></tr>
+    <tr><td><b>Etiquetas</b></td><td>Palavras-chave livres para filtrar e agrupar</td><td>cliente, urgente, trimestre</td></tr>
+    <tr><td><b>Projeto</b></td><td>Lista NEXORA associada que funciona como projeto (agrupamento)</td><td>Onboarding ABC</td></tr>
+    <tr><td><b>Documento</b></td><td>Documento relacionado (ex.: o ficheiro a revisar)</td><td>proposta-abc.docx</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Ciclo de vida — os 5 estados</h2>
+<table>
+  <thead><tr><th>Estado</th><th>Significado</th><th>Quando usar</th></tr></thead>
+  <tbody>
+    <tr><td><b>Por fazer</b> (TODO)</td><td>Criada, ainda não iniciada</td><td>Estado inicial por defeito</td></tr>
+    <tr><td><b>Em curso</b> (IN_PROGRESS)</td><td>Alguém está a trabalhar nela</td><td>O responsável começou a execução</td></tr>
+    <tr><td><b>Em revisão</b> (IN_REVIEW)</td><td>Feita, à espera de validação</td><td>Trabalho entregue mas precisa de revisão de terceiros</td></tr>
+    <tr><td><b>Concluída</b> (DONE)</td><td>Terminada — regista automaticamente a data de conclusão</td><td>Trabalho finalizado e aceite</td></tr>
+    <tr><td><b>Cancelada</b> (CANCELLED)</td><td>Descartada sem conclusão</td><td>Pedido retirado, já não faz sentido</td></tr>
+  </tbody>
+</table>
+<div class="tip"><b>Fluxo típico:</b> Por fazer → Em curso → Em revisão → Concluída. O estado «Cancelada» existe para tarefas que morrem pelo caminho — não as apague, cancele-as: fica registo histórico.</div>
+
+<h2>4. Prioridades</h2>
+<table>
+  <thead><tr><th>Prioridade</th><th>Uso recomendado</th></tr></thead>
+  <tbody>
+    <tr><td><b>Urgente</b></td><td>Bloqueadores, incidentes, prazos de hoje — aparece no topo das ordenações por prioridade</td></tr>
+    <tr><td><b>Alta</b></td><td>Importante, com prazo próximo</td></tr>
+    <tr><td><b>Normal</b></td><td>Trabalho corrente (defeito)</td></tr>
+    <tr><td><b>Baixa</b></td><td>Nice-to-have, melhorias, backlog</td></tr>
+  </tbody>
+</table>
+
+<h2>5. Como criar e gerir — passo a passo</h2>
+<h3>5.1 Criar uma tarefa</h3>
+<ol class="steps">
+  <li>Menu lateral → <b>Tarefas</b> → botão <b>«Nova tarefa»</b>.</li>
+  <li>Preencher <b>título</b> (obrigatório) e descrição.</li>
+  <li>Definir <b>prioridade</b>, <b>responsável</b> (membro) ou <b>equipa</b>.</li>
+  <li>Opcional: data de início, data limite, etiquetas, projeto, documento associado.</li>
+  <li>Guardar. <span class="exp">A tarefa aparece na lista; o responsável recebe a notificação «Tarefa atribuída».</span></li>
+</ol>
+
+<h3>5.2 Trabalhar a tarefa</h3>
+<ol class="steps">
+  <li>Abrir a tarefa (clicar na linha) → página de detalhe.</li>
+  <li>Mudar o estado para <b>Em curso</b> quando começar.</li>
+  <li>Adicionar comentários/atualizações na página de detalhe para manter contexto.</li>
+  <li>Concluir → estado <b>Concluída</b>. <span class="exp">A data de conclusão é registada automaticamente.</span></li>
+</ol>
+
+<h3>5.3 Filtrar e organizar a lista</h3>
+<ol class="steps">
+  <li>Usar os filtros de <b>estado</b> e a pesquisa por texto.</li>
+  <li>Alternar o âmbito <b>«Todas» / «Minhas»</b> — «Minhas» mostra só tarefas atribuídas a si.</li>
+  <li>Ordenar por título, prazo, prioridade, data de criação ou atualização.</li>
+</ol>
+
+<h3>5.4 O «O meu dia»</h3>
+<p>A página <b>O meu dia</b> (<code>/my-day</code>) agrega o que precisa de atenção hoje: tarefas suas com prazo próximo ou em curso, aprovações pendentes e notificações. É o ponto de partida diário recomendado.</p>
+
+<h2>6. Exemplos práticos</h2>
+
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Pedido simples</div>
+  <p><b>Cenário:</b> precisa que a Carla prepare uma apresentação.</p>
+  <ul>
+    <li>Título: «Preparar apresentação comercial Q4»</li>
+    <li>Responsável: Carla Mendes · Prioridade: Alta · Data limite: sexta-feira</li>
+    <li>Etiquetas: <code>comercial, apresentacao</code></li>
+  </ul>
+  <p>A Carla recebe notificação, trabalha a tarefa, marca Em curso → Concluída. O criador acompanha na lista.</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Tarefa com revisão</div>
+  <ul>
+    <li>Título: «Rever contrato fornecedor X» · Responsável: Bruno · Prioridade: Normal</li>
+    <li>Documento associado: <code>contrato-x.pdf</code> (abre direto da tarefa)</li>
+    <li>Fluxo: Por fazer → Em curso → <b>Em revisão</b> (o criador valida) → Concluída</li>
+  </ul>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Tarefa criada por um Processo</div>
+  <p>Num workflow «Onboarding», o passo <b>Criar tarefa</b> gera automaticamente «Preparar acessos do novo membro» atribuída ao responsável configurado. A tarefa aparece na lista normal e o id fica disponível no contexto do processo (<code>context.taskId</code>) para passos seguintes (ex.: fechá-la no fim).</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 4 — Tarefa de equipa</div>
+  <p>Atribuir a <b>equipa «Consultores»</b> em vez de uma pessoa: qualquer membro da equipa pode pegar na tarefa. Útil para filas de trabalho partilhadas (ex.: «responder a pedidos de suporte»).</p>
+</div>
+
+<h2>7. Quem pode fazer o quê</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver tarefas e abrir detalhe</td><td><code>tasks.view</code></td><td>Todos (incl. Viewer)</td></tr>
+    <tr><td>Criar, editar, mudar estado, atribuir, eliminar</td><td><code>tasks.manage</code></td><td>Admin, Manager, Editor, Member</td></tr>
+    <tr><td>Viewer</td><td>—</td><td>Só consulta — o botão «Nova tarefa» está desativado e a API devolve 403</td></tr>
+  </tbody>
+</table>
+<div class="note"><b>Nota:</b> o Member é o papel «operacional» mais baixo que pode criar e concluir tarefas — por isso os testes de execução de trabalho devem ser feitos como Member, não como Viewer.</div>
+
+<h2>8. Boas práticas</h2>
+<ul>
+  <li><b>Títulos acionáveis:</b> «Enviar fatura à ABC» &gt; «Fatura».</li>
+  <li><b>Uma tarefa = uma entrega:</b> se tem 5 passos independentes, crie 5 tarefas (ou um Processo se for recorrente).</li>
+  <li><b>Sempre com responsável e prazo</b> — tarefas órfãs acumulam-se sem dono.</li>
+  <li><b>Use «Em revisão»</b> quando o trabalho precisa de validação — evita concluir trabalho por verificar.</li>
+  <li><b>Etiquetas consistentes</b> — combine um vocabulário curto com a equipa (<code>cliente, interno, urgente</code>) em vez de etiquetas ad-hoc.</li>
+  <li><b>Tarefa recorrente ou multi-etapa?</b> Provavelmente é um <b>Processo</b> (workflow), não uma tarefa.</li>
+</ul>
+
+<h2>9. Resolução de problemas</h2>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>Botão «Nova tarefa» desativado/ausente</td><td>Está como <b>Viewer</b> — falta <code>tasks.manage</code></td></tr>
+    <tr><td>Responsável não recebeu notificação</td><td>Verificar o sino de notificações; a atribuição a equipa notifica de forma diferente</td></tr>
+    <tr><td>Tarefa não aparece na lista</td><td>Filtro de estado ativo ou âmbito «Minhas» ligado</td></tr>
+    <tr><td>Não consigo associar documento</td><td>O documento tem de existir e estar ativo na organização</td></tr>
+  </tbody>
+</table>
+
+
+</section>
+
+<section class="chapter-divider" id="cap-aprovacoes">
+  <div class="cap-part">Parte IV — Trabalho e automação</div>
+  <div class="cap-num">12</div>
+  <h1>Aprovações</h1>
+  <p class="cap-desc">A fila de decisões dos processos: aprovar, rejeitar e delegar.</p>
+  <p class="cap-route">Menu lateral → Aprovações · <code>/approvals</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que são Aprovações</h2>
+<p>As <b>Aprovações</b> são os pontos de <b>decisão humana</b> dentro dos Processos (workflows). Quando um processo atinge um passo do tipo <b>«Aprovação»</b>, a execução <b>pára</b> e cria uma pendência para o aprovador designado — que decide <b>Aprovar</b> ou <b>Rejeitar</b>. A página de Aprovações é a fila central onde essas decisões se tomam.</p>
+
+<h2>2. Como uma aprovação nasce</h2>
+<ol class="steps">
+  <li>Um Processo publicado com um passo «Aprovação» é <b>iniciado</b>.</li>
+  <li>Ao chegar a esse passo, a instância fica «A aguardar aprovação» e cria a pendência.</li>
+  <li>O aprovador configurado recebe uma <b>notificação</b> «Aprovação necessária» e vê o item na fila.</li>
+  <li>Ao decidir, o processo continua: <b>Aprovado</b> → passo seguinte; <b>Rejeitado</b> → salta para o passo configurado em «salto de rejeição» (ou termina).</li>
+</ol>
+
+<h2>3. A página de Aprovações</h2>
+<table>
+  <thead><tr><th>Elemento</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><b>Filtro de estado</b></td><td>Pendentes / aprovadas / rejeitadas / todas</td></tr>
+    <tr><td><b>Âmbito</b></td><td>«Minhas» (atribuídas a si) vs todas as que pode ver</td></tr>
+    <tr><td><b>Cartão de aprovação</b></td><td>Título, processo de origem, passo, aprovador designado, data — e quem delegou, se aplicável</td></tr>
+    <tr><td><b>Ações</b></td><td><b>Aprovar</b>, <b>Rejeitar</b>, <b>Delegar</b> — em cada pendência sua</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Delegar uma aprovação</h2>
+<ol class="steps">
+  <li>Na pendência → <b>«Delegar»</b> → escolher outro membro da organização.</li>
+  <li>A aprovação passa a ser decidida por essa pessoa — o registo mostra «delegado por {nome}».</li>
+  <li>Não se pode delegar para si próprio nem para o aprovador atual.</li>
+</ol>
+<div class="tip"><b>Caso de uso:</b> vai de férias e é o aprovador configurado num processo — delegue as pendências no substituto em vez de bloquear os processos.</div>
+
+<h2>5. Quem decide — a regra fundamental</h2>
+<div class="note"><b>A decisão é por ATRIBUIÇÃO, não por permissão global.</b> Só o <b>aprovador designado</b> no passo (ou o delegado, ou o Super Admin) pode aprovar/rejeitar — mesmo um Admin da organização recebe 403 se não for o designado. A permissão <code>approvals.view</code> deixa <i>ver</i> a fila; <code>approvals.manage</code> está ligada à gestão administrativa das aprovações.</div>
+<table>
+  <thead><tr><th>Papel</th><th>Ver fila</th><th>Decidir</th></tr></thead>
+  <tbody>
+    <tr><td><b>Viewer</b></td><td>✓ (<code>approvals.view</code>)</td><td>Só as que lhe são atribuídas/delegadas</td></tr>
+    <tr><td><b>Member</b></td><td>✓</td><td>As suas + delegadas (<code>approvals.manage</code>)</td></tr>
+    <tr><td><b>Editor / Manager / Admin</b></td><td>✓</td><td>As suas + gestão</td></tr>
+    <tr><td><b>Super Admin</b></td><td>✓</td><td>Qualquer uma</td></tr>
+  </tbody>
+</table>
+
+<h2>6. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Aprovação de documento (o fluxo testado)</div>
+  <ol class="steps">
+    <li>Processo «Aprovação de documento» publicado → <b>Iniciar</b>.</li>
+    <li>Instância fica «A aguardar aprovação» no passo 1 → o aprovador recebe notificação.</li>
+    <li>Aprovador abre <b>Aprovações</b> → <b>Aprovar</b> → o processo continua sozinho (move documento, notifica, termina) e a notificação de pedido é marcada como lida automaticamente.</li>
+  </ol>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Rejeição com salto</div>
+  <p>Num processo com «salto de rejeição» configurado (ex.: voltar ao passo de correção), <b>Rejeitar</b> não mata o processo — redireciona-o para o passo definido.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Delegação antes de férias</div>
+  <p>Gestor vai estar ausente → abre cada pendência → «Delegar» para o adjunto → o adjunto passa a ver as pendências na sua fila com a etiqueta «delegado por…».</p>
+</div>
+
+<h2>7. Ligações com outros módulos</h2>
+<ul>
+  <li><b>Processos</b> — as aprovações nascem dos passos «Aprovação»; a instância mostra o histórico da decisão.</li>
+  <li><b>O meu dia</b> — as suas aprovações pendentes aparecem na secção própria, decidíveis ali.</li>
+  <li><b>Notificações</b> — «Aprovação necessária» ao ser designado; «Aprovação concedida/rejeitada» a quem iniciou o processo.</li>
+  <li><b>Dashboard</b> — contagem de aprovações pessoais pendentes.</li>
+</ul>
+
+<h2>8. Resolução de problemas</h2>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>Vê a aprovação mas não consegue decidir</td><td>Não é o aprovador designado — a decisão é por atribuição</td></tr>
+    <tr><td>Fila vazia como Viewer</td><td>Normal — sem atribuições; a consulta continua disponível</td></tr>
+    <tr><td>Notificação de aprovação não desaparece</td><td>Atualize — ao decidir, a notificação de pedido é marcada como lida automaticamente</td></tr>
+    <tr><td>Não consegue delegar para alguém</td><td>Não é possível delegar para si próprio nem para o aprovador atual</td></tr>
+  </tbody>
+</table>
+
+
+</section>
+
+<section class="chapter-divider" id="cap-processos">
+  <div class="cap-part">Parte IV — Trabalho e automação</div>
+  <div class="cap-num">13</div>
+  <h1>Processos (Workflows)</h1>
+  <p class="cap-desc">Automação: construtor de passos, publicação, execuções e instâncias.</p>
+  <p class="cap-route">Menu lateral → Processos · <code>/workflows</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que são Processos</h2>
+<p>Um <b>Processo</b> (na API: <i>workflow</i>) é uma <b>sequência de passos automatizada</b> que corre dentro da organização — o motor de automação do NEXORA. Desenha-se uma cadeia de ações no construtor visual, publica-se, e cada <b>execução</b> (instância) percorre os passos sozinha: cria tarefas, pede aprovações, envia notificações e emails, move documentos — sem intervenção manual.</p>
+<p><b>Diferença chave:</b> Tarefas, Listas e Documentos guardam <i>dados</i>; Processos executam <i>lógica</i> — ligam todos os módulos numa sequência automática e auditável.</p>
+
+<h2>2. Conceitos fundamentais</h2>
+<table>
+  <thead><tr><th>Conceito</th><th>O que é</th></tr></thead>
+  <tbody>
+    <tr><td><b>Processo</b></td><td>A definição: nome, descrição e a sequência de passos</td></tr>
+    <tr><td><b>Passo</b></td><td>Uma ação do fluxo — com tipo, nome e configuração própria</td></tr>
+    <tr><td><b>Instância / Execução</b></td><td>Uma corrida concreta do processo, com contexto e histórico passo a passo</td></tr>
+    <tr><td><b>Contexto</b></td><td>As variáveis da execução — o JSON passado ao iniciar + o que os passos vão produzindo (ex.: <code>context.taskId</code>)</td></tr>
+    <tr><td><b>Variáveis</b></td><td>Em qualquer campo de configuração, <code>{{nome}}</code> é substituído pelo valor do contexto — ex.: <code>{{documentId}}</code></td></tr>
+    <tr><td><b>Salto</b></td><td>Desvio do fluxo linear: condições e rejeições podem saltar para outro passo</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Ciclo de vida do processo</h2>
+<table>
+  <thead><tr><th>Estado</th><th>Significado</th></tr></thead>
+  <tbody>
+    <tr><td><b>Rascunho</b></td><td>Em construção — o construtor está editável; não pode ser iniciado</td></tr>
+    <tr><td><b>Publicado</b></td><td>Pronto a executar — validado pela API; o construtor fica bloqueado</td></tr>
+    <tr><td><b>Arquivado</b></td><td>Retirado de uso — mantém o histórico das execuções</td></tr>
+  </tbody>
+</table>
+<div class="tip"><b>Corrigir um processo publicado:</b> na página do processo → <b>«Retirar publicação»</b> → volta a Rascunho → editar no Construtor → Guardar → Publicar de novo.</div>
+
+<h2>4. Tipos de passo</h2>
+<table>
+  <thead><tr><th>Categoria</th><th>Passo</th><th>O que faz / configuração</th></tr></thead>
+  <tbody>
+    <tr><td rowspan="3"><b>Controlo</b></td><td><b>Iniciar</b> (START)</td><td>Entrada obrigatória — todo o processo começa aqui</td></tr>
+    <tr><td><b>Condição</b></td><td>Avalia uma variável do contexto (variável + operador + valor); <b>se verdadeira, salta</b> para o passo configurado — senão segue em frente</td></tr>
+    <tr><td><b>Terminar</b> (END)</td><td>Saída obrigatória — marca a execução como concluída</td></tr>
+    <tr><td rowspan="2"><b>Trabalho</b></td><td><b>Criar tarefa</b></td><td>Gera uma tarefa (título, descrição, responsável, prioridade, prazo) — guarda o id em <code>context.taskId</code></td></tr>
+    <tr><td><b>Aprovação</b></td><td><b>Pára</b> a execução até o aprovador designado decidir; configura aprovador, título/mensagem e <b>salto de rejeição</b> (para onde ir se rejeitado)</td></tr>
+    <tr><td rowspan="2"><b>Comunicação</b></td><td><b>Enviar notificação</b></td><td>Notificação in-app a um membro (destinatário, título, corpo)</td></tr>
+    <tr><td><b>Enviar email</b></td><td>Email real (destinatário, assunto, corpo) — <b>exige SMTP configurado</b></td></tr>
+    <tr><td rowspan="4"><b>Dados</b></td><td><b>Alterar estado</b></td><td>Muda o estado da instância ou de um recurso (ex.: fechar a tarefa criada antes)</td></tr>
+    <tr><td><b>Atribuir utilizador</b></td><td>Atribui a execução/recurso a um membro</td></tr>
+    <tr><td><b>Alterar campo</b></td><td>Modifica um campo/dado</td></tr>
+    <tr><td><b>Mover documento</b></td><td>Move um documento para outra pasta (documento + pasta de destino — aceita <code>{{variável}}</code>)</td></tr>
+  </tbody>
+</table>
+
+<h2>5. Criar e executar — passo a passo</h2>
+<h3>5.1 Criar (com templates)</h3>
+<ol class="steps">
+  <li><b>Processos → «Novo processo»</b> → seletor de templates: <i>Aprovação de tarefa, Pedido de compra, Onboarding de membro, Aprovação de documento, Resposta a incidente</i> — ou «Em branco» (START + END).</li>
+  <li>O template cria a sequência completa de passos — os IDs de pessoas/documentos vêm como placeholders por preencher.</li>
+</ol>
+<h3>5.2 Construir</h3>
+<ol class="steps">
+  <li>Abrir o <b>Construtor</b> — paleta de passos à esquerda, fluxo à direita.</li>
+  <li>Clicar num passo → configurar (aprovador, destinatário, título, IDs, variável da condição, salto…).</li>
+  <li>O <b>aviso amarelo de validação</b> lista o que falta — o botão <b>Guardar</b> só ativa quando não há problemas.</li>
+  <li>«Alterações por guardar» avisa antes de sair sem gravar; «Repor alterações» descarta a edição.</li>
+</ol>
+<h3>5.3 Publicar e executar</h3>
+<ol class="steps">
+  <li><b>«Publicar»</b> — a API valida: começa em Iniciar, acaba em Terminar, passos ordenados, configuração obrigatória preenchida, saltos válidos.</li>
+  <li><b>«Iniciar»</b> → diálogo de <b>dados de entrada</b> em JSON — o que escrever vira o contexto (ex.: <code>{"documentId": "abc"}</code>, <code>{"valorAlto": "true"}</code>). Vazio (<code>{}</code>) usa só os valores fixos do construtor.</li>
+  <li>A instância corre passo a passo — nas «Aprovações» pára até à decisão.</li>
+</ol>
+<h3>5.4 Acompanhar</h3>
+<ol class="steps">
+  <li>Separador <b>«Instâncias»</b> na página do processo: cada execução com estado (em execução, a aguardar aprovação, concluída, falhada).</li>
+  <li>Expandir → histórico passo a passo: o que correu, resultado, erros.</li>
+  <li>Erros de configuração (ex.: ID de documento inexistente) falham a instância com a mensagem do passo que falhou.</li>
+</ol>
+
+<h2>6. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Aprovação de documento</div>
+  <p><b>Iniciar → Aprovação (gestor) → Mover documento para «Aprovados» → Notificar autor → Fim.</b><br>
+  Aprovado: o documento muda de pasta e o autor é notificado. Rejeitado: salta direto para o Fim. Com <code>{{documentId}}</code> no passo de mover, cada execução trata o documento indicado nos dados de entrada.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Pedido de compra com ramificação</div>
+  <p><b>Iniciar → Criar tarefa → Aprovação do gestor → Condição (valorAlto = "true"?) → [salta para] Aprovação da direção → Notificar → Fechar tarefa → Fim.</b><br>
+  Valores baixos saltam a aprovação extra; valores altos passam por dois níveis de aprovação.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Onboarding de membro</div>
+  <p><b>Iniciar → Criar tarefa «preparar acessos» → Email de boas-vindas → Notificar equipa → Fim.</b><br>
+  Um clique em «Iniciar» executa o onboarding inteiro.</p>
+</div>
+
+<h2>7. Permissões</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver processos e instâncias</td><td><code>workflows.view</code></td><td>Todos</td></tr>
+    <tr><td>Criar, construir, publicar, iniciar, arquivar</td><td><code>workflows.manage</code></td><td>Admin, Manager, Editor</td></tr>
+    <tr><td>Decidir uma aprovação</td><td>Por atribuição</td><td>O aprovador designado (qualquer papel)</td></tr>
+  </tbody>
+</table>
+
+<h2>8. Boas práticas e resolução de problemas</h2>
+<ul>
+  <li><b>Use templates</b> — a parte difícil é a estrutura; ajuste os placeholders aos seus IDs reais.</li>
+  <li><b>Variáveis em vez de IDs fixos</b> — <code>{{documentId}}</code> torna o processo reutilizável.</li>
+  <li><b>Nomeie os passos</b> — «Aprovação do gestor financeiro» &gt; «Aprovação».</li>
+  <li><b>Sempre configure o salto de rejeição</b> nas aprovações — decida o que acontece quando é rejeitado.</li>
+  <li><b>Email precisa de SMTP</b> — sem configuração, o passo de email falha a execução.</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>«Guardar» desativado no construtor</td><td>Validação com problemas — ver o aviso amarelo</td></tr>
+    <tr><td>«Publicar» falha</td><td>Estrutura inválida — tem de começar em Iniciar e acabar em Terminar, campos obrigatórios preenchidos</td></tr>
+    <tr><td>Instância falhou a meio</td><td>Erro num passo — ex.: documento inexistente, SMTP em falta; ver o histórico da instância</td></tr>
+    <tr><td>Sem botão «Iniciar»</td><td>Processo não está Publicado (ou falta <code>workflows.manage</code>)</td></tr>
+  </tbody>
+</table>
+
+
+</section>
+
+<section class="chapter-divider" id="cap-ia">
+  <div class="cap-part">Parte IV — Trabalho e automação</div>
+  <div class="cap-num">14</div>
+  <h1>IA (Copilot)</h1>
+  <p class="cap-desc">Assistente conversacional que cria listas, processos e aplicações.</p>
+  <p class="cap-route">Menu lateral → IA · <code>/ai</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que é a IA no NEXORA</h2>
+<p>A <b>IA</b> é o assistente inteligente da plataforma — um copiloto conversacional que conhece o contexto da organização e pode <b>responder a perguntas</b>, <b>resumir</b> e sobretudo <b>criar estruturas reais</b>: listas completas com campos, processos (workflows) com passos, e até esboços de aplicações. As conversas ficam guardadas e há estatísticas de utilização.</p>
+<p>Há dois pontos de acesso: a <b>página IA</b> (<code>/ai</code>) com o histórico de conversas, e o <b>Copilot contextual</b> — o botão flutuante disponível nas páginas, que sabe em que ecrã está e ajuda nesse contexto.</p>
+
+<h2>2. O que a IA pode fazer</h2>
+<table>
+  <thead><tr><th>Capacidade</th><th>Descrição</th><th>Exemplo de pedido</th></tr></thead>
+  <tbody>
+    <tr><td><b>Conversar</b></td><td>Perguntas sobre a plataforma e os seus dados</td><td>«Que tarefas estão pendentes?»</td></tr>
+    <tr><td><b>Criar listas</b></td><td>Propõe e cria uma lista completa com campos tipados</td><td>«Cria uma lista de clientes com nome, email e estado»</td></tr>
+    <tr><td><b>Criar processos</b></td><td>Propõe e cria um workflow com passos configurados</td><td>«Faz um processo de aprovação de férias»</td></tr>
+    <tr><td><b>Criar aplicações</b></td><td>Gera um esboço de app (scaffold)</td><td>«Monta uma app de gestão de inventário»</td></tr>
+    <tr><td><b>Sugerir</b></td><td>Sugestões contextuais na página onde está</td><td>Cartões de sugestão no ecrã inicial</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Fluxo de uma proposta de criação</h2>
+<ol class="steps">
+  <li>Pedir em linguagem natural: <i>«cria uma lista de fornecedores»</i>.</li>
+  <li>A IA responde com uma <b>proposta estruturada</b> (nome, descrição, campos com tipos).</li>
+  <li><b>Confirmar</b> → a lista é criada de verdade na organização — aparece em Listas, pronta a usar.</li>
+  <li>O mesmo para workflows: a proposta inclui os passos — confirmar cria o processo em Rascunho.</li>
+</ol>
+<div class="note"><b>A IA respeita permissões:</b> não executa ações que o papel do utilizador não permite — um Viewer pode conversar, mas a criação de listas/processos falha nas mesmas regras da API (a IA usa os endpoints normais).</div>
+
+<h2>4. A página IA</h2>
+<table>
+  <thead><tr><th>Elemento</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><b>Lista de conversas</b></td><td>Histórico de sessões de chat — retome onde ficou</td></tr>
+    <tr><td><b>Sugestões iniciais</b></td><td>Cartões com prompts prontos (criar lista, criar workflow, resumir documentos, pendências…)</td></tr>
+    <tr><td><b>Utilização</b></td><td>Estatísticas de uso da IA na organização</td></tr>
+    <tr><td><b>Chat</b></td><td>A conversa em si — mensagens, propostas acionáveis com botão de confirmação</td></tr>
+  </tbody>
+</table>
+
+<h2>5. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Lista em 30 segundos</div>
+  <p>«Cria uma lista de controlo de equipamentos com nome, número de série, estado e responsável» → a IA propõe a estrutura com tipos corretos (texto, escolha, utilizador) → Confirmar → a lista existe.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Processo sem desenhar passos</div>
+  <p>«Faz um processo de aprovação de despesas: aprovação do gestor, depois notificação ao financeiro» → proposta com os passos → Confirmar → abre no Construtor para ajustar os aprovadores reais.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Copilot contextual</div>
+  <p>Na página de um documento, o botão Copilot oferece ações contextuais («resume este documento») — o assistente sabe onde está.</p>
+</div>
+
+<h2>6. Boas práticas e notas</h2>
+<ul>
+  <li><b>Seja específico:</b> «lista de clientes com nome, empresa, email e estado ativo/inativo» dá melhores propostas que «uma lista».</li>
+  <li><b>Revise antes de confirmar:</b> a proposta mostra exatamente o que será criado — os nomes, tipos e passos.</li>
+  <li><b>Depois da criação, ajuste:</b> listas e processos criados pela IA são objetos normais — edite-os nos respetivos construtores.</li>
+  <li><b>O Copilot contextual é por página:</b> as sugestões mudam consoante onde está (documento vs processo vs lista).</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>Criação pela IA falha</td><td>O seu papel não tem a permissão de gestão desse módulo — a IA usa as mesmas regras da API</td></tr>
+    <tr><td>Respostas vagas</td><td>Pedidos pouco específicos — dê nomes de campos e contexto</td></tr>
+  </tbody>
+</table>
+
+
+</section>
+
+<section class="part-divider">
+  <div class="part-num">Parte V</div>
+  <h1>Organização</h1>
+  <p class="part-desc">Gestão e configuração: métricas, administração, faturação, utilizadores e a sua conta.</p>
+  <ul class="part-toc"><li>Análise</li><li>Administração</li><li>Planos (Faturação)</li><li>Configurações</li><li>Perfil</li><li>Ajuda</li></ul>
+</section>
+
+<section class="chapter-divider" id="cap-analise">
+  <div class="cap-part">Parte V — Organização</div>
+  <div class="cap-num">15</div>
+  <h1>Análise</h1>
+  <p class="cap-desc">Métricas operacionais e tendências — KPIs, gráficos e adoção.</p>
+  <p class="cap-route">Menu lateral → Análise · <code>/analytics</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que é a Análise</h2>
+<p>A página de <b>Análise</b> é o centro de <b>métricas operacionais</b> da organização — gráficos e indicadores sobre a atividade da plataforma num período escolhido: produtividade de tarefas, adoção de documentos, uso de processos e adoção geral. Responde a «como evoluímos?» — complementando o Dashboard (estado atual) com <b>tendências no tempo</b>.</p>
+
+<h2>2. O que a página mostra</h2>
+<table>
+  <thead><tr><th>Secção</th><th>Conteúdo</th></tr></thead>
+  <tbody>
+    <tr><td><b>Seletor de período</b></td><td>Escolha o intervalo de dias analisado (os gráficos reagem)</td></tr>
+    <tr><td><b>Resumo (KPIs)</b></td><td>Cartões com os números-chave do período</td></tr>
+    <tr><td><b>Tendência</b></td><td>Gráfico temporal de <b>tarefas criadas</b>, <b>tarefas concluídas</b> e <b>documentos criados</b> por dia</td></tr>
+    <tr><td><b>Estado das tarefas</b></td><td>Distribuição por estado (Por fazer, Em curso, Em revisão, Concluída, Cancelada)</td></tr>
+    <tr><td><b>Processos</b></td><td>Estatísticas de execuções de workflows (instâncias, estados)</td></tr>
+    <tr><td><b>Adoção</b></td><td>Quão ativa está a organização nos vários módulos</td></tr>
+  </tbody>
+</table>
+<div class="note"><b>Secções vazias são normais</b> em organizações novas ou períodos sem atividade — cada gráfico mostra um estado vazio próprio («Sem dados de tendência» etc.).</div>
+
+<h2>3. Como usar</h2>
+<ol class="steps">
+  <li>Menu lateral → <b>Análise</b> (só aparece a quem tem <code>analytics.view</code>).</li>
+  <li>Ajustar o <b>período</b> (número de dias) — a API recalcula e os gráficos atualizam.</li>
+  <li>Ler o resumo → descer à tendência diária → distribuições por estado → adoção.</li>
+</ol>
+
+<h2>4. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Revisão semanal</div>
+  <p>Período 7 dias: a tendência mostra picos de criação de tarefas na segunda e conclusões na sexta — ritmo saudável. Se «criadas ≫ concluídas» por várias semanas, a fila está a acumular.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Adoção pós-rollout</div>
+  <p>Depois de lançar o NEXORA à equipa: a secção de adoção mostra quais os módulos usados — se «Documentos» está a zeros ao fim de um mês, é preciso formação ou incentivo.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Gargalo de tarefas</div>
+  <p>A distribuição por estado mostra muitas tarefas «Em revisão» paradas — sinal de que o passo de validação é o gargalo do processo de trabalho.</p>
+</div>
+
+<h2>5. Permissões</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver a página de Análise</td><td><code>analytics.view</code></td><td>Admin, Manager</td></tr>
+    <tr><td>Editor / Member / Viewer</td><td>—</td><td>Sem o item no menu; por URL direto → «Análises indisponíveis»</td></tr>
+  </tbody>
+</table>
+<p class="small">A permissão é deliberadamente restrita: métricas operacionais são informação de gestão, não de execução.</p>
+
+<h2>6. Análise vs Dashboard vs Auditoria</h2>
+<table>
+  <thead><tr><th>Ferramenta</th><th>Pergunta</th><th>Quem</th></tr></thead>
+  <tbody>
+    <tr><td><b>Análise</b></td><td>«Como evoluímos?» — tendências, gráficos</td><td>Admin, Manager</td></tr>
+    <tr><td><b>Dashboard</b></td><td>«Como está agora?» — estado atual, KPIs</td><td>Todos</td></tr>
+    <tr><td><b>Auditoria</b></td><td>«Quem fez o quê?» — registo de eventos</td><td><code>audit.view</code> (Admin, Manager)</td></tr>
+  </tbody>
+</table>
+
+
+</section>
+
+<section class="chapter-divider" id="cap-administracao">
+  <div class="cap-part">Parte V — Organização</div>
+  <div class="cap-num">16</div>
+  <h1>Administração</h1>
+  <p class="cap-desc">Utilizadores, papéis, auditoria, segurança, webhooks e definições.</p>
+  <p class="cap-route">Menu lateral → Administração · <code>/admin</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que é a Administração</h2>
+<p>A <b>Administração</b> é o centro de gestão da organização — utilizadores, equipas, papéis, auditoria, segurança, integrações e definições. O menu lateral só a mostra a quem tem <b>pelo menos uma permissão administrativa</b>, e o painel apresenta <b>só os cartões que o utilizador pode abrir</b> — cada cartão está ligado à sua permissão.</p>
+
+<h2>2. Os cartões e quem os vê</h2>
+<table>
+  <thead><tr><th>Cartão</th><th>O que faz</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td><b>Utilizadores</b></td><td>Listar, criar, convidar, editar, suspender membros; gerir convites</td><td><code>users.update</code></td><td>Admin, Manager, Editor</td></tr>
+    <tr><td><b>Equipas</b></td><td>Criar equipas e gerir membros de equipa</td><td><code>roles.manage</code></td><td>Admin</td></tr>
+    <tr><td><b>Funções</b> (papéis)</td><td>Criar/editar funções personalizadas e as suas permissões</td><td><code>roles.manage</code></td><td>Admin</td></tr>
+    <tr><td><b>Auditoria</b></td><td>Registo completo de eventos — quem fez o quê e quando</td><td><code>audit.view</code></td><td>Admin, Manager</td></tr>
+    <tr><td><b>Segurança</b></td><td>Estado de segurança da organização</td><td><code>audit.view</code></td><td>Admin, Manager</td></tr>
+    <tr><td><b>Webhooks</b></td><td>Endpoints para integrações externas (eventos → URL)</td><td><code>webhooks.manage</code></td><td>Admin, Manager, Editor</td></tr>
+    <tr><td><b>Automatização</b></td><td>Vista administrativa dos processos</td><td><code>workflows.manage</code></td><td>Admin, Manager, Editor</td></tr>
+    <tr><td><b>Governança</b></td><td>Políticas e conformidade da organização</td><td><code>audit.view</code></td><td>Admin, Manager</td></tr>
+    <tr><td><b>Comunicados</b></td><td>Anúncios que aparecem no Dashboard de todos</td><td><code>settings.manage</code></td><td>Admin, Manager</td></tr>
+    <tr><td><b>Definições</b></td><td>Configuração da organização (incl. SSO)</td><td><code>settings.manage</code></td><td>Admin, Manager</td></tr>
+    <tr><td><b>Organizações</b></td><td>Todos os tenants da plataforma — listar, inspecionar, eliminar</td><td>Super Admin</td><td>Só plataforma</td></tr>
+    <tr><td><b>Pedidos de contacto</b></td><td>Mensagens do formulário de contacto público</td><td>Super Admin</td><td>Só plataforma</td></tr>
+  </tbody>
+</table>
+<div class="note"><b>Exemplo — o Editor vê 3 cartões:</b> Utilizadores (<code>users.update</code>), Webhooks (<code>webhooks.manage</code>) e Automatização (<code>workflows.manage</code>). URLs diretos a páginas sem permissão mostram «Não tem permissão» — a segurança é garantida pela API, não pelo esconder de cartões.</div>
+
+<h2>3. Gestão de utilizadores — as regras</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Quem pode</th><th>Regra</th></tr></thead>
+  <tbody>
+    <tr><td>Criar utilizador/convite com papel <b>Member</b></td><td><code>users.create</code> (Admin, Manager)</td><td>Papel por defeito</td></tr>
+    <tr><td>Criar com outro papel (Viewer, Editor, Manager, Admin)</td><td><code>users.create</code> + <code>roles.manage</code> (só Admin)</td><td>Anti-escalação — a UI só oferece «Member» a quem não tem roles.manage</td></tr>
+    <tr><td>Atribuir papel <b>Super Admin</b></td><td>Só Super Admin da plataforma</td><td>Nunca por membros da organização</td></tr>
+    <tr><td>Mudar papel de um membro</td><td><code>roles.manage</code> (Admin)</td><td>Manager não muda papéis</td></tr>
+    <tr><td>Suspender/reativar membro</td><td><code>users.update</code> (Admin, Manager, Editor)</td><td>Estado na organização</td></tr>
+    <tr><td>Editar perfil de <b>outro</b> utilizador</td><td>Só o próprio ou Super Admin</td><td>Campos globais são do utilizador</td></tr>
+    <tr><td>Eliminar membro</td><td><code>users.delete</code> (Admin)</td><td>Suspende — soft delete</td></tr>
+    <tr><td>Remover-se a si próprio</td><td>Ninguém</td><td>Bloqueado pela API (400)</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Funções (papéis)</h2>
+<ul>
+  <li><b>Sistema</b>: Super Admin, Admin, Manager, Editor, Member, Viewer — <b>não editáveis nem elimináveis</b> (a API recusa).</li>
+  <li><b>Personalizadas</b>: o Admin cria funções com conjuntos próprios de permissões — ex.: «Contabilidade» com documents.edit + lists.manage.</li>
+  <li>Eliminar função personalizada: só se nenhum membro a estiver a usar.</li>
+</ul>
+
+<h2>5. Auditoria</h2>
+<p>Registo imutável de eventos: criação/edição/remoção de utilizadores, papéis, documentos, processos, logins administrativos — com <b>ator</b>, ação, recurso e timestamp. Essencial para responder «quem mudou isto?» e para conformidade.</p>
+
+<h2>6. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Entrada de um novo colaborador</div>
+  <p>Administração → Utilizadores → «Convidar utilizador» (ou criar diretamente) → escolher papel → o novo membro entra com as permissões certas desde o primeiro login.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Integração com sistema externo</div>
+  <p>Administração → Webhooks → criar endpoint <code>https://erp.exemplo.pt/hook</code> → eventos da plataforma (tarefa criada, workflow concluído…) são enviados para lá.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Anúncio a todos</div>
+  <p>Administração → Comunicados → «Manutenção sexta 18h» → aparece no Dashboard de todos os membros.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 4 — Investigar uma alteração</div>
+  <p>«Quem suspendeu a conta do João?» → Administração → Auditoria → filtrar por ação <code>user.updated</code> → ator e timestamp.</p>
+</div>
+
+<h2>7. Boas práticas e resolução de problemas</h2>
+<ul>
+  <li><b>Mínimo privilégio:</b> atribua o papel mais baixo que cubra a função — Viewer/Member por defeito.</li>
+  <li><b>Prefira convites:</b> o utilizador define a própria password em vez de a receber criada.</li>
+  <li><b>Funções personalizadas para equipas reais:</b> quando 3+ pessoas partilham o mesmo perfil de acesso, crie uma função.</li>
+  <li><b>Auditoria regular:</b> reveja ações sensíveis (suspensões, mudanças de papel) periodicamente.</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>Sem item «Administração» no menu</td><td>Viewer/Member — nenhuma permissão administrativa</td></tr>
+    <tr><td>Cartão que preciso não aparece</td><td>Falta a permissão correspondente — ver tabela §2</td></tr>
+    <tr><td>Só posso escolher «Member» ao criar</td><td>Sem <code>roles.manage</code> — correto por desenho</td></tr>
+    <tr><td>Não consigo editar papel de sistema</td><td>São protegidos — nome e permissões fixos</td></tr>
+  </tbody>
+</table>
+
+
+</section>
+
+<section class="chapter-divider" id="cap-planos">
+  <div class="cap-part">Parte V — Organização</div>
+  <div class="cap-num">17</div>
+  <h1>Planos (Faturação)</h1>
+  <p class="cap-desc">Subscrição atual, limites de utilização e mudança de plano.</p>
+  <p class="cap-route">Menu lateral → Planos · <code>/billing</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que é a página de Planos</h2>
+<p>A página de <b>Planos</b> é o centro de faturação da organização — mostra o <b>plano atual</b>, a <b>utilização contra os limites</b> e os <b>planos disponíveis</b> para upgrade. Os pagamentos são geridos via Stripe: ao escolher um plano pago, é redirecionado para o checkout seguro.</p>
+
+<h2>2. As três secções</h2>
+<h3>2.1 Utilização atual</h3>
+<p>Cartões com barras de progresso para cada limite do plano — <b>atualizados a cada 30 segundos</b>:</p>
+<table>
+  <thead><tr><th>Recurso</th><th>O que mede</th></tr></thead>
+  <tbody>
+    <tr><td><b>Utilizadores</b></td><td>Membros ativos da organização</td></tr>
+    <tr><td><b>Armazenamento</b></td><td>Bytes usados por documentos/ficheiros</td></tr>
+    <tr><td><b>Documentos</b></td><td>Número de documentos criados</td></tr>
+    <tr><td><b>Processos</b></td><td>Workflows existentes</td></tr>
+    <tr><td><b>Pedidos IA/mês</b></td><td>Interações com o Copilot no mês corrente</td></tr>
+  </tbody>
+</table>
+<p>As barras mudam de cor: azul (normal) → amarela (&gt;80%) → vermelha (limite atingido). Um aviso «Limite atingido» lista os recursos excedidos.</p>
+
+<h3>2.2 Subscrição atual</h3>
+<p>Faixa com o <b>plano ativo</b>, o estado (ACTIVE, TRIALING…) e ações:</p>
+<ul>
+  <li><b>«Gerir faturação»</b> — abre o portal Stripe (métodos de pagamento, faturas) — só quando a faturação é gerida externamente.</li>
+  <li><b>«Cancelar subscrição»</b> — para planos pagos, com confirmação; o plano reverte para Free.</li>
+</ul>
+
+<h3>2.3 Grelha de planos</h3>
+<p>Cada cartão mostra: nome, descrição, preço mensal (+ preço anual quando existe), os 5 limites e a lista de funcionalidades incluídas. O plano atual tem moldura destacada e botão «Atual» desativado.</p>
+<table>
+  <thead><tr><th>Plano</th><th>Perfil</th></tr></thead>
+  <tbody>
+    <tr><td><b>Free</b></td><td>Começar — limites base, sem custo</td></tr>
+    <tr><td><b>Basic</b></td><td>Equipas pequenas</td></tr>
+    <tr><td><b>Professional</b></td><td>Operação a sério</td></tr>
+    <tr><td><b>Business</b></td><td>Empresas em crescimento</td></tr>
+    <tr><td><b>Enterprise</b></td><td>Destaque «Premium» — limites mais altos/ilimitados</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Mudar de plano — passo a passo</h2>
+<ol class="steps">
+  <li>Planos → rever a utilização: que limites estão próximos?</li>
+  <li>Comparar planos na grelha — limites e funcionalidades lado a lado.</li>
+  <li><b>«Selecionar»</b> no plano pretendido → se for pago, redireciona para o <b>checkout Stripe</b>.</li>
+  <li>Completar o pagamento → volta à app com o aviso «Subscrição ativada».</li>
+  <li><b>«Começar grátis»</b> no plano Free muda imediatamente, sem checkout.</li>
+</ol>
+<div class="tip"><b>Ciclos de faturação:</b> planos pagos suportam mensal e anual — o preço anual aparece por baixo do mensal no cartão.</div>
+
+<h2>4. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Limite de armazenamento a 85%</div>
+  <p>A barra de Armazenamento está amarela → fazer upgrade para o plano com mais GB antes de bloquear uploads.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Cancelamento</div>
+  <p>«Cancelar subscrição» → confirmar → a organização volta ao plano Free; os limites passam a aplicar-se — verifique primeiro se a utilização cabe nos limites Free.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Gerir cartão</div>
+  <p>«Gerir faturação» → portal Stripe → atualizar método de pagamento e descarregar faturas — sem sair do fluxo da app.</p>
+</div>
+
+<h2>5. Permissões e notas</h2>
+<p>A página é visível a todos no menu, mas as ações de <b>mudança de plano</b> são controladas pela API — em produção, tipicamente restritas a quem gere a organização. Os limites são <b>aplicados pela API</b>: criar o 11.º documento num plano de 10 falha com erro de limite, não apenas um aviso.</p>
+<ul>
+  <li>Os dados de utilização atualizam sozinhos (30s) — não precisa de refresh.</li>
+  <li>«Ilimitado» aparece como valor <code>-1</code> — sem barra de progresso.</li>
+  <li>Após checkout cancelado, a página mostra aviso informativo — nada foi cobrado.</li>
+</ul>
+
+
+</section>
+
+<section class="chapter-divider" id="cap-configuracoes">
+  <div class="cap-part">Parte V — Organização</div>
+  <div class="cap-num">18</div>
+  <h1>Configurações</h1>
+  <p class="cap-desc">Gestão rápida de utilizadores da organização.</p>
+  <p class="cap-route">Menu lateral → Configurações · <code>/settings</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que é a página de Configurações</h2>
+<p>A página de <b>Configurações</b> é a vista rápida de <b>gestão de utilizadores</b> da organização — lista os membros com os seus papéis e permite criar novos utilizadores diretamente e removê-los. É a versão simples do que a Administração → Utilizadores oferece em profundidade.</p>
+<div class="note"><b>Não confundir:</b> «Configurações» (<code>/settings</code>) trata de <b>utilizadores</b>. As definições da organização (SSO, branding, etc.) vivem em <b>Administração → Definições</b> (<code>/admin/settings</code>) — que exige <code>settings.manage</code>. O seu perfil pessoal está em <b>Perfil</b> (<code>/profile</code>).</div>
+
+<h2>2. O que a página mostra</h2>
+<table>
+  <thead><tr><th>Elemento</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><b>Lista de utilizadores</b></td><td>Cada membro com avatar, nome, email, cargo e <b>badge com os papéis</b> na organização</td></tr>
+    <tr><td><b>Botão «Adicionar utilizador»</b></td><td>Abre o formulário de criação</td></tr>
+    <tr><td><b>Remover</b></td><td>Ícone de lixeira por membro — com confirmação; <b>não aparece na sua própria linha</b></td></tr>
+  </tbody>
+</table>
+
+<h2>3. Criar um utilizador — passo a passo</h2>
+<ol class="steps">
+  <li>Configurações → <b>«Adicionar utilizador»</b>.</li>
+  <li>Preencher: <b>Nome</b>, <b>Email</b> (obrigatórios), <b>Cargo</b> (opcional), <b>Função</b> (Admin, Manager, Editor, Member, Viewer) e <b>Palavra-passe</b> — <b>mínimo 12 caracteres</b>.</li>
+  <li><b>«Criar utilizador»</b> → a conta entra na organização com o papel escolhido; o formulário fecha e a lista atualiza.</li>
+  <li>Erros da API (email duplicado, permissão insuficiente) aparecem em alerta vermelho no formulário.</li>
+</ol>
+<div class="note"><b>Atenção à escolha do papel:</b> este formulário oferece todas as funções de sistema, mas a API aplica as regras de proteção — criar com papel ≠ Member exige <code>roles.manage</code> (só Admin). Um Manager que tente criar um «Admin» aqui recebe 403 — deve usar Administração → Utilizadores ou convites.</div>
+
+<h2>4. Remover um utilizador</h2>
+<ol class="steps">
+  <li>Na linha do membro → ícone de lixeira → confirmar.</li>
+  <li>O membro é removido da organização (soft delete — o histórico fica na auditoria).</li>
+  <li>A sua própria linha <b>não tem</b> o botão — a API também bloqueia auto-remoção.</li>
+</ol>
+
+<h2>5. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Entrada rápida de membro</div>
+  <p>Novo colaborador sem processo de convite: Configurações → Adicionar utilizador → nome, email, papel Member, password temporária forte → partilhar credenciais por canal seguro.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Saída de colaborador</div>
+  <p>Configurações → lixeira na linha do membro → confirmar → acesso à organização cortado imediatamente (a sessão expira).</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Auditoria rápida de papéis</div>
+  <p>Rever a lista: «há algum Admin a mais?» — os badges mostram os papéis de cada um à primeira vista.</p>
+</div>
+
+<h2>6. Permissões</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver a lista de utilizadores</td><td><code>users.read</code></td><td>Todos</td></tr>
+    <tr><td>Criar utilizador (papel Member)</td><td><code>users.create</code></td><td>Admin, Manager</td></tr>
+    <tr><td>Criar com outro papel</td><td><code>users.create</code> + <code>roles.manage</code></td><td>Admin</td></tr>
+    <tr><td>Remover membro</td><td><code>users.delete</code></td><td>Admin</td></tr>
+  </tbody>
+</table>
+<p class="small">Editor/Member/Viewer veem a lista (têm <code>users.read</code>) mas as ações falham na API conforme a tabela — a página é essencialmente de consulta para eles.</p>
+
+<h2>7. Resolução de problemas</h2>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>«Criar utilizador» dá 403</td><td>Sem <code>users.create</code>, ou tentou papel ≠ Member sem <code>roles.manage</code></td></tr>
+    <tr><td>Lixeira não aparece numa linha</td><td>É a sua própria conta — auto-remoção bloqueada</td></tr>
+    <tr><td>Password rejeitada</td><td>Mínimo 12 caracteres — exigido no campo e pela API</td></tr>
+    <tr><td>«Email já existe»</td><td>Conta duplicada — usar convite ou outro email</td></tr>
+  </tbody>
+</table>
+
+
+</section>
+
+<section class="chapter-divider" id="cap-perfil">
+  <div class="cap-part">Parte V — Organização</div>
+  <div class="cap-num">19</div>
+  <h1>Perfil</h1>
+  <p class="cap-desc">A sua identidade, palavra-passe e sessões ativas.</p>
+  <p class="cap-route">Menu lateral → Perfil · <code>/profile</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que é a página de Perfil</h2>
+<p>A página de <b>Perfil</b> é a sua área pessoal — onde gere <b>a sua identidade</b> na plataforma (nome, avatar, cargo), <b>a sua palavra-passe</b> e <b>as suas sessões ativas</b> em todos os dispositivos. Tudo aqui é <b>seu</b>: nenhum outro utilizador, nem um Admin, pode editar o seu perfil (só o Super Admin da plataforma).</p>
+
+<h2>2. As três secções</h2>
+<h3>2.1 Informação pessoal</h3>
+<table>
+  <thead><tr><th>Campo</th><th>Notas</th></tr></thead>
+  <tbody>
+    <tr><td><b>Nome</b></td><td>O nome mostrado em todo o lado (tarefas, aprovações, comentários)</td></tr>
+    <tr><td><b>Cargo</b></td><td>Função profissional — aparece na listagem de utilizadores</td></tr>
+    <tr><td><b>Avatar</b></td><td><b>URL</b> de uma imagem — não há upload de ficheiro; deixe vazio para iniciais</td></tr>
+  </tbody>
+</table>
+<p>«Guardar perfil» atualiza imediatamente — incluindo o avatar no canto superior da app.</p>
+
+<h3>2.2 Alterar palavra-passe</h3>
+<ol class="steps">
+  <li><b>Palavra-passe atual</b> — prova de identidade.</li>
+  <li><b>Nova palavra-passe</b> — <b>mínimo 12 caracteres</b>.</li>
+  <li>Submeter → <b>todas as sessões são terminadas</b> em todos os dispositivos e é redirecionado para o login — entre de novo com a nova password.</li>
+</ol>
+<div class="note"><b>Porque termina tudo?</b> Se a password antiga foi comprometida, invalidar todas as sessões garante que quem a tinha perde o acesso imediatamente — é uma medida de segurança deliberada, não um bug.</div>
+
+<h3>2.3 Sessões ativas</h3>
+<p>Lista de todos os dispositivos/browsers com sessão aberta na sua conta:</p>
+<table>
+  <thead><tr><th>Informação</th><th>Detalhe</th></tr></thead>
+  <tbody>
+    <tr><td><b>Dispositivo</b></td><td>Browser identificado pelo user-agent (Chrome, Edge, Firefox, Safari…) com ícone desktop/mobile</td></tr>
+    <tr><td><b>IP</b></td><td>Endereço da sessão</td></tr>
+    <tr><td><b>Última utilização</b></td><td>Data/hora da última atividade</td></tr>
+    <tr><td><b>«Atual»</b></td><td>Badge na sessão corrente — <b>não pode ser revogada</b> por aqui (use «Terminar sessão» no menu do avatar)</td></tr>
+  </tbody>
+</table>
+<p><b>«Revogar»</b> (com confirmação) mata a sessão desse dispositivo imediatamente — o browser afetado perde o acesso na próxima ação.</p>
+
+<h2>3. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Dispositivo perdido</div>
+  <p>Perdeu o portátil? Perfil → Sessões → identificar a sessão do portátil (browser + IP) → <b>Revogar</b> → acesso cortado, mesmo que alguém o tenha aberto.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Suspeita de comprometimento</div>
+  <p>Atividade estranha na conta? Altere a palavra-passe — todas as sessões morrem de uma vez, incluindo a do intruso. Depois reveja a lista de sessões para confirmar que só ficam as suas.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Foto de perfil</div>
+  <p>Colar o URL público da sua foto (Gravatar, CDN da empresa…) no campo Avatar → Guardar → o avatar aparece em comentários, atribuições e no canto superior.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 4 — Manutenção de sessões</div>
+  <p>Revisão mensal: veja sessões antigas (browser que já não usa, IP de hotel de uma viagem) e revogue-as — quanto menos sessões, menor a superfície de ataque.</p>
+</div>
+
+<h2>4. Permissões e notas</h2>
+<p>O Perfil é <b>pessoal e disponível a todos os papéis</b> — não há permissões especiais. Algumas regras importantes:</p>
+<ul>
+  <li>Só <b>você</b> edita o seu perfil — um Admin não muda o seu nome/cargo/avatar (campos globais do utilizador).</li>
+  <li>A sessão corrente não pode revogar-se a si própria nesta lista — para sair, use «Terminar sessão».</li>
+  <li>Após mudar a password, vai para o login — <b>não é um erro</b>, é a invalidação de sessões a funcionar.</li>
+  <li>Se revogar uma sessão e ela continuar ativa uns segundos, é o cache do token de acesso — resolve em instantes.</li>
+</ul>
+
+
+</section>
+
+<section class="chapter-divider" id="cap-ajuda">
+  <div class="cap-part">Parte V — Organização</div>
+  <div class="cap-num">20</div>
+  <h1>Ajuda</h1>
+  <p class="cap-desc">Centro de documentação, pesquisa de artigos e assistente.</p>
+  <p class="cap-route">Menu lateral → Ajuda · <code>/help</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. O que é a Ajuda</h2>
+<p>A <b>Ajuda</b> é o centro de documentação integrado do NEXORA — artigos organizados por categorias sobre cada módulo, pesquisa dedicada e um <b>assistente de ajuda</b> conversacional. Está disponível a todos os utilizadores, sem permissões especiais.</p>
+
+<h2>2. Estrutura</h2>
+<table>
+  <thead><tr><th>Elemento</th><th>Descrição</th></tr></thead>
+  <tbody>
+    <tr><td><b>Pesquisa de ajuda</b></td><td>Campo hero no topo — procura nos títulos e conteúdos dos artigos; resultados instantâneos</td></tr>
+    <tr><td><b>Categorias</b></td><td>Artigos agrupados por tema/módulo (Documentos, Tarefas, Administração…)</td></tr>
+    <tr><td><b>Artigos</b></td><td>Guias passo a passo com ícone e resumo — cada um com a sua página</td></tr>
+    <tr><td><b>Assistente de ajuda</b></td><td>Chat dedicado a dúvidas de utilização (<code>/help/assistant</code>)</td></tr>
+    <tr><td><b>Ajuda contextual</b></td><td>Botões «?» espalhados pela app — abrem o artigo relevante <b>para a página onde está</b></td></tr>
+  </tbody>
+</table>
+
+<h2>3. Como usar</h2>
+<ol class="steps">
+  <li><b>Pesquisar diretamente:</b> escrever no campo do topo (ex.: «partilhar documento») → resultados aparecem imediatamente → clicar abre o artigo.</li>
+  <li><b>Navegar por categoria:</b> escolher a categoria do módulo → lista de artigos → abrir o que interessa.</li>
+  <li><b>Perguntar ao assistente:</b> <code>/help/assistant</code> — conversa orientada a «como fazer X».</li>
+  <li><b>Ajuda no contexto:</b> noutras páginas, o botão de ajuda contextual (junto ao título) leva ao artigo daquele módulo.</li>
+</ol>
+
+<h2>4. Exemplos práticos</h2>
+<div class="example">
+  <div class="ex-title">Exemplo 1 — «Como partilho um documento?»</div>
+  <p>Em Documentos, clicar no botão de ajuda contextual → abre o artigo de partilha — ou pesquisar «partilhar» na Ajuda.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Onboarding de novo membro</div>
+  <p>Um membro novo explora as categorias por módulo para aprender a plataforma sozinho — sem depender de colegas.</p>
+</div>
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Admin a configurar segurança</div>
+  <p>A Ajuda tem secção própria de administração (<code>/help/admin</code>) com artigos sobre papéis, permissões e segurança.</p>
+</div>
+
+<h2>5. Notas</h2>
+<ul>
+  <li>Disponível para <b>todos os papéis</b> — a ajuda não esconde conteúdo por permissão.</li>
+  <li>A pesquisa de ajuda é <b>independente</b> da Pesquisa global — procura só nos artigos, não nos seus dados.</li>
+  <li>Os artigos seguem o <b>idioma da interface</b> — mude o idioma no seletor do topo para ver a ajuda noutra língua.</li>
+</ul>
+
+
+</section>
+
+<section class="part-divider">
+  <div class="part-num">Apêndice</div>
+  <h1>Apêndice</h1>
+  <p class="part-desc">A narrativa da empresa fictícia que dá contexto a todos os exemplos do manual.</p>
+  <ul class="part-toc"><li>Caso de Estudo: a empresa XPTO</li></ul>
+</section>
+
+<section class="chapter-divider" id="cap-caso-xpto">
+  <div class="cap-part">Apêndice</div>
+  <div class="cap-num">A</div>
+  <h1>Caso de Estudo: a empresa XPTO</h1>
+  <p class="cap-desc">Os 5 utilizadores, a matriz de funções e cinco cenários completos de colaboração.</p>
+  <p class="cap-route">Documento de referência · <code>docs/NEXORA-guia-caso-xpto.html</code></p>
+</section>
+<section class="chapter-content">
+<h2>1. A empresa XPTO e os seus 5 utilizadores</h2>
+<p>A <b>XPTO, Lda.</b> é uma pequena empresa de consultoria. Usa o NEXORA para gerir documentos de clientes, acompanhar tarefas, aprovar despesas e manter um portal interno. Tem 5 funcionários — <b>um por cada função do sistema</b> — e são as contas de demonstração usadas em todos os testes (password comum: <code>XPTOdemo2024!</code>).</p>
+
+<div class="persona">
+  <h3><span class="tag">ADMIN</span> Ana Silva — Diretora-Geral</h3>
+  <p><b>Email:</b> ana@xpto.pt · <b>Função:</b> Admin</p>
+  <p>Foi ela que registou a empresa no NEXORA — ficou automaticamente administradora. Gere utilizadores, convites, funções, configurações, faturação, auditoria e todo o conteúdo. É a «dona» da organização.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag">MANAGER</span> Bruno Costa — Gestor de Operações</h3>
+  <p><b>Email:</b> bruno@xpto.pt · <b>Função:</b> Manager</p>
+  <p>Responsável pela operação diária: cria e gere listas de clientes, formulários, workflows e sites. Cria utilizadores (papel Member), consulta auditoria e análise, mas não muda papéis, não elimina utilizadores nem gere funções personalizadas.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag">EDITOR</span> Diana Rocha — Gestora de Conteúdos</h3>
+  <p><b>Email:</b> diana@xpto.pt · <b>Função:</b> Editor</p>
+  <p>Produz e gere o conteúdo: cria e apaga documentos, estrutura listas, formulários, workflows, sites e notícias, e cria webhooks. Não partilha documentos externamente, não convida utilizadores nem vê auditoria ou análise.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag">MEMBER</span> Carla Mendes — Consultora</h3>
+  <p><b>Email:</b> carla@xpto.pt · <b>Função:</b> Member</p>
+  <p>Trabalhadora operacional: carrega e edita documentos, consulta listas, executa as suas tarefas e decide aprovações que lhe são atribuídas. Não cria listas, formulários, workflows, sites nem notícias.</p>
+</div>
+<div class="persona">
+  <h3><span class="tag">VIEWER</span> Eduardo Santos — Diretor Financeiro</h3>
+  <p><b>Email:</b> eduardo@xpto.pt · <b>Função:</b> Viewer</p>
+  <p>Só consulta: vê documentos, listas, tarefas, workflows, aprovações, sites e notícias, sem criar nem alterar nada. Ideal para quem precisa de visibilidade total sem risco — direção, auditoria externa, consultores.</p>
+</div>
+
+<div class="tip"><b>Porquê estas funções?</b> Princípio do menor privilégio: cada pessoa recebe apenas o acesso de que precisa. As 5 funções de sistema cobrem a maioria dos casos; se nenhuma servir, a Ana cria funções personalizadas em Administração → Funções.</div>
+
+<h2>2. Matriz rápida de funções</h2>
+<table>
+  <thead><tr><th>Capacidade</th><th>Viewer<br>(Eduardo)</th><th>Member<br>(Carla)</th><th>Editor<br>(Diana)</th><th>Manager<br>(Bruno)</th><th>Admin<br>(Ana)</th></tr></thead>
+  <tbody>
+    <tr><td>Ver todo o conteúdo</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Criar/editar documentos e tarefas</td><td>—</td><td>✔</td><td>✔</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Apagar documentos</td><td>—</td><td>—</td><td>✔</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Partilhar documentos externamente</td><td>—</td><td>—</td><td>—</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Gerir listas, formulários, workflows, páginas, notícias</td><td>—</td><td>—</td><td>✔</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Gerir sites</td><td>—</td><td>—</td><td>✔</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Criar utilizadores (papel Member)</td><td>—</td><td>—</td><td>—</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Ver auditoria e análise, gerir definições e webhooks</td><td>—</td><td>—</td><td>só webhooks</td><td>✔</td><td>✔</td></tr>
+    <tr><td>Mudar papéis, apagar utilizadores, funções personalizadas</td><td>—</td><td>—</td><td>—</td><td>—</td><td>✔</td></tr>
+    <tr><td>Decidir aprovações</td><td colspan="5">Só as que lhes são atribuídas/delegadas — a decisão é por atribuição</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Um dia na XPTO — cenários completos de colaboração</h2>
+<p>Cinco fluxos reais que mostram como os 5 utilizadores trabalham em conjunto, de ponta a ponta — cada um dentro do que a sua função permite.</p>
+
+<h3>Cenário A — Nova proposta para o cliente ABC</h3>
+<table>
+  <thead><tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Bruno</td><td>Cria a pasta <code>Clientes/ABC S.A./Propostas</code> e instancia o template «Modelo — Proposta Comercial».</td><td>Documentos</td></tr>
+    <tr><td>2</td><td>Bruno</td><td>Atribui tarefa à Carla: «Redigir proposta ABC» — prioridade Alta, prazo sexta-feira.</td><td>Tarefas</td></tr>
+    <tr><td>3</td><td>Carla</td><td>Recebe notificação, abre a tarefa, faz check-out do documento e redige a proposta.</td><td>Notificações → Documentos</td></tr>
+    <tr><td>4</td><td>Carla</td><td>Faz check-in (nova versão) e comenta: «Versão pronta para revisão».</td><td>Documento</td></tr>
+    <tr><td>5</td><td>Carla</td><td>Pede à IA um resumo para verificar os pontos-chave.</td><td>Documento → IA</td></tr>
+    <tr><td>6</td><td>Bruno</td><td>Reve o documento, comenta «falta tabela de preços» → Carla adiciona → Bruno aprova internamente.</td><td>Comentários</td></tr>
+    <tr><td>7</td><td>Diana</td><td>Reve a formatação final e atualiza o registo «ABC, S.A.» na lista de Clientes (estado → Ativo).</td><td>Documentos → Listas</td></tr>
+    <tr><td>8</td><td>Bruno</td><td>Cria link de partilha externa com expiração de 7 dias e envia ao cliente.</td><td>Partilha</td></tr>
+    <tr><td>9</td><td>Eduardo</td><td>Abre a proposta em modo leitura para acompanhar o negócio — não consegue editar, apagar nem partilhar.</td><td>Documentos</td></tr>
+    <tr><td>10</td><td>Ana</td><td>No fim do dia vê na atividade recente todo o percurso — e na auditoria o acesso do cliente via link.</td><td>Dashboard → Auditoria</td></tr>
+  </tbody>
+</table>
+
+<h3>Cenário B — Despesa da Carla aprovada por workflow</h3>
+<table>
+  <thead><tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Carla</td><td>Preenche o formulário «Pedido de Despesa»: 230€, categoria Viagem, anexa a fatura.</td><td>Formulários</td></tr>
+    <tr><td>2</td><td>Sistema</td><td>Inicia a instância do workflow «Aprovação de Despesas» → passo de aprovação do Bruno.</td><td>Processos</td></tr>
+    <tr><td>3</td><td>Bruno</td><td>Vê a aprovação pendente, consulta o pedido e aprova com comentário «OK — entra no projeto ABC».</td><td>Aprovações</td></tr>
+    <tr><td>4</td><td>Sistema</td><td>Como 230€ &lt; 500€, a instância termina aprovada; a Carla é notificada e a notificação de pedido do Bruno fica lida automaticamente.</td><td>Processos → Notificações</td></tr>
+    <tr><td>5</td><td>Ana</td><td>Exporta a lista de despesas para CSV no fim do mês para a contabilidade.</td><td>Listas</td></tr>
+  </tbody>
+</table>
+<div class="tip">Se a despesa fosse 800€, depois do Bruno passava à Ana — o passo <b>Condição</b> do workflow encaminha valores altos para uma segunda aprovação. O Eduardo consegue <i>ver</i> a aprovação na fila, mas não decide — não é o aprovador designado.</div>
+
+<h3>Cenário C — Um consultor externo recebe acesso de leitura</h3>
+<table>
+  <thead><tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Ana</td><td>Convida <code>duarte@xpto.pt</code> (contabilista externo) com função <b>Viewer</b> — fica pendente na tabela de convites.</td><td>Administração → Utilizadores</td></tr>
+    <tr><td>2</td><td>Duarte</td><td>Aceita o convite, cria a conta — no Dashboard vê o checklist de onboarding.</td><td>Aceitar convite</td></tr>
+    <tr><td>3</td><td>Bruno</td><td>Adiciona-o como membro leitor do site «Portal XPTO» para consultar as notícias internas.</td><td>Sites</td></tr>
+    <tr><td>4</td><td>Duarte</td><td>Consulta a lista de despesas e os documentos financeiros — tudo em modo leitura.</td><td>Listas → Documentos</td></tr>
+    <tr><td>5</td><td>Duarte</td><td>Lê a notícia de boas-vindas e explora a Ajuda.</td><td>Notícias → Ajuda</td></tr>
+  </tbody>
+</table>
+<div class="note">Como Viewer, o Duarte não consegue editar, criar, partilhar ou aprovar nada — o acesso é estritamente de consulta. Se precisar de colaborar, a Ana muda-lhe a função em Administração → Utilizadores.</div>
+
+<h3>Cenário D — A Diana atualiza o portal interno</h3>
+<table>
+  <thead><tr><th>#</th><th>Quem</th><th>Ação</th><th>Onde</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Diana</td><td>Edita a página «Boas-vindas» do site interno com as novas regras de despesas.</td><td>Sites → Páginas</td></tr>
+    <tr><td>2</td><td>Diana</td><td>Publica a notícia «Novas regras de despesas em vigor» na categoria Comunicação interna.</td><td>Notícias</td></tr>
+    <tr><td>3</td><td>Sistema</td><td>Os utilizadores recebem a notificação da nova notícia.</td><td>Notificações</td></tr>
+    <tr><td>4</td><td>Carla, Eduardo</td><td>Lêem a notícia — a Carla pode comentar, o Eduardo só lê.</td><td>Notícias</td></tr>
+    <tr><td>5</td><td>Diana</td><td>Cria um novo campo «NIF» na lista Clientes e ajusta o formulário de pedido de despesa.</td><td>Listas → Formulários</td></tr>
+  </tbody>
+</table>
+<div class="note">O que a Diana <b>não</b> consegue fazer (e pediria ao Bruno ou à Ana): partilhar documentos por link externo, convidar utilizadores, ver auditoria e análise, mexer nas definições da organização. Consegue, no entanto, criar e gerir <b>sites</b> inteiros — tem <code>sites.manage</code>.</div>
+
+<h3>Cenário E — A Ana prepara a empresa para crescer</h3>
+<ul>
+  <li>Cria a função personalizada <b>«Comercial»</b> (documentos + listas, sem administração).</li>
+  <li>Configura <b>SSO</b> com o Google Workspace — todos passam a entrar com a conta Google.</li>
+  <li>Define política de <b>retenção</b>: documentos da reciclagem purgados após 90 dias.</li>
+  <li>Ativa um <b>webhook</b> para o sistema de faturação externo receber eventos de aprovação de despesas.</li>
+  <li>Faz upgrade para o plano <b>Professional</b> via Stripe quando a equipa passa de 5 pessoas.</li>
+  <li>Reve a <b>Análise</b> mensal: adoção por módulo, tendência de tarefas, gargalos.</li>
+</ul>
+
+
+</section>
+
+</body>
+</html>

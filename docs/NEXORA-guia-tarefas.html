@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de Tarefas</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  h4 { font-size: 10pt; color: #0f172a; margin: 3.5mm 0 1.5mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .section { page-break-before: always; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .deny { color: #b91c1c; }
+  .deny::before { content: "→ Esperado (negado): "; font-weight: 600; color: #b91c1c; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+  .role-pill { display: inline-block; background: #e0e7ff; color: #3730a3; border-radius: 10px; padding: 0 2.5mm; font-size: 8pt; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — Tarefas</div>
+  <div class="meta">
+    <p>Módulo: Tarefas (menu lateral → Tarefas · <code>/tasks</code>)</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que são Tarefas</h2>
+<p>As <b>Tarefas</b> são a unidade básica de trabalho do NEXORA: uma ação concreta com responsável, prazo e estado. Servem para distribuir e acompanhar trabalho dentro da organização — pedidos, entregas, revisões, follow-ups.</p>
+<p>As tarefas ligam-se ao resto da plataforma: podem ser <b>atribuídas a pessoas ou equipas</b>, associadas a <b>projetos</b> e a <b>documentos</b>, criadas <b>automaticamente por Processos</b> (workflows) e geram <b>notificações</b> ao responsável.</p>
+
+<h2>2. Anatomia de uma tarefa</h2>
+<table>
+  <thead><tr><th>Campo</th><th>Descrição</th><th>Exemplo</th></tr></thead>
+  <tbody>
+    <tr><td><b>Título</b></td><td>Nome curto e acionável (obrigatório)</td><td>«Revisar proposta ABC»</td></tr>
+    <tr><td><b>Descrição</b></td><td>Detalhe, contexto, critérios de aceitação</td><td>«Verificar cláusulas 4 e 7 com o jurídico»</td></tr>
+    <tr><td><b>Estado</b></td><td>Fase de vida da tarefa (ver §3)</td><td>Em curso</td></tr>
+    <tr><td><b>Prioridade</b></td><td>Baixa, Normal, Alta, Urgente (ver §4)</td><td>Alta</td></tr>
+    <tr><td><b>Responsável</b></td><td>Membro da organização a quem pertence a execução</td><td>Carla Mendes</td></tr>
+    <tr><td><b>Equipa</b></td><td>Alternativa ao responsável individual — a tarefa fica visível para a equipa</td><td>Consultores</td></tr>
+    <tr><td><b>Data de início</b></td><td>Quando o trabalho deve começar</td><td>25/09/2026</td></tr>
+    <tr><td><b>Data limite</b></td><td>Prazo de entrega — alimenta alertas e o «O meu dia»</td><td>30/09/2026</td></tr>
+    <tr><td><b>Etiquetas</b></td><td>Palavras-chave livres para filtrar e agrupar</td><td>cliente, urgente, trimestre</td></tr>
+    <tr><td><b>Projeto</b></td><td>Lista NEXORA associada que funciona como projeto (agrupamento)</td><td>Onboarding ABC</td></tr>
+    <tr><td><b>Documento</b></td><td>Documento relacionado (ex.: o ficheiro a revisar)</td><td>proposta-abc.docx</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Ciclo de vida — os 5 estados</h2>
+<table>
+  <thead><tr><th>Estado</th><th>Significado</th><th>Quando usar</th></tr></thead>
+  <tbody>
+    <tr><td><b>Por fazer</b> (TODO)</td><td>Criada, ainda não iniciada</td><td>Estado inicial por defeito</td></tr>
+    <tr><td><b>Em curso</b> (IN_PROGRESS)</td><td>Alguém está a trabalhar nela</td><td>O responsável começou a execução</td></tr>
+    <tr><td><b>Em revisão</b> (IN_REVIEW)</td><td>Feita, à espera de validação</td><td>Trabalho entregue mas precisa de revisão de terceiros</td></tr>
+    <tr><td><b>Concluída</b> (DONE)</td><td>Terminada — regista automaticamente a data de conclusão</td><td>Trabalho finalizado e aceite</td></tr>
+    <tr><td><b>Cancelada</b> (CANCELLED)</td><td>Descartada sem conclusão</td><td>Pedido retirado, já não faz sentido</td></tr>
+  </tbody>
+</table>
+<div class="tip"><b>Fluxo típico:</b> Por fazer → Em curso → Em revisão → Concluída. O estado «Cancelada» existe para tarefas que morrem pelo caminho — não as apague, cancele-as: fica registo histórico.</div>
+
+<h2>4. Prioridades</h2>
+<table>
+  <thead><tr><th>Prioridade</th><th>Uso recomendado</th></tr></thead>
+  <tbody>
+    <tr><td><b>Urgente</b></td><td>Bloqueadores, incidentes, prazos de hoje — aparece no topo das ordenações por prioridade</td></tr>
+    <tr><td><b>Alta</b></td><td>Importante, com prazo próximo</td></tr>
+    <tr><td><b>Normal</b></td><td>Trabalho corrente (defeito)</td></tr>
+    <tr><td><b>Baixa</b></td><td>Nice-to-have, melhorias, backlog</td></tr>
+  </tbody>
+</table>
+
+<h2>5. Como criar e gerir — passo a passo</h2>
+<h3>5.1 Criar uma tarefa</h3>
+<ol class="steps">
+  <li>Menu lateral → <b>Tarefas</b> → botão <b>«Nova tarefa»</b>.</li>
+  <li>Preencher <b>título</b> (obrigatório) e descrição.</li>
+  <li>Definir <b>prioridade</b>, <b>responsável</b> (membro) ou <b>equipa</b>.</li>
+  <li>Opcional: data de início, data limite, etiquetas, projeto, documento associado.</li>
+  <li>Guardar. <span class="exp">A tarefa aparece na lista; o responsável recebe a notificação «Tarefa atribuída».</span></li>
+</ol>
+
+<h3>5.2 Trabalhar a tarefa</h3>
+<ol class="steps">
+  <li>Abrir a tarefa (clicar na linha) → página de detalhe.</li>
+  <li>Mudar o estado para <b>Em curso</b> quando começar.</li>
+  <li>Adicionar comentários/atualizações na página de detalhe para manter contexto.</li>
+  <li>Concluir → estado <b>Concluída</b>. <span class="exp">A data de conclusão é registada automaticamente.</span></li>
+</ol>
+
+<h3>5.3 Filtrar e organizar a lista</h3>
+<ol class="steps">
+  <li>Usar os filtros de <b>estado</b> e a pesquisa por texto.</li>
+  <li>Alternar o âmbito <b>«Todas» / «Minhas»</b> — «Minhas» mostra só tarefas atribuídas a si.</li>
+  <li>Ordenar por título, prazo, prioridade, data de criação ou atualização.</li>
+</ol>
+
+<h3>5.4 O «O meu dia»</h3>
+<p>A página <b>O meu dia</b> (<code>/my-day</code>) agrega o que precisa de atenção hoje: tarefas suas com prazo próximo ou em curso, aprovações pendentes e notificações. É o ponto de partida diário recomendado.</p>
+
+<h2>6. Exemplos práticos</h2>
+
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Pedido simples</div>
+  <p><b>Cenário:</b> precisa que a Carla prepare uma apresentação.</p>
+  <ul>
+    <li>Título: «Preparar apresentação comercial Q4»</li>
+    <li>Responsável: Carla Mendes · Prioridade: Alta · Data limite: sexta-feira</li>
+    <li>Etiquetas: <code>comercial, apresentacao</code></li>
+  </ul>
+  <p>A Carla recebe notificação, trabalha a tarefa, marca Em curso → Concluída. O criador acompanha na lista.</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Tarefa com revisão</div>
+  <ul>
+    <li>Título: «Rever contrato fornecedor X» · Responsável: Bruno · Prioridade: Normal</li>
+    <li>Documento associado: <code>contrato-x.pdf</code> (abre direto da tarefa)</li>
+    <li>Fluxo: Por fazer → Em curso → <b>Em revisão</b> (o criador valida) → Concluída</li>
+  </ul>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Tarefa criada por um Processo</div>
+  <p>Num workflow «Onboarding», o passo <b>Criar tarefa</b> gera automaticamente «Preparar acessos do novo membro» atribuída ao responsável configurado. A tarefa aparece na lista normal e o id fica disponível no contexto do processo (<code>context.taskId</code>) para passos seguintes (ex.: fechá-la no fim).</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 4 — Tarefa de equipa</div>
+  <p>Atribuir a <b>equipa «Consultores»</b> em vez de uma pessoa: qualquer membro da equipa pode pegar na tarefa. Útil para filas de trabalho partilhadas (ex.: «responder a pedidos de suporte»).</p>
+</div>
+
+<h2>7. Quem pode fazer o quê</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver tarefas e abrir detalhe</td><td><code>tasks.view</code></td><td>Todos (incl. Viewer)</td></tr>
+    <tr><td>Criar, editar, mudar estado, atribuir, eliminar</td><td><code>tasks.manage</code></td><td>Admin, Manager, Editor, Member</td></tr>
+    <tr><td>Viewer</td><td>—</td><td>Só consulta — o botão «Nova tarefa» está desativado e a API devolve 403</td></tr>
+  </tbody>
+</table>
+<div class="note"><b>Nota:</b> o Member é o papel «operacional» mais baixo que pode criar e concluir tarefas — por isso os testes de execução de trabalho devem ser feitos como Member, não como Viewer.</div>
+
+<h2>8. Boas práticas</h2>
+<ul>
+  <li><b>Títulos acionáveis:</b> «Enviar fatura à ABC» &gt; «Fatura».</li>
+  <li><b>Uma tarefa = uma entrega:</b> se tem 5 passos independentes, crie 5 tarefas (ou um Processo se for recorrente).</li>
+  <li><b>Sempre com responsável e prazo</b> — tarefas órfãs acumulam-se sem dono.</li>
+  <li><b>Use «Em revisão»</b> quando o trabalho precisa de validação — evita concluir trabalho por verificar.</li>
+  <li><b>Etiquetas consistentes</b> — combine um vocabulário curto com a equipa (<code>cliente, interno, urgente</code>) em vez de etiquetas ad-hoc.</li>
+  <li><b>Tarefa recorrente ou multi-etapa?</b> Provavelmente é um <b>Processo</b> (workflow), não uma tarefa.</li>
+</ul>
+
+<h2>9. Resolução de problemas</h2>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>Botão «Nova tarefa» desativado/ausente</td><td>Está como <b>Viewer</b> — falta <code>tasks.manage</code></td></tr>
+    <tr><td>Responsável não recebeu notificação</td><td>Verificar o sino de notificações; a atribuição a equipa notifica de forma diferente</td></tr>
+    <tr><td>Tarefa não aparece na lista</td><td>Filtro de estado ativo ou âmbito «Minhas» ligado</td></tr>
+    <tr><td>Não consigo associar documento</td><td>O documento tem de existir e estar ativo na organização</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>

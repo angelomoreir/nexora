@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Apresentação do Produto</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 16mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 14pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  h4 { font-size: 10pt; color: #0f172a; margin: 3.5mm 0 1.5mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.6mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+  .no-break { page-break-inside: avoid; }
+  .section { page-break-before: always; }
+
+  /* Capa */
+  .cover { page-break-after: always; text-align: center; }
+  .cover .hero { width: 100%; border-radius: 10px; margin-top: 10mm; }
+  .cover .sub { font-size: 16pt; color: #334155; margin-top: 10mm; font-weight: 600; }
+  .cover .tagline { font-size: 11.5pt; color: #64748b; margin-top: 3mm; }
+  .cover .meta { margin-top: 22mm; font-size: 10pt; color: #64748b; }
+  .cover .badges { margin-top: 12mm; }
+  .cover .badge { display: inline-block; background: #eef2ff; color: #3730a3; border: 1px solid #c7d2fe; border-radius: 20px; padding: 1mm 4mm; font-size: 8.5pt; font-weight: 600; margin: 1mm; }
+
+  /* Índice */
+  .toc { page-break-after: always; }
+  .toc h1 { font-size: 20pt; border-bottom: 3px solid #4f46e5; padding-bottom: 2mm; }
+  .toc-list { list-style: none; margin: 0; padding: 0; }
+  .toc-list li { margin: 2.2mm 0; font-size: 10.5pt; }
+  .toc-list a { display: flex; align-items: baseline; text-decoration: none; color: #1c2430; }
+  .toc-list .num { font-weight: 700; color: #4f46e5; min-width: 8mm; }
+  .toc-list .fill { flex: 1; margin: 0 2mm; border-bottom: 1px dotted #94a3b8; }
+
+  /* Componentes de destaque */
+  .stats { display: flex; flex-wrap: wrap; gap: 3mm; margin: 3mm 0 4mm; }
+  .stat { flex: 1 1 30%; min-width: 40mm; background: #f5f7ff; border: 1px solid #c7d2fe; border-radius: 6px; padding: 3mm 4mm; text-align: center; page-break-inside: avoid; }
+  .stat .n { font-size: 17pt; font-weight: 800; color: #4f46e5; line-height: 1.1; }
+  .stat .l { font-size: 8pt; color: #475569; margin-top: 1mm; }
+  .cards { display: flex; flex-wrap: wrap; gap: 3mm; margin: 3mm 0; }
+  .card { flex: 1 1 45%; min-width: 70mm; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; border-radius: 4px; padding: 2.5mm 3.5mm; page-break-inside: avoid; }
+  .card h4 { margin: 0 0 1.5mm; color: #3730a3; font-size: 10pt; }
+  .card p, .card ul { margin: 0.5mm 0; font-size: 9pt; }
+  .card ul { padding-left: 4.5mm; }
+  .quote { background: #eef2ff; border-left: 4px solid #4f46e5; padding: 3mm 4mm; font-size: 11pt; color: #1e293b; border-radius: 2px; margin: 3mm 0; font-style: italic; }
+  img.shot { display: block; margin: 2.5mm auto 1mm; max-width: 100%; max-height: 82mm; border: 1px solid #e2e8f0; border-radius: 6px; box-shadow: 0 3px 10px rgba(15,23,42,.10); }
+  .shot-cap { text-align: center; font-size: 8pt; color: #64748b; margin: 0 0 4mm; }
+  .check { color: #15803d; font-weight: 700; }
+  .cross { color: #b91c1c; }
+  .mod { border: 1px solid #e2e8f0; border-radius: 5px; padding: 2.5mm 3.5mm; margin: 2.5mm 0; page-break-inside: avoid; }
+  .mod h4 { margin: 0 0 1mm; color: #3730a3; font-size: 10.5pt; }
+  .mod p { font-size: 9pt; margin: 1mm 0; }
+  .cta { background: linear-gradient(135deg, #312e81, #4f46e5); color: #fff; border-radius: 8px; padding: 6mm 6mm; margin: 6mm 0; page-break-inside: avoid; }
+  .cta h3 { color: #fff; margin: 0 0 2mm; font-size: 13pt; }
+  .cta p { color: #e0e7ff; }
+</style>
+</head>
+<body>
+
+<!-- ============ CAPA ============ -->
+<div class="cover">
+  <img class="hero" src="../logo.png" alt="NEXORA — Tudo o que a sua empresa precisa, num só lugar">
+  <div class="sub">Apresentação do Produto</div>
+  <div class="tagline">O que é o NEXORA, qual a sua aplicação prática e porque a sua empresa o deve utilizar</div>
+  <div class="badges">
+    <span class="badge">Documentos</span><span class="badge">Listas</span><span class="badge">Formulários</span><span class="badge">Tarefas</span><span class="badge">Workflows</span><span class="badge">Aprovações</span><span class="badge">Sites internos</span><span class="badge">Notícias</span><span class="badge">IA</span><span class="badge">Pesquisa global</span>
+  </div>
+  <div class="meta">
+    <p>Documento de apresentação para decisores e equipas</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<!-- ============ ÍNDICE ============ -->
+<nav class="toc">
+  <h1>Índice</h1>
+  <ol class="toc-list">
+    <li><a href="#s1"><span class="num">1</span><span>Sumário executivo</span><span class="fill"></span></a></li>
+    <li><a href="#s2"><span class="num">2</span><span>O que é o NEXORA</span><span class="fill"></span></a></li>
+    <li><a href="#s3"><span class="num">3</span><span>O problema que resolve</span><span class="fill"></span></a></li>
+    <li><a href="#s4"><span class="num">4</span><span>Como funciona</span><span class="fill"></span></a></li>
+    <li><a href="#s5"><span class="num">5</span><span>Os módulos em detalhe</span><span class="fill"></span></a></li>
+    <li><a href="#s6"><span class="num">6</span><span>Aplicação prática — cenários reais</span><span class="fill"></span></a></li>
+    <li><a href="#s7"><span class="num">7</span><span>Inteligência artificial ao serviço da empresa</span><span class="fill"></span></a></li>
+    <li><a href="#s8"><span class="num">8</span><span>Segurança, privacidade e conformidade</span><span class="fill"></span></a></li>
+    <li><a href="#s9"><span class="num">9</span><span>Porquê as empresas devem usar o NEXORA</span><span class="fill"></span></a></li>
+    <li><a href="#s10"><span class="num">10</span><span>Como se compara com as alternativas</span><span class="fill"></span></a></li>
+    <li><a href="#s11"><span class="num">11</span><span>Planos e preços</span><span class="fill"></span></a></li>
+    <li><a href="#s12"><span class="num">12</span><span>Como começar</span><span class="fill"></span></a></li>
+    <li><a href="#s13"><span class="num">13</span><span>Perguntas frequentes de quem decide</span><span class="fill"></span></a></li>
+  </ol>
+</nav>
+
+<!-- ============ 1. SUMÁRIO EXECUTIVO ============ -->
+<h2 id="s1">1. Sumário executivo</h2>
+<p>O <b>NEXORA</b> é uma plataforma empresarial multi-tenant que junta num único espaço de trabalho — seguro, auditável e em 5 idiomas — tudo aquilo que hoje está disperso por drives partilhadas, folhas de cálculo, emails e ferramentas isoladas: <b>documentos</b>, <b>dados estruturados</b>, <b>formulários</b>, <b>tarefas</b>, <b>processos automatizados</b>, <b>aprovações</b>, <b>portais internos</b>, <b>comunicação interna</b>, <b>pesquisa global</b> e um <b>assistente de IA</b> que cria estruturas reais na plataforma.</p>
+<p>Foi desenhado para empresas que precisam da capacidade de um SharePoint, mas sem a complexidade, o custo e a dependência de equipas de IT que ele traz. Cada organização tem o seu espaço isolado, cada pessoa tem a sua conta e as suas permissões, e cada ação relevante fica registada em auditoria.</p>
+
+<div class="stats">
+  <div class="stat"><div class="n">15+</div><div class="l">módulos integrados num só produto</div></div>
+  <div class="stat"><div class="n">6</div><div class="l">funções de sistema + funções personalizadas</div></div>
+  <div class="stat"><div class="n">32</div><div class="l">permissões granulares (RBAC)</div></div>
+  <div class="stat"><div class="n">5</div><div class="l">idiomas de interface (PT · EN · ES · FR · DE)</div></div>
+  <div class="stat"><div class="n">0&nbsp;€</div><div class="l">para começar — plano Free sem cartão</div></div>
+  <div class="stat"><div class="n">~200</div><div class="l">verificações automatizadas em auditoria de segurança</div></div>
+</div>
+
+<div class="quote">«Tudo o que a sua empresa precisa, num só lugar.» — documentos, dados, trabalho, processos e comunicação, com controlo total sobre quem vê e faz o quê.</div>
+
+<h3>Para quem é</h3>
+<ul>
+  <li><b>PME e empresas em crescimento</b> — que já ultrapassaram o «Excel partilhado + email» mas não querem montar um SharePoint.</li>
+  <li><b>Equipas distribuídas</b> — que precisam de um único ponto de verdade acessível a partir do browser, em qualquer lugar.</li>
+  <li><b>Organizações com processos de aprovação</b> — despesas, compras, férias, contratos, onboarding — que hoje correm por email e papel.</li>
+  <li><b>Empresas com requisitos de controlo</b> — auditoria, retenção legal, permissões finas, isolamento de dados por organização.</li>
+  <li><b>Consultoras e empresas multi-cliente</b> — uma conta pode pertencer a várias organizações, cada uma com dados totalmente isolados.</li>
+</ul>
+
+<!-- ============ 2. O QUE É ============ -->
+<div class="section"></div>
+<h2 id="s2">2. O que é o NEXORA</h2>
+<p>O NEXORA é uma <b>plataforma SaaS de gestão do trabalho e do conteúdo empresarial</b>. Tecnicamente, é um monólito modular web (API REST + aplicação web) que pode ser usado como serviço na cloud ou instalado na infraestrutura da própria empresa. Na prática, é o «sistema operativo» do dia a dia da organização: o sítio onde os ficheiros vivem, onde os dados se mantêm, onde o trabalho se atribui e acompanha, onde as decisões se aprovam e onde a informação se comunica.</p>
+
+<h3>2.1 O que substitui</h3>
+<table>
+  <thead><tr><th>Necessidade da empresa</th><th>Ferramenta típica hoje</th><th>No NEXORA</th></tr></thead>
+  <tbody>
+    <tr><td>Biblioteca de ficheiros com versões e permissões</td><td>SharePoint / Google Drive / pasta de rede</td><td><b>Documentos</b> — pastas, versões, check-out, partilhas, links externos</td></tr>
+    <tr><td>Tabelas de dados vivas (clientes, inventário, requisições)</td><td>Excel partilhado / Access</td><td><b>Listas</b> — 13 tipos de campo, relações entre listas, exportação CSV</td></tr>
+    <tr><td>Recolha de dados (pedidos, questionários, inscrições)</td><td>Google Forms / papel / email</td><td><b>Formulários</b> — construtor visual, publicação, submissões</td></tr>
+    <tr><td>Gestão de trabalho da equipa</td><td>Trello / Planner / email</td><td><b>Tarefas</b> — lista, kanban e calendário, comentários, prazos</td></tr>
+    <tr><td>Processos de aprovação e automatização</td><td>Power Automate / correntes de email / papel</td><td><b>Processos + Aprovações</b> — motor de workflows com construtor visual</td></tr>
+    <tr><td>Portal interno / intranet</td><td>SharePoint Sites / wiki</td><td><b>Sites + Notícias</b> — portais com widgets e comunicação editorial</td></tr>
+    <tr><td>Encontrar qualquer coisa</td><td>Procurar em N ferramentas</td><td><b>Pesquisa global</b> — um só campo, com Ctrl+K, consciente de permissões</td></tr>
+    <tr><td>Assistente inteligente</td><td>ChatGPT separado dos dados da empresa</td><td><b>IA integrada</b> — resume documentos e cria listas/processos reais</td></tr>
+    <tr><td>Governação: quem pode ver/fazer o quê</td><td>Configurações dispersas</td><td><b>Administração</b> — RBAC, auditoria, SSO, webhooks, retenção</td></tr>
+  </tbody>
+</table>
+
+<h3>2.2 Princípios de desenho</h3>
+<div class="cards">
+  <div class="card"><h4>Tudo num só lugar</h4><p>Um só login, um só menu, uma só pesquisa. A informação deixa de estar espalhada por drives, folhas e caixas de email.</p></div>
+  <div class="card"><h4>Permissões por defeito</h4><p>Cada utilizador tem uma função (Viewer, Member, Editor, Manager, Admin…) e só vê e faz o que essa função permite — em todos os módulos.</p></div>
+  <div class="card"><h4>Auditável</h4><p>Ações relevantes ficam registadas: quem criou, editou, aprovou, partilhou ou eliminou — e quando.</p></div>
+  <div class="card"><h4>Multilingue e acessível</h4><p>Interface em Português, Inglês, Espanhol, Francês e Alemão, com tema claro/escuro e conformidade WCAG AA verificada.</p></div>
+  <div class="card"><h4>Automatizável</h4><p>Qualquer processo repetitivo — aprovações, notificações, movimentação de documentos — vira um workflow que corre sozinho.</p></div>
+  <div class="card"><h4>Extensível</h4><p>API REST completa, webhooks para sistemas externos, SSO/OIDC, e providers abstratos para storage, email, IA e faturação.</p></div>
+</div>
+
+<!-- ============ 3. O PROBLEMA ============ -->
+<div class="section"></div>
+<h2 id="s3">3. O problema que resolve</h2>
+<p>Na maioria das empresas, a informação e os processos estão fragmentados. O NEXORA ataca diretamente os sintomas que todos reconhecem:</p>
+<table>
+  <thead><tr><th>Sintoma atual</th><th>Custo real</th><th>Resposta do NEXORA</th></tr></thead>
+  <tbody>
+    <tr><td>«Onde está a versão final do contrato?» — ficheiros em drives, emails e computadores pessoais</td><td>Horas perdidas a procurar; risco de usar a versão errada</td><td>Documentos centralizados com <b>versões numeradas</b>, check-out e pesquisa global por nome, descrição e etiquetas</td></tr>
+    <tr><td>Dados da empresa em folhas Excel partilhadas</td><td>Conflitos de edição, sem histórico, sem validação, sem permissões finas</td><td><b>Listas</b> com campos tipados e validados, relações entre dados e registo de quem alterou o quê</td></tr>
+    <tr><td>Aprovações por email ou papel — «já aprovaste aquela despesa?»</td><td>Decisões perdidas, sem rasto, sem prazos, sem escalonamento</td><td><b>Workflows</b> que encaminham, esperam a decisão, ramificam por valor e notificam automaticamente</td></tr>
+    <tr><td>Comunicação interna que ninguém lê no email</td><td>Regras e novidades não chegam às pessoas certas</td><td><b>Notícias</b> com estados editoriais e agendamento + <b>Sites</b> de portal interno + notificações</td></tr>
+    <tr><td>Cada departamento usa uma ferramenta diferente</td><td>Subscrições multiplicadas, dados que não se falam, formação repetida</td><td>Uma só plataforma com os módulos todos ligados entre si — a lista alimenta o workflow, que gera a tarefa, que anexa o documento</td></tr>
+    <tr><td>Ninguém sabe quem viu/apagou/alterou o quê</td><td>Risco legal e de compliance; impossível auditar</td><td><b>Auditoria</b> imutável, retenção legal, reciclagem recuperável, relatórios de atividade</td></tr>
+    <tr><td>Partilhar credenciais entre colegas</td><td>Sem responsabilização possível; acessos que ficam abertos quando alguém sai</td><td><b>Convites individuais</b> de 7 dias e funções por pessoa; sair da empresa = suspender a conta, histórico preservado</td></tr>
+    <tr><td>Introduzir IA sem expor dados sensíveis</td><td>Colar documentos em chats públicos, sem controlo</td><td>IA integrada que <b>respeita as permissões do utilizador</b> e fica auditada como qualquer outra ação</td></tr>
+  </tbody>
+</table>
+
+<!-- ============ 4. COMO FUNCIONA ============ -->
+<div class="section"></div>
+<h2 id="s4">4. Como funciona</h2>
+<p>O modelo mental é simples — quatro conceitos explicam toda a plataforma:</p>
+<table>
+  <thead><tr><th>Conceito</th><th>O que é</th></tr></thead>
+  <tbody>
+    <tr><td><b>Organização</b></td><td>O espaço de trabalho da empresa. Todos os dados pertencem a uma organização e estão <b>totalmente isolados</b> das outras — nem a pesquisa nem a IA atravessam a fronteira.</td></tr>
+    <tr><td><b>Pessoas</b></td><td>Cada pessoa tem a sua conta (email + palavra-passe ou SSO). Entra por <b>convite</b> — link seguro de 7 dias que ninguém partilha com passwords.</td></tr>
+    <tr><td><b>Funções</b></td><td>O que cada pessoa pode fazer: <b>Viewer</b> (só lê), <b>Member</b> (executa), <b>Editor</b> (produz conteúdo), <b>Manager</b> (gere a operação), <b>Admin</b> (gere a organização), <b>Super Admin</b> (plataforma) — ou funções personalizadas à medida.</td></tr>
+    <tr><td><b>Conteúdo + Processos</b></td><td>O trabalho em si: documentos, listas, formulários, tarefas, workflows, sites, notícias — tudo ligado e pesquisável.</td></tr>
+  </tbody>
+</table>
+
+<img class="shot" src="shots/dashboard.png" alt="Dashboard do NEXORA">
+<p class="shot-cap">O Dashboard — métricas, atividade recente e checklist de onboarding da organização.</p>
+
+<h3>4.1 Um só ecrã, cinco áreas</h3>
+<table>
+  <thead><tr><th>Área do menu</th><th>Contém</th><th>Para quem</th></tr></thead>
+  <tbody>
+    <tr><td><b>Pessoal</b></td><td>O meu dia · Dashboard · Pesquisa</td><td>Todos — o ponto de partida diário</td></tr>
+    <tr><td><b>Trabalho</b></td><td>Tarefas · Aprovações · Processos · Notificações</td><td>Quem executa e decide</td></tr>
+    <tr><td><b>Conteúdo</b></td><td>Sites · Notícias · Documentos · Listas · Formulários</td><td>Quem produz e gere informação</td></tr>
+    <tr><td><b>Análise</b></td><td>Análise (KPIs e tendências)</td><td>Admin e Manager</td></tr>
+    <tr><td><b>Gerir</b></td><td>Administração · Planos · Configurações · Perfil · Ajuda</td><td>Quem administra</td></tr>
+  </tbody>
+</table>
+<p>O cabeçalho concentra o resto: seletor de organização (para quem pertence a várias), paleta de comandos <b>Ctrl+K</b>, tema claro/escuro, idioma, notificações com contador e menu do utilizador. O botão <b>«?»</b> em cada página abre ajuda contextual daquele módulo.</p>
+
+<div class="tip"><b>Adoção sem formação formal:</b> o primeiro login mostra um checklist guiado (primeiro documento, primeira lista, primeira tarefa, convidar a equipa, primeiro processo) e a Ajuda tem ~80 artigos com pesquisa. A maioria das equipas fica produtiva no primeiro dia.</div>
+
+<!-- ============ 5. MÓDULOS ============ -->
+<div class="section"></div>
+<h2 id="s5">5. Os módulos em detalhe</h2>
+
+<h3>5.1 O dia a dia</h3>
+<div class="mod"><h4>O meu dia</h4><p>Painel pessoal de foco: as suas tarefas, as aprovações que esperam por si e as notificações por ler — o que cada pessoa precisa de fazer <i>hoje</i>.</p></div>
+<div class="mod"><h4>Dashboard</h4><p>O estado da organização: métricas por módulo, atividade recente e dashboards personalizados — visibilidade para a gestão sem relatórios manuais.</p></div>
+<div class="mod"><h4>Pesquisa global</h4><p>Um campo para tudo: documentos, pastas, listas, registos, tarefas, processos e utilizadores — com Ctrl+K sempre à mão. Resultados filtrados pelas permissões: quem não tem acesso nem sequer vê que o item existe.</p></div>
+<div class="mod"><h4>Notificações</h4><p>Alertas in-app com ciclo lida/não lida, contador no cabeçalho, subscrição de recursos (seguir um documento ou processo) e entrega multi-canal.</p></div>
+
+<h3>5.2 Conteúdo e dados</h3>
+<div class="mod"><h4>Documentos — a biblioteca central</h4>
+<ul>
+  <li>Pastas hierárquicas, upload/descarga, pré-visualização inline (PDF, imagens, DOCX), download em massa (ZIP)</li>
+  <li><b>Versões numeradas</b> restauráveis, check-out/check-in para edição exclusiva, comentários e atividade por documento</li>
+  <li>Partilha por utilizador, equipa ou organização inteira; <b>ligações públicas</b> com revogação para quem não tem conta</li>
+  <li>Governação: publicar, aprovar, declarar <b>registo oficial</b>, <b>retenção legal</b> e lixo com restauro</li>
+</ul></div>
+<img class="shot" src="shots/documentos.png" alt="Módulo de Documentos">
+<p class="shot-cap">Documentos — a biblioteca de ficheiros com pastas, metadados e partilha controlada.</p>
+
+<div class="mod"><h4>Listas — mini bases de dados sem código</h4>
+<ul>
+  <li><b>13 tipos de campo</b>: texto, número, moeda, data, booleano, escolha, email, URL, utilizador, relação entre listas, ficheiro…</li>
+  <li>Templates prontos (Clientes, Inventário, Contactos, Fornecedores, Requisições) e criação também por IA</li>
+  <li>Filtros, ordenação, vistas guardadas, exportação CSV, duplicação de estrutura</li>
+  <li>Substitui o «Excel partilhado»: validação, histórico e permissões — o CRM, o inventário ou o pipeline da empresa, à medida</li>
+</ul></div>
+<img class="shot" src="shots/listas.png" alt="Módulo de Listas">
+<p class="shot-cap">Listas — dados estruturados com campos tipados, filtros e exportação.</p>
+
+<div class="mod"><h4>Formulários — recolha de dados</h4><p>Construtor visual de formulários com validação, publicação e submissões datadas ligadas ao autor — pedidos de férias, pedidos de despesa, inscrições, questionários. Exportação para CSV para análise externa.</p></div>
+<div class="mod"><h4>Sites — portais internos</h4><p>Intranets com páginas de widgets (hero, texto, documentos recentes, KPIs…), hierarquia de páginas e papéis locais — o «portal da empresa» sem projeto de desenvolvimento.</p></div>
+<div class="mod"><h4>Notícias — comunicação interna</h4><p>Fluxo editorial completo: rascunho, revisão, publicação e <b>agendamento</b>; categorias, comentários e notificação automática aos colaboradores.</p></div>
+
+<img class="shot" src="shots/sites.png" alt="Módulo de Sites">
+<p class="shot-cap">Sites — portais internos montados com widgets, sem código.</p>
+
+<h3>5.3 Execução e automação</h3>
+<div class="mod"><h4>Tarefas — o trabalho organizado</h4>
+<ul>
+  <li>Estados, prioridades, responsáveis, prazos, projetos e comentários por tarefa</li>
+  <li>Três vistas: <b>lista</b>, <b>kanban</b> e <b>calendário</b></li>
+  <li>Atribuição gera notificação; tarefas podem nascer de workflows automaticamente</li>
+</ul></div>
+<div class="mod"><h4>Aprovações — a fila de decisões</h4><p>Caixa de entrada das decisões que os processos geram: aprovar, rejeitar ou <b>delegar</b>, com comentários e contexto do pedido. A decisão é por atribuição — só o aprovador designado decide, mas a visibilidade respeita permissões.</p></div>
+<div class="mod"><h4>Processos (Workflows) — o motor de automação</h4>
+<ul>
+  <li>Construtor visual de passos com validação antes de publicar; templates (aprovação de tarefa, pedido de compra, onboarding, aprovação de documento, incidente)</li>
+  <li><b>11 tipos de passo</b>: iniciar, condição, terminar, criar tarefa, aprovação, notificação, email, alterar estado, atribuir utilizador, alterar campo, mover documento</li>
+  <li>Ramificação por condição (ex.: despesa &gt; 500 € sobe à direção), variáveis <code>{{contexto}}</code> entre passos, saltos de rejeição</li>
+  <li>Cada execução (instância) tem histórico passo a passo — auditável do início ao fim</li>
+</ul></div>
+<img class="shot" src="shots/processos.png" alt="Módulo de Processos">
+<p class="shot-cap">Processos — construtor visual de workflows com instâncias e histórico por passo.</p>
+<img class="shot" src="shots/tarefas.png" alt="Módulo de Tarefas">
+<p class="shot-cap">Tarefas — vista de gestão do trabalho com estados, prioridades e responsáveis.</p>
+
+<h3>5.4 Inteligência artificial</h3>
+<div class="mod"><h4>IA / Copilot — o assistente que cria, não só conversa</h4>
+<ul>
+  <li>Chat com contexto da organização + <b>Copilot contextual</b> (botão flutuante que sabe em que ecrã está)</li>
+  <li>Cria estruturas reais: «cria uma lista de clientes com nome, email e estado» → proposta estruturada → confirmar → a lista existe</li>
+  <li>O mesmo para workflows e esboços de aplicações; resume documentos e responde sobre os seus dados</li>
+  <li><b>Respeita permissões</b> — a IA usa os mesmos endpoints e regras da API; cada operação fica auditada</li>
+</ul></div>
+<img class="shot" src="shots/ia.png" alt="Assistente de IA">
+<p class="shot-cap">IA — assistente conversacional que propõe e cria listas, processos e aplicações.</p>
+
+<h3>5.5 Gestão e administração</h3>
+<div class="mod"><h4>Análise</h4><p>KPIs operacionais e tendências: adoção por módulo, volume e prazos de tarefas, gargalos em aprovações — para gerir com dados, não por intuição.</p></div>
+<div class="mod"><h4>Administração</h4><p>Utilizadores e convites, equipas, papéis e funções personalizadas, auditoria, segurança (SSO/OIDC), webhooks para integrações e definições da organização (incl. política de retenção).</p></div>
+<div class="mod"><h4>Planos e faturação</h4><p>Subscrição atual com barras de utilização contra os limites, grelha de planos, checkout Stripe, portal de faturação e cancelamento — os limites são impostos pela API, não por avisos.</p></div>
+<div class="mod"><h4>Ajuda</h4><p>Centro de documentação com ~80 artigos por categoria, pesquisa e assistente — mais o botão «?» contextual em cada página.</p></div>
+
+<img class="shot" src="shots/administracao.png" alt="Administração">
+<p class="shot-cap">Administração — utilizadores, funções, auditoria e segurança num só painel.</p>
+<img class="shot" src="shots/analise.png" alt="Análise">
+<p class="shot-cap">Análise — KPIs de adoção e operação para a gestão.</p>
+
+<!-- ============ 6. APLICAÇÃO PRÁTICA ============ -->
+<div class="section"></div>
+<h2 id="s6">6. Aplicação prática — cenários reais</h2>
+
+<h3>6.1 Onde cada departamento usa o NEXORA</h3>
+<table>
+  <thead><tr><th>Área</th><th>Utilização típica</th></tr></thead>
+  <tbody>
+    <tr><td><b>Comercial</b></td><td>Lista «Clientes» como CRM, propostas em Documentos com versões e check-out, partilha externa por link com expiração, pipeline de oportunidades</td></tr>
+    <tr><td><b>Financeiro</b></td><td>Formulário de pedido de despesa → workflow de aprovação com ramificação por valor → exportação CSV mensal para contabilidade</td></tr>
+    <tr><td><b>Recursos Humanos</b></td><td>Onboarding de novo colaborador como workflow, pedidos de férias por formulário, políticas internas no portal (Sites), lista de formações</td></tr>
+    <tr><td><b>Operações</b></td><td>Inventário e fornecedores em Listas relacionadas, requisições com aprovação, tarefas de equipa em kanban, dashboard de atividade</td></tr>
+    <tr><td><b>Jurídico</b></td><td>Contratos com versões e aprovação formal, declaração de registo oficial, retenção legal em litígio, auditoria de acessos</td></tr>
+    <tr><td><b>Direção</b></td><td>Função Viewer para visibilidade total sem risco, Análise com KPIs, Dashboard com atividade recente</td></tr>
+    <tr><td><b>TI / Administração</b></td><td>SSO com Google/Azure AD, webhooks para sistemas externos, políticas de retenção, gestão de papéis sem tocar em código</td></tr>
+    <tr><td><b>Qualidade / Compliance</b></td><td>Procedimentos publicados e aprovados como documentos controlados, evidência de quem leu/aprovou, trilho de auditoria completo</td></tr>
+  </tbody>
+</table>
+
+<h3>6.2 Exemplo: uma proposta comercial, de ponta a ponta</h3>
+<div class="example">
+  <div class="ex-title">Do pedido do cliente ao envio — sem sair do NEXORA</div>
+  <ol class="steps">
+    <li>O gestor cria a pasta do cliente e instancia o template «Modelo — Proposta Comercial».</li>
+    <li>Atribui a tarefa «Redigir proposta» à consultora — prioridade alta, prazo definido. Ela é notificada.</li>
+    <li>A consultora faz check-out do documento, redige, faz check-in (nova versão) e pede à IA um resumo para verificar os pontos-chave.</li>
+    <li>O gestor revê, comenta «falta a tabela de preços», a consultora corrige; a versão 3 fica aprovada.</li>
+    <li>O registo do cliente na lista «Clientes» passa a Ativo.</li>
+    <li>Cria-se um link de partilha externa com expiração de 7 dias e envia-se ao cliente.</li>
+    <li>O diretor financeiro (Viewer) acompanha em leitura; no fim do dia, a diretora vê na Auditoria todo o percurso — incluindo o acesso do cliente via link.</li>
+  </ol>
+</div>
+
+<h3>6.3 Exemplo: despesa aprovada por workflow</h3>
+<div class="example">
+  <div class="ex-title">Do formulário à decisão — em minutos, com rasto completo</div>
+  <ol class="steps">
+    <li>A colaboradora preenche o formulário «Pedido de Despesa»: 230 €, categoria Viagem, fatura anexa.</li>
+    <li>O workflow «Aprovação de Despesas» inicia automaticamente e cria a aprovação para o gestor.</li>
+    <li>O gestor abre a fila de Aprovações, consulta o pedido e aprova com comentário.</li>
+    <li>Condição do fluxo: 230 € &lt; 500 € → termina aprovada; a colaboradora é notificada. (Aos 800 € passaria por uma segunda aprovação da direção.)</li>
+    <li>No fim do mês, a administração exporta a lista de despesas para CSV para a contabilidade.</li>
+  </ol>
+</div>
+
+<h3>6.4 Exemplo: um dia de trabalho no NEXORA</h3>
+<table>
+  <thead><tr><th>Momento</th><th>O que acontece</th></tr></thead>
+  <tbody>
+    <tr><td>09:00</td><td>Login → «O meu dia» mostra 3 tarefas, 1 aprovação pendente e 2 notificações novas.</td></tr>
+    <tr><td>09:15</td><td>Abre a aprovação, decide, comenta — o workflow avança sozinho para o passo seguinte.</td></tr>
+    <tr><td>10:00</td><td>Ctrl+K → procura «contrato ABC» → abre o documento, confirma a versão, partilha com a equipa Jurídico em leitura.</td></tr>
+    <tr><td>11:30</td><td>Pede à IA: «cria uma lista de fornecedores com NIF, email e estado» → confirma → a lista existe e já recebe registos.</td></tr>
+    <tr><td>14:00</td><td>Lê a notícia agendada «Novas regras de despesas» publicada no portal interno.</td></tr>
+    <tr><td>16:30</td><td>Arrasta tarefas no kanban para «Em curso»/«Concluída»; um workflow cria-lhe automaticamente a tarefa «preparar onboarding do novo colega».</td></tr>
+    <tr><td>17:45</td><td>O gestor abre Análise: adoção por módulo, tarefas em atraso, tempo médio de aprovação — dados para a reunião de sexta.</td></tr>
+  </tbody>
+</table>
+
+<!-- ============ 7. IA ============ -->
+<div class="section"></div>
+<h2 id="s7">7. Inteligência artificial ao serviço da empresa</h2>
+<p>A IA do NEXORA não é um chat à parte — é um <b>copiloto integrado</b> que conhece o contexto da organização e produz estruturas reais dentro da plataforma.</p>
+<table>
+  <thead><tr><th>Capacidade</th><th>O que faz</th><th>Exemplo</th></tr></thead>
+  <tbody>
+    <tr><td><b>Conversar</b></td><td>Responde sobre a plataforma e os seus dados</td><td>«Que tarefas estão pendentes esta semana?»</td></tr>
+    <tr><td><b>Criar listas</b></td><td>Propõe estrutura completa com campos tipados; confirmar cria a lista real</td><td>«Cria uma lista de equipamentos com nº de série e responsável»</td></tr>
+    <tr><td><b>Criar processos</b></td><td>Gera o workflow com passos; abre no construtor para ajuste</td><td>«Faz um processo de aprovação de férias»</td></tr>
+    <tr><td><b>Criar aplicações</b></td><td>Esboça (scaffold) mini-apps internas</td><td>«Monta uma app de gestão de inventário»</td></tr>
+    <tr><td><b>Resumir</b></td><td>Resume documentos diretamente na página do ficheiro</td><td>«Resume este contrato»</td></tr>
+    <tr><td><b>Sugerir</b></td><td>Sugestões contextuais conforme o ecrã onde está</td><td>Cartões de ação no Copilot de cada página</td></tr>
+  </tbody>
+</table>
+<div class="tip"><b>IA sob controlo:</b> o assistente usa os mesmos endpoints e as mesmas regras da API — um Viewer pode conversar, mas não cria listas nem processos. As propostas mostram exatamente o que será criado antes de confirmar, e cada operação fica registada em auditoria. O provider de IA é abstrato: hoje opera localmente por regras; OpenAI/Anthropic ligam-se por configuração.</div>
+
+<!-- ============ 8. SEGURANÇA ============ -->
+<div class="section"></div>
+<h2 id="s8">8. Segurança, privacidade e conformidade</h2>
+<p>A segurança não é um módulo — está na arquitetura. Uma auditoria técnica de pré-produção executou <b>~200 verificações automatizadas</b> (API, web e browser E2E) sobre isolamento, RBAC, autenticação e uploads, sem encontrar fugas entre organizações.</p>
+
+<h3>8.1 Identidade e sessões</h3>
+<ul>
+  <li>Palavras-passe com <b>Argon2id</b> (nem o admin as consegue ler); login timing-safe contra enumeração de contas</li>
+  <li>JWT de acesso de 15 min + <b>refresh token com rotação e deteção de reuso</b> — um token roubado revoga todas as sessões</li>
+  <li>Cookies httpOnly, SameSite=Lax, Secure em produção; revogação server-side em logout e mudança de password</li>
+  <li><b>SSO/OIDC</b> configurável (Google Workspace, Azure AD…); convites de 7 dias revogáveis; recuperação de password por email</li>
+</ul>
+<h3>8.2 Dados e acessos</h3>
+<ul>
+  <li><b>Isolamento multi-tenant total</b>: todas as queries filtram por organização; nem a pesquisa nem a IA atravessam fronteiras</li>
+  <li><b>RBAC granular</b>: 6 papéis de sistema + funções personalizadas, 32 permissões, princípio do menor privilégio</li>
+  <li><b>Auditoria imutável</b> de ações relevantes; atividade por documento; histórico passo a passo de cada execução de processo</li>
+  <li>Governação documental: registo oficial, <b>retenção legal</b>, reciclagem com restauro, política de retenção configurável</li>
+</ul>
+<h3>8.3 Perímetro e uploads</h3>
+<ul>
+  <li>Uploads validados por extensão + MIME + <b>magic bytes</b> + limite de tamanho; chaves de storage por tenant com nomes opacos; escrita atómica; proteção contra path traversal</li>
+  <li>Rate limiting (global e reforçado em autenticação e links públicos), CORS allowlist, CSRF, headers de segurança, proteção contra formula injection em CSV e escaping em emails</li>
+  <li>Health checks (<code>/health</code>, <code>/live</code>, <code>/ready</code>) e métricas Prometheus para observabilidade</li>
+</ul>
+<h3>8.4 Conformidade e residência de dados</h3>
+<ul>
+  <li>Arquitetura preparada para requisitos RGPD: isolamento por organização, minimização por permissões, direito de exportação (CSV) e de eliminação, trilho de auditoria</li>
+  <li>Storage abstrato: local, <b>S3/R2/Azure</b> — a empresa escolhe onde os ficheiros ficam (incl. região/fornecedor)</li>
+  <li>Opção <b>self-hosted</b>: Docker + PostgreSQL na infraestrutura da própria empresa, para quem precisa de controlo total dos dados</li>
+  <li>Backups recomendados: PostgreSQL diário (incremental) + semanal (completo), storage replicado, retenção de 30 dias</li>
+</ul>
+
+<!-- ============ 9. PORQUÊ ============ -->
+<div class="section"></div>
+<h2 id="s9">9. Porquê as empresas devem usar o NEXORA</h2>
+<div class="cards">
+  <div class="card"><h4>1 · Uma subscrição em vez de cinco</h4><p>Documentos + base de dados + formulários + gestão de tarefas + automação + intranet + IA — num só produto, com um só custo e uma só administração.</p></div>
+  <div class="card"><h4>2 · Adoção em horas, não em meses</h4><p>Interface moderna em PT-PT (e 4 outros idiomas), checklist de onboarding, templates de listas e workflows, ajuda contextual — sem projeto de implementação.</p></div>
+  <div class="card"><h4>3 · Capacidade enterprise sem complexidade enterprise</h4><p>Versões, check-out, retenção legal, auditoria, SSO, webhooks — as funcionalidades de um SharePoint, com a simplicidade de uma app moderna.</p></div>
+  <div class="card"><h4>4 · Processos que correm sozinhos</h4><p>Cada workflow elimina emails de seguimento, esquecimentos e papel. Aprovações param à espera da decisão e retomam sozinhas — com rasto completo.</p></div>
+  <div class="card"><h4>5 · IA útil e segura</h4><p>O assistente não só responde — cria listas, processos e esboços de apps, dentro das permissões de cada utilizador e com auditoria.</p></div>
+  <div class="card"><h4>6 · Controlo real sobre os dados</h4><p>Permissões granulares, isolamento garantido, links externos revogáveis, e a escolha de cloud ou self-hosted com storage na região que decidir.</p></div>
+  <div class="card"><h4>7 · Cresce com a empresa</h4><p>Do plano Free (5 pessoas) ao Enterprise ilimitado; limites impostos pela API; webhooks e API REST para ligar a sistemas existentes.</p></div>
+  <div class="card"><h4>8 · Menos risco operacional</h4><p>Fim das passwords partilhadas, das folhas em conflito e das decisões sem rasto: contas individuais, dados únicos e auditoria de ponta a ponta.</p></div>
+  <div class="card"><h4>9 · Transparência para a gestão</h4><p>Dashboard, Análise e atividade recente dão à direção visibilidade real da operação — sem pedir relatórios a ninguém.</p></div>
+  <div class="card"><h4>10 · Começa hoje, a custo zero</h4><p>O plano Free permite avaliar com a equipa real e os dados reais — sem cartão, sem compromisso, com upgrade direto quando fizer sentido.</p></div>
+</div>
+
+<h3>O retorno em linguagem simples</h3>
+<table>
+  <thead><tr><th>Investimento</th><th>Retorno típico</th></tr></thead>
+  <tbody>
+    <tr><td>1 hora para registar a organização e convidar a equipa</td><td>Uma única fonte de verdade para documentos e dados</td></tr>
+    <tr><td>30 minutos num workflow de aprovação</td><td>Todos os pedidos futuros decididos com prazo, rasto e escalonamento automático</td></tr>
+    <tr><td>Um formulário de 5 minutos</td><td>Fim dos pedidos por email — dados validados desde a origem</td></tr>
+    <tr><td>49 €/mês (Professional)</td><td>Substitui, tipicamente, 3–5 subscrições separadas e as horas de «colar informação» entre elas</td></tr>
+  </tbody>
+</table>
+
+<!-- ============ 10. COMPARATIVO ============ -->
+<h2 id="s10">10. Como se compara com as alternativas</h2>
+<table>
+  <thead><tr><th>Critério</th><th>NEXORA</th><th>SharePoint + Power&nbsp;Automate</th><th>Notion / folhas de cálculo</th><th>Ferramentas isoladas (Drive+Trello+Forms+…)</th></tr></thead>
+  <tbody>
+    <tr><td>Documentos com versões e check-out</td><td class="check">✔ nativo</td><td class="check">✔</td><td class="cross">parcial</td><td class="cross">parcial (Drive)</td></tr>
+    <tr><td>Bases de dados com campos tipados e relações</td><td class="check">✔ Listas (13 tipos)</td><td class="check">✔ (complexo)</td><td class="check">✔</td><td class="cross">folhas sem validação real</td></tr>
+    <tr><td>Workflows com aprovações humanas</td><td class="check">✔ nativo, passo «Aprovação»</td><td class="check">✔ (requer licenças/configuração)</td><td class="cross">—</td><td class="cross">—</td></tr>
+    <tr><td>IA integrada que cria estruturas reais</td><td class="check">✔ permission-aware</td><td class="cross">add-on à parte</td><td class="check">parcial</td><td class="cross">—</td></tr>
+    <tr><td>Portal interno + notícias</td><td class="check">✔ Sites + Notícias</td><td class="check">✔</td><td class="check">páginas</td><td class="cross">—</td></tr>
+    <tr><td>Auditoria e retenção legal</td><td class="check">✔ nativo</td><td class="check">✔ (planos altos)</td><td class="cross">—</td><td class="cross">—</td></tr>
+    <tr><td>Implementação sem equipa de IT</td><td class="check">✔ checklist + templates</td><td class="cross">tipicamente projeto</td><td class="check">✔</td><td class="check">✔ mas fragmentada</td></tr>
+    <tr><td>Uma conta, uma pesquisa, uma auditoria</td><td class="check">✔</td><td class="check">✔ (no ecossistema MS)</td><td class="check">✔</td><td class="cross">N contas, N pesquisas, 0 auditoria cruzada</td></tr>
+    <tr><td>Opção self-hosted</td><td class="check">✔ Docker + PostgreSQL</td><td class="check">✔ (complexo)</td><td class="cross">—</td><td class="cross">—</td></tr>
+    <tr><td>Preço de entrada</td><td><b>0 €</b> (Free) · 19 €+ pagos</td><td>licenciamento M365</td><td>0 € limitado</td><td>soma de N subscrições</td></tr>
+  </tbody>
+</table>
+<p class="small">Comparação qualitativa com uma stack típica de PME — as alternativas indicadas são famílias de produtos; capacidades concretas dependem do plano e da configuração de cada fornecedor.</p>
+
+<!-- ============ 11. PLANOS ============ -->
+<div class="section"></div>
+<h2 id="s11">11. Planos e preços</h2>
+<p>Cinco planos, limites aplicados pela API (não por avisos), faturação mensal ou anual via Stripe, e reversão para Free a qualquer momento.</p>
+<table>
+  <thead><tr><th>Plano</th><th>Preço/mês</th><th>Utilizadores</th><th>Armazenamento</th><th>Documentos</th><th>Workflows</th><th>IA/mês</th></tr></thead>
+  <tbody>
+    <tr><td><b>Free</b></td><td>0 €</td><td>5</td><td>1 GB</td><td>100</td><td>5</td><td>50</td></tr>
+    <tr><td><b>Basic</b></td><td>19 €</td><td>15</td><td>10 GB</td><td>1.000</td><td>20</td><td>500</td></tr>
+    <tr><td><b>Professional</b></td><td>49 €</td><td>50</td><td>50 GB</td><td>10.000</td><td>100</td><td>5.000</td></tr>
+    <tr><td><b>Business</b></td><td>99 €</td><td>200</td><td>100 GB</td><td>100.000</td><td>500</td><td>20.000</td></tr>
+    <tr><td><b>Enterprise</b></td><td>299 €</td><td>Ilimitado</td><td>Ilimitado</td><td>Ilimitado</td><td>Ilimitado</td><td>Ilimitado</td></tr>
+  </tbody>
+</table>
+<ul>
+  <li>A página <b>Planos</b> mostra a utilização em tempo real (barras que passam a amarelo &gt;80% e vermelho no limite) — a empresa sabe sempre quando faz sentido subir de plano.</li>
+  <li>Checkout Stripe, portal de faturação (métodos de pagamento, faturas) e cancelamento self-service.</li>
+  <li>Organizações novas começam no Free automaticamente — avaliação real com a equipa, sem cartão.</li>
+</ul>
+
+<!-- ============ 12. COMO COMEÇAR ============ -->
+<h2 id="s12">12. Como começar</h2>
+<ol class="steps">
+  <li><b>Registar</b> — nome, organização, email e palavra-passe. A organização nasce no plano Free e o criador fica Admin.</li>
+  <li><b>Convidar a equipa</b> — Administração → Utilizadores → «Convidar utilizador»: email + função, link de 7 dias. Sem passwords partilhadas.</li>
+  <li><b>Trazer o primeiro conteúdo</b> — upload dos documentos-chave, criar a primeira lista (template ou pedido à IA), publicar a primeira notícia.</li>
+  <li><b>Automatizar o primeiro processo</b> — escolher um template de workflow (ex.: aprovação de despesas), ajustar aprovadores, publicar.</li>
+  <li><b>Medir e crescer</b> — acompanhar a adoção em Análise, criar funções personalizadas se necessário, ativar SSO e webhooks, fazer upgrade quando os limites o pedirem.</li>
+</ol>
+<div class="tip"><b>Migração gradual é o caminho certo:</b> não é preciso mover tudo no primeiro dia. O padrão que funciona: semana 1 documentos e equipa; semana 2 listas e formulários; semana 3 o primeiro workflow; semana 4 portal interno e notícias.</div>
+
+<!-- ============ 13. FAQ ============ -->
+<div class="section"></div>
+<h2 id="s13">13. Perguntas frequentes de quem decide</h2>
+<p><b>Precisamos de equipa de IT para implementar?</b> Não — o registo cria a organização pronta a usar, com pastas e checklist iniciais. Self-hosted requer apenas Docker + PostgreSQL.</p>
+<p><b>E se alguém sair da empresa?</b> Suspende-se a conta (segundos, em Administração). O acesso é cortado e todo o histórico — documentos criados, decisões tomadas — fica preservado e auditável.</p>
+<p><b>Os dados estão seguros entre empresas?</b> Sim — o isolamento multi-tenant foi verificado por testes automatizados de acesso cruzado (documentos, listas, tarefas, pesquisa, auditoria) sem qualquer fuga detetada.</p>
+<p><b>A IA lê os nossos documentos?</b> Só os que o próprio utilizador tem permissão para abrir — e cada operação fica auditada como qualquer outra ação.</p>
+<p><b>Conseguimos tirar os dados de lá para fora?</b> Sim — exportação CSV em listas e formulários, download de documentos (individual ou ZIP), API REST completa e, self-hosted, acesso direto à base de dados.</p>
+<p><b>E se ultrapassarmos um limite do plano?</b> A barra fica amarela a 80% para avisar; no limite, a API bloqueia novas criações (o que existe continua acessível). Fazer upgrade resolve de imediato.</p>
+<p><b>Suporta o nosso login da empresa?</b> Sim — SSO/OIDC com Google Workspace, Azure AD e outros fornecedores de identidade, configurável em Administração.</p>
+<p><b>Funciona em telemóvel e noutros idiomas?</b> A interface é responsiva (menu adaptado a ecrãs pequenos) e está em PT-PT, EN, ES, FR e DE — cada utilizador escolhe o seu idioma e tema.</p>
+<p><b>Como integra com os sistemas que já temos?</b> Webhooks enviam eventos a sistemas externos (ex.: faturação recebe «despesa aprovada») e a API REST permite integrações customizadas.</p>
+<p><b>Quanto custa avaliar?</b> Zero — o plano Free inclui 5 utilizadores, 1 GB e todos os módulos, sem cartão nem prazo.</p>
+
+<div class="cta">
+  <h3>O próximo passo</h3>
+  <p>Registe a organização, convide 4 colegas e use o NEXORA durante uma semana com trabalho real — uma lista, um formulário, um workflow. É a forma mais rápida de perceber o que muda quando <b>tudo o que a empresa precisa está num só lugar</b>.</p>
+</div>
+
+<p class="small" style="text-align:center;margin-top:8mm">NEXORA — Apresentação do Produto · Versão 1.0 · Documento complementar aos guias de utilizador (docs/NEXORA-guia-*.pdf) e ao Manual Completo (NEXORA-manual-completo.pdf)</p>
+
+</body>
+</html>

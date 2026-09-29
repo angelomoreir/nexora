@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de Documentos</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  h4 { font-size: 10pt; color: #0f172a; margin: 3.5mm 0 1.5mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .section { page-break-before: always; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .deny { color: #b91c1c; }
+  .deny::before { content: "→ Esperado (negado): "; font-weight: 600; color: #b91c1c; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+  .role-pill { display: inline-block; background: #e0e7ff; color: #3730a3; border-radius: 10px; padding: 0 2.5mm; font-size: 8pt; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — Documentos</div>
+  <div class="meta">
+    <p>Módulo: Documentos (menu lateral → Documentos · <code>/documents</code>)</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que é o módulo de Documentos</h2>
+<p>O módulo de <b>Documentos</b> é a biblioteca de ficheiros da organização — o equivalente a um SharePoint/Google Drive interno. Organiza ficheiros em <b>pastas hierárquicas</b>, mantém <b>versões</b>, controla acesso por <b>partilhas</b> e oferece funcionalidades de governação documental (aprovação, check-out, registo e retenção legal).</p>
+
+<h2>2. Conceitos fundamentais</h2>
+<table>
+  <thead><tr><th>Conceito</th><th>O que é</th></tr></thead>
+  <tbody>
+    <tr><td><b>Pasta</b></td><td>Contentor hierárquico — pastas dentro de pastas, sem limite prático de profundidade</td></tr>
+    <tr><td><b>Documento</b></td><td>Um ficheiro carregado + metadados (nome, descrição, etiquetas) + histórico de versões</td></tr>
+    <tr><td><b>Versão</b></td><td>Cada upload novo sobre um documento cria uma versão numerada — as anteriores ficam guardadas e restauráveis</td></tr>
+    <tr><td><b>Check-out / Check-in</b></td><td>Bloqueio de edição: «reservar» o documento para trabalhar sem que outros o alterem</td></tr>
+    <tr><td><b>Partilha (share)</b></td><td>Conceder acesso extra a utilizadores, equipas ou toda a organização, com nível Leitura ou Edição</td></tr>
+    <tr><td><b>Ligação pública</b></td><td>Link externo para descarregar um documento ou pasta sem login</td></tr>
+    <tr><td><b>Registo (record)</b></td><td>Declarar o documento como registo oficial — congela alterações (governação)</td></tr>
+    <tr><td><b>Retenção legal (legal hold)</b></td><td>Marca legal que impede eliminação — para litígios/auditorias</td></tr>
+    <tr><td><b>Lixo</b></td><td>Eliminação é suave — documentos apagados vão para o Lixo e são restauráveis</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Organização em pastas</h2>
+<p>As organizações novas nascem com a pasta <b>«Documentos»</b> e três sub-pastas: <b>Contratos, Faturas, Projetos</b>.</p>
+<ol class="steps">
+  <li>Em Documentos, clicar <b>«Nova pasta»</b> → nome → criada dentro da pasta atual.</li>
+  <li>Navegar clicando nas pastas; usar as <b>breadcrumbs</b> no topo para voltar atrás.</li>
+  <li>As ações de pasta (renomear, copiar, eliminar, metadados, governação) estão no menu «⋯» de cada linha.</li>
+</ol>
+<div class="tip"><b>Estrutura sugerida:</b> Documentos → por departamento → por tema. Ex.: <code>Documentos / Comercial / Propostas / 2026</code>. Estruturas planas demais tornam-se caóticas; demasiado profundas tornam-se lentas de navegar — 3 níveis costuma ser o ideal.</div>
+
+<h2>4. Carregar e gerir ficheiros</h2>
+<h3>4.1 Upload</h3>
+<ol class="steps">
+  <li>Dentro da pasta de destino → <b>«Upload»</b> → escolher o ficheiro.</li>
+  <li>O documento aparece na lista com tipo, tamanho, autor e data.</li>
+</ol>
+<h3>4.2 Editar metadados</h3>
+<ol class="steps">
+  <li>Menu «⋯» ou página de detalhe → editar <b>nome</b>, <b>descrição</b>, <b>etiquetas</b>.</li>
+  <li>Metadados alimentam a Pesquisa global — invista em descrições e etiquetas úteis.</li>
+</ol>
+<h3>4.3 Versões</h3>
+<ol class="steps">
+  <li>Na página do documento → <b>«Nova versão»</b> → carregar o ficheiro atualizado.</li>
+  <li>O histórico lista todas as versões: ver, <b>descarregar</b> qualquer uma, ou <b>«Restaurar»</b> uma versão antiga (que passa a ser a atual).</li>
+</ol>
+<h3>4.4 Check-out / Check-in</h3>
+<ol class="steps">
+  <li><b>«Check-out»</b> bloqueia o documento para edição por outros — aparece «em check-out por {nome}».</li>
+  <li>Trabalhe offline, depois <b>«Check-in»</b> com a nova versão (ou anule o check-out).</li>
+  <li>Se alguém ficar com check-out esquecido, um <b>Admin</b> pode fazer <b>«Forçar check-in»</b>.</li>
+</ol>
+<h3>4.5 Comentários e atividade</h3>
+<p>Na página do documento há um separador de <b>comentários</b> (discussão contextual sobre o ficheiro) e um registo de <b>atividade</b> (quem fez o quê: uploads, versões, partilhas, aprovações).</p>
+<h3>4.6 Pré-visualização</h3>
+<p>Ao abrir um documento, o NEXORA mostra pré-visualização inline para os formatos suportados — incluindo <b>PDF, imagens e DOCX</b> (convertido para leitura via Mammoth). Para formatos não suportados, use «Descarregar».</p>
+<h3>4.7 Download em massa</h3>
+<p>Selecionar vários documentos → <b>download em massa</b> — a API devolve um pacote (ZIP) com todos.</p>
+
+<h2>5. Partilha</h2>
+<h3>5.1 Partilhar com pessoas/equipas/organização</h3>
+<ol class="steps">
+  <li>Documento → <b>«Partilhar»</b> → escolher o destino: <b>utilizador</b>, <b>equipa</b> ou <b>organização inteira</b>.</li>
+  <li>Definir o nível: <b>Leitura</b> (vê e descarrega) ou <b>Edição</b> (pode atualizar versões/metadados).</li>
+  <li><span class="exp">O destino passa a ver o item em <b>«Partilhado comigo»</b> com a permissão concedida.</span></li>
+</ol>
+<h3>5.2 Ligações públicas</h3>
+<ol class="steps">
+  <li>Documento ou pasta → <b>ligações de partilha</b> → criar link público.</li>
+  <li>Qualquer pessoa com o link acede ao conteúdo <b>sem login</b> — use com critério.</li>
+  <li>Os links podem ser <b>revogados</b> individualmente a qualquer momento.</li>
+</ol>
+<div class="note"><b>Atenção:</b> criar partilhas e links públicos exige <code>documents.share</code> — nem todos os papéis o têm (ver §8).</div>
+
+<h2>6. Governação documental</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Efeito</th></tr></thead>
+  <tbody>
+    <tr><td><b>Publicar</b></td><td>Marca o documento como versão oficial publicada</td></tr>
+    <tr><td><b>Aprovar / Rejeitar</b></td><td>Revisão formal: quem tem acesso pode aprovar ou rejeitar o documento publicado</td></tr>
+    <tr><td><b>Declarar registo</b></td><td>Transforma o documento em «record» — registo oficial que não deve ser alterado</td></tr>
+    <tr><td><b>Retenção legal</b></td><td>Legal hold: bloqueia a eliminação enquanto estiver ativa (auditorias, litígios)</td></tr>
+    <tr><td><b>Metadados/governação de pasta</b></td><td>As pastas têm diálogos próprios de metadados e políticas de governação</td></tr>
+  </tbody>
+</table>
+
+<h2>7. Lixo — eliminação segura</h2>
+<ol class="steps">
+  <li><b>Eliminar</b> um documento/pasta → vai para o <b>Lixo</b> (<code>/documents/trash</code>), não desaparece.</li>
+  <li>No Lixo: <b>Restaurar</b> (volta ao sítio original), <b>Eliminar definitivamente</b> (irreversível) ou <b>Esvaziar lixo</b>.</li>
+</ol>
+
+<h2>8. Permissões — quem pode fazer o quê</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver, descarregar, comentar, pré-visualizar</td><td><code>documents.view</code></td><td>Todos</td></tr>
+    <tr><td>Criar pastas, upload, editar metadados, versões, check-out, copiar</td><td><code>documents.edit</code></td><td>Admin, Manager, Editor, Member</td></tr>
+    <tr><td>Eliminar, restaurar do lixo</td><td><code>documents.delete</code></td><td>Admin, Manager, Editor</td></tr>
+    <tr><td>Partilhar, links públicos, registo, legal hold</td><td><code>documents.share</code></td><td>Admin, Manager</td></tr>
+  </tbody>
+</table>
+<p class="small">As partilhas por item podem <b>restringir</b> ainda mais: um documento partilhado «só leitura» consigo não permite edição mesmo que o seu papel global o permita — a permissão efetiva é a interseção (papel × partilha).</p>
+
+<h2>9. Exemplos práticos</h2>
+
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Colaboração num contrato</div>
+  <ul>
+    <li>Upload de <code>contrato-abc-v1.docx</code> em <code>Documentos/Contratos</code></li>
+    <li>Check-out → edita offline → check-in com v2</li>
+    <li>Partilhar com a equipa «Jurídico» em modo Leitura para revisão</li>
+    <li>Jurídico comenta na página do documento → corrige → <b>Publicar</b> → gestor <b>Aprova</b></li>
+  </ul>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Recuperar uma versão errada</div>
+  <p>Alguém carregou a versão errada por cima: abrir histórico de versões → <b>Restaurar</b> a versão correta → ela torna-se a atual (a errada fica no histórico).</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Enviar ficheiro a quem não tem conta</div>
+  <p>Criar <b>ligação pública</b> no documento → enviar o link por email → revogar quando já não for necessário.</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 4 — Eliminação acidental</div>
+  <p>Documento eliminado por engano → <b>Documentos → Lixo</b> → Restaurar. Só desaparece de vez com «Eliminar definitivamente» ou «Esvaziar lixo» — e mesmo assim pode haver <b>retenção legal</b> a impedir.</p>
+</div>
+
+<h2>10. Boas práticas e resolução de problemas</h2>
+<ul>
+  <li><b>Nomeie ficheiros com contexto</b> — <code>proposta-abc-2026-09.docx</code> em vez de <code>doc1.docx</code>.</li>
+  <li><b>Check-out para edições longas</b> — evita conflitos de versões.</li>
+  <li><b>Prefira partilha interna a links públicos</b> — links públicos são para quem não tem conta.</li>
+  <li><b>Etiquetas e descrições</b> alimentam a Pesquisa global — documentos sem metadados são difíceis de encontrar.</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>«Nova pasta»/«Upload» ausentes</td><td>Viewer — falta <code>documents.edit</code></td></tr>
+    <tr><td>Não consigo eliminar</td><td>Falta <code>documents.delete</code> (Member/Viewer) ou retenção legal ativa</td></tr>
+    <tr><td>«em check-out por {nome}»</td><td>Outro utilizador reservou o ficheiro — peça check-in ou um Admin força</td></tr>
+    <tr><td>Sem opção «Partilhar»</td><td>Falta <code>documents.share</code> (só Admin/Manager)</td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,1320 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./client"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../prisma/dev.db"
+}
+
+model User {
+  id                  String               @id @default(cuid())
+  name                String               @map("displayName")
+  email               String               @unique
+  passwordHash        String?
+  avatar              String?
+  jobTitle            String?
+  status              String               @default("ACTIVE")
+  isSuperAdmin        Boolean              @default(false)
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  memberships         OrganizationMember[]
+  refreshSessions     RefreshSession[]
+  passwordResetTokens PasswordResetToken[]
+  ownedFolders        Folder[]             @relation("FolderOwner")
+  ownedDocuments      Document[]           @relation("DocumentOwner")
+  documentVersions    DocumentVersion[]    @relation("DocumentVersionCreator")
+  createdShareLinks   DocumentShareLink[]  @relation("DocumentShareLinkCreator")
+  createdLists        ListDefinition[]     @relation("ListCreator")
+  createdListItems    ListItem[]           @relation("ListItemCreator")
+  createdForms        FormDefinition[]     @relation("FormCreator")
+  formSubmissions     FormSubmission[]     @relation("FormSubmitter")
+  createdTasks        Task[]               @relation("TaskCreator")
+  taskComments        TaskComment[]        @relation("TaskCommentAuthor")
+  createdProjects     Project[]            @relation("ProjectCreator")
+  documentComments    DocumentComment[]    @relation("DocumentCommentAuthor")
+  createdSites        Site[]               @relation("SiteCreator")
+  createdSitePages    SitePage[]           @relation("SitePageCreator")
+}
+
+model Organization {
+  id                     String                           @id @default(cuid())
+  slug                   String                           @unique
+  name                   String
+  status                 String                           @default("ACTIVE")
+  createdAt              DateTime                         @default(now())
+  updatedAt              DateTime                         @updatedAt
+  memberships            OrganizationMember[]
+  teams                  Team[]
+  teamMembers            TeamMember[]
+  roles                  Role[]
+  membershipRoles        OrganizationMemberRole[]
+  rolePermissions        RolePermission[]
+  folders                Folder[]
+  documents              Document[]
+  documentVersions       DocumentVersion[]
+  listDefinitions        ListDefinition[]
+  listFields             ListField[]
+  listItems              ListItem[]
+  formDefinitions        FormDefinition[]
+  formSubmissions        FormSubmission[]
+  tasks                  Task[]
+  projects               Project[]
+  taskComments           TaskComment[]
+  processDefinitions     ProcessDefinition[]
+  workflowDefinitions    WorkflowDefinition[]
+  workflowSteps          WorkflowStep[]
+  workflowInstances      WorkflowInstance[]
+  workflowStepExecutions WorkflowStepExecution[]
+  approvals              Approval[]
+  approvalComments       ApprovalComment[]
+  approvalDelegations    ApprovalDelegation[]
+  notifications          Notification[]
+  notificationDeliveries NotificationDelivery[]
+  auditLogs              AuditLog[]
+  organizationSettings   OrganizationSettings?
+  aiConversations        AIConversation[]
+  aiOperations           AIOperation[]
+  dashboards             Dashboard[]
+  dashboardWidgets       DashboardWidget[]
+  documentTeamShares     DocumentTeamPermission[]
+  ownedDocumentOrgShares DocumentOrganizationPermission[] @relation("DocumentShareOwnerOrganization")
+  receivedDocumentShares DocumentOrganizationPermission[] @relation("DocumentShareTargetOrganization")
+  documentShareLinks     DocumentShareLink[]
+  subscription           OrganizationSubscription?
+  documentComments       DocumentComment[]
+  folderMetadataFields   FolderMetadataField[]
+  documentContents       DocumentContent[]
+  savedViews             SavedView[]
+  subscriptions          Subscription[]
+  accessRequests         AccessRequest[]
+  webhooks               Webhook[]
+  webhookDeliveries      WebhookDelivery[]
+  workflowTriggers       WorkflowTrigger[]
+  quickActions           QuickAction[]
+  announcements          Announcement[]
+  sites                  Site[]
+  siteMembers            SiteMember[]
+  sitePages              SitePage[]
+  newsPosts              NewsPost[]
+  newsComments           NewsComment[]
+  invitations            Invitation[]
+  ssoConfiguration       SsoConfiguration?
+
+  @@map("Tenant")
+}
+
+model OrganizationMember {
+  id                  String                   @id @default(cuid())
+  tenantId            String
+  userId              String
+  status              String                   @default("ACTIVE")
+  jobTitle            String?
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime                 @updatedAt
+  tenant              Organization             @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  user                User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  teamMembers         TeamMember[]
+  membershipRoles     OrganizationMemberRole[]
+  assignedTasks       Task[]                   @relation("TaskAssignee")
+  startedWorkflows    WorkflowInstance[]       @relation("WorkflowStarter")
+  approvals           Approval[]               @relation("ApprovalApprover")
+  delegatedApprovals  Approval[]               @relation("ApprovalDelegator")
+  approvalComments    ApprovalComment[]        @relation("ApprovalCommentAuthor")
+  delegationsFrom     ApprovalDelegation[]     @relation("ApprovalDelegationFrom")
+  delegationsTo       ApprovalDelegation[]     @relation("ApprovalDelegationTo")
+  notifications       Notification[]
+  auditLogs           AuditLog[]               @relation("AuditActor")
+  documentFavorites   DocumentFavorite[]
+  folderFavorites     FolderFavorite[]
+  documentPermissions DocumentPermission[]
+  folderPermissions   FolderPermission[]
+  deletedDocuments    Document[]               @relation("DocumentDeletedBy")
+  deletedFolders      Folder[]                 @relation("FolderDeletedBy")
+  checkedOutDocuments Document[]               @relation("DocumentCheckedOutBy")
+  publishRequests     Document[]               @relation("DocumentPublishRequester")
+  announcements       Announcement[]
+  siteMemberships     SiteMember[]
+  newsPosts           NewsPost[]
+  newsComments        NewsComment[]
+  sentInvitations     Invitation[]
+
+  @@unique([tenantId, userId])
+  @@index([tenantId, status])
+  @@map("Membership")
+}
+
+model RefreshSession {
+  id         String    @id @default(cuid())
+  userId     String
+  tokenHash  String    @unique
+  userAgent  String?
+  ipAddress  String?
+  expiresAt  DateTime
+  revokedAt  DateTime?
+  lastUsedAt DateTime?
+  createdAt  DateTime  @default(now())
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
+}
+
+model PasswordResetToken {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime  @default(now())
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
+}
+
+model Invitation {
+  id          String             @id @default(cuid())
+  tenantId    String
+  email       String
+  roleId      String
+  tokenHash   String             @unique
+  invitedById String
+  expiresAt   DateTime
+  acceptedAt  DateTime?
+  revokedAt   DateTime?
+  createdAt   DateTime           @default(now())
+  tenant      Organization       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  role        Role               @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  invitedBy   OrganizationMember @relation(fields: [invitedById], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, email])
+  @@index([tenantId, expiresAt])
+}
+
+model SsoConfiguration {
+  id           String       @id @default(cuid())
+  tenantId     String       @unique
+  provider     String       @default("oidc")
+  issuerUrl    String
+  clientId     String
+  clientSecret String
+  scopes       String       @default("openid profile email")
+  emailDomains String       @default("[]")
+  isEnabled    Boolean      @default(false)
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  tenant       Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+}
+
+model Team {
+  id                  String                   @id @default(cuid())
+  tenantId            String
+  name                String
+  description         String?
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime                 @updatedAt
+  tenant              Organization             @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  members             TeamMember[]
+  assignedTasks       Task[]                   @relation("TaskTeam")
+  documentPermissions DocumentTeamPermission[]
+
+  @@unique([tenantId, name])
+  @@index([tenantId])
+}
+
+model TeamMember {
+  id           String             @id @default(cuid())
+  tenantId     String
+  teamId       String
+  membershipId String
+  createdAt    DateTime           @default(now())
+  tenant       Organization       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  team         Team               @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  membership   OrganizationMember @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, membershipId])
+  @@index([tenantId, membershipId])
+}
+
+model Permission {
+  id              String           @id @default(cuid())
+  key             String           @unique
+  description     String
+  rolePermissions RolePermission[]
+}
+
+model Role {
+  id          String                   @id @default(cuid())
+  tenantId    String
+  name        String
+  description String?
+  isSystem    Boolean                  @default(false)
+  createdAt   DateTime                 @default(now())
+  updatedAt   DateTime                 @updatedAt
+  tenant      Organization             @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  memberships OrganizationMemberRole[]
+  permissions RolePermission[]
+  invitations Invitation[]
+
+  @@unique([tenantId, name])
+  @@index([tenantId])
+}
+
+model OrganizationMemberRole {
+  id           String             @id @default(cuid())
+  tenantId     String
+  membershipId String
+  roleId       String
+  createdAt    DateTime           @default(now())
+  tenant       Organization       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  membership   OrganizationMember @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  role         Role               @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@unique([membershipId, roleId])
+  @@index([tenantId, roleId])
+  @@map("MembershipRole")
+}
+
+model RolePermission {
+  id           String       @id @default(cuid())
+  tenantId     String
+  roleId       String
+  permissionId String
+  createdAt    DateTime     @default(now())
+  tenant       Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  role         Role         @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission   @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+  @@index([tenantId, permissionId])
+}
+
+model Folder {
+  id                    String                @id @default(cuid())
+  tenantId              String
+  parentId              String?
+  name                  String
+  createdById           String?
+  status                String                @default("ACTIVE")
+  deletedAt             DateTime?
+  deletedByMembershipId String?
+  deletedViaFolderId    String?
+  isTemplate            Boolean               @default(false)
+  pinnedAt              DateTime?
+  inheritsPermissions   Boolean               @default(true)
+  retentionMode         String                @default("NONE") // NONE | RETAIN | BLOCK_DELETE
+  retentionDays         Int?
+  sensitivity           String                @default("INTERNAL") // PUBLIC | INTERNAL | CONFIDENTIAL | RESTRICTED
+  requireApproval       Boolean               @default(false)
+  createdAt             DateTime              @default(now())
+  updatedAt             DateTime              @updatedAt
+  tenant                Organization          @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  owner                 User?                 @relation("FolderOwner", fields: [createdById], references: [id], onDelete: SetNull)
+  parent                Folder?               @relation("FolderTree", fields: [parentId], references: [id], onDelete: Cascade)
+  children              Folder[]              @relation("FolderTree")
+  documents             Document[]
+  favorites             FolderFavorite[]
+  permissions           FolderPermission[]
+  deletedBy             OrganizationMember?   @relation("FolderDeletedBy", fields: [deletedByMembershipId], references: [id], onDelete: SetNull)
+  metadataFields        FolderMetadataField[]
+  shareLinks            DocumentShareLink[]
+  siteId                String?
+  site                  Site?                 @relation(fields: [siteId], references: [id], onDelete: SetNull)
+
+  @@index([tenantId, parentId, name])
+  @@index([tenantId, parentId])
+  @@index([tenantId, status])
+}
+
+model Document {
+  id                       String                           @id @default(cuid())
+  tenantId                 String
+  folderId                 String?
+  name                     String
+  originalName             String                           @default("")
+  extension                String                           @default("")
+  documentKind             String                           @default("FILE") // FILE | DOC | SHEET
+  mimeType                 String                           @default("application/octet-stream")
+  sizeBytes                Int                              @default(0)
+  storageKey               String?                          @unique
+  status                   String                           @default("ACTIVE")
+  deletedAt                DateTime?
+  deletedByMembershipId    String?
+  deletedViaFolderId       String?
+  checkedOutByMembershipId String?
+  checkedOutAt             DateTime?
+  metadataJson             String                           @default("{}")
+  metadataAutoJson         String?
+  isTemplate               Boolean                          @default(false)
+  pinnedAt                 DateTime?
+  inheritsPermissions      Boolean                          @default(true)
+  publishStatus            String                           @default("PUBLISHED") // PUBLISHED | DRAFT | PENDING | REJECTED
+  publishRequestedById     String?
+  publishRequestedAt       DateTime?
+  isRecord                 Boolean                          @default(false)
+  legalHold                Boolean                          @default(false)
+  sensitivity              String? // null = inherit folder; PUBLIC | INTERNAL | CONFIDENTIAL | RESTRICTED
+  retentionMode            String? // null = inherit; NONE | RETAIN | BLOCK_DELETE
+  retentionDays            Int?
+  createdById              String
+  createdAt                DateTime                         @default(now())
+  updatedAt                DateTime                         @updatedAt
+  tenant                   Organization                     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  owner                    User                             @relation("DocumentOwner", fields: [createdById], references: [id], onDelete: Restrict)
+  folder                   Folder?                          @relation(fields: [folderId], references: [id], onDelete: SetNull)
+  versions                 DocumentVersion[]
+  favorites                DocumentFavorite[]
+  permissions              DocumentPermission[]
+  teamPermissions          DocumentTeamPermission[]
+  organizationPermissions  DocumentOrganizationPermission[]
+  shareLinks               DocumentShareLink[]
+  relatedTasks             Task[]                           @relation("TaskDocument")
+  deletedBy                OrganizationMember?              @relation("DocumentDeletedBy", fields: [deletedByMembershipId], references: [id], onDelete: SetNull)
+  checkedOutBy             OrganizationMember?              @relation("DocumentCheckedOutBy", fields: [checkedOutByMembershipId], references: [id], onDelete: SetNull)
+  publishRequestedBy       OrganizationMember?              @relation("DocumentPublishRequester", fields: [publishRequestedById], references: [id], onDelete: SetNull)
+  comments                 DocumentComment[]
+  content                  DocumentContent?
+
+  @@index([tenantId, folderId])
+  @@index([tenantId, name])
+  @@index([tenantId, mimeType])
+}
+
+model DocumentFavorite {
+  id           String             @id @default(cuid())
+  tenantId     String
+  documentId   String
+  membershipId String
+  createdAt    DateTime           @default(now())
+  membership   OrganizationMember @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  document     Document           @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([documentId, membershipId])
+  @@index([tenantId, membershipId])
+}
+
+model FolderFavorite {
+  id           String             @id @default(cuid())
+  tenantId     String
+  folderId     String
+  membershipId String
+  createdAt    DateTime           @default(now())
+  membership   OrganizationMember @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  folder       Folder             @relation(fields: [folderId], references: [id], onDelete: Cascade)
+
+  @@unique([folderId, membershipId])
+  @@index([tenantId, membershipId])
+}
+
+model DocumentPermission {
+  id           String             @id @default(cuid())
+  tenantId     String
+  documentId   String
+  membershipId String
+  canView      Boolean            @default(true)
+  canEdit      Boolean            @default(false)
+  canDelete    Boolean            @default(false)
+  canShare     Boolean            @default(false)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  membership   OrganizationMember @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  document     Document           @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([documentId, membershipId])
+  @@index([tenantId, membershipId])
+}
+
+model DocumentTeamPermission {
+  id         String       @id @default(cuid())
+  tenantId   String
+  documentId String
+  teamId     String
+  canRead    Boolean      @default(true)
+  canEdit    Boolean      @default(false)
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  tenant     Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  document   Document     @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  team       Team         @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([documentId, teamId])
+  @@index([tenantId, teamId])
+}
+
+model DocumentOrganizationPermission {
+  id                   String       @id @default(cuid())
+  tenantId             String
+  documentId           String
+  targetOrganizationId String
+  canRead              Boolean      @default(true)
+  canEdit              Boolean      @default(false)
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+  tenant               Organization @relation("DocumentShareOwnerOrganization", fields: [tenantId], references: [id], onDelete: Cascade)
+  targetOrganization   Organization @relation("DocumentShareTargetOrganization", fields: [targetOrganizationId], references: [id], onDelete: Cascade)
+  document             Document     @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@unique([documentId, targetOrganizationId])
+  @@index([targetOrganizationId, canRead])
+}
+
+model DocumentShareLink {
+  id           String       @id @default(cuid())
+  tenantId     String
+  documentId   String?
+  folderId     String?
+  tokenHash    String       @unique
+  passwordHash String?
+  permission   String       @default("READ") // READ | EDIT | UPLOAD (UPLOAD = file request, folder links only)
+  expiresAt    DateTime
+  revokedAt    DateTime?
+  createdById  String
+  createdAt    DateTime     @default(now())
+  tenant       Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  document     Document?    @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  folder       Folder?      @relation(fields: [folderId], references: [id], onDelete: Cascade)
+  creator      User         @relation("DocumentShareLinkCreator", fields: [createdById], references: [id], onDelete: Restrict)
+
+  @@index([tenantId, documentId])
+  @@index([tenantId, folderId])
+  @@index([expiresAt, revokedAt])
+}
+
+model FolderPermission {
+  id           String             @id @default(cuid())
+  tenantId     String
+  folderId     String
+  membershipId String
+  canView      Boolean            @default(true)
+  canEdit      Boolean            @default(false)
+  canDelete    Boolean            @default(false)
+  canShare     Boolean            @default(false)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  membership   OrganizationMember @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  folder       Folder             @relation(fields: [folderId], references: [id], onDelete: Cascade)
+
+  @@unique([folderId, membershipId])
+  @@index([tenantId, membershipId])
+}
+
+model DocumentVersion {
+  id           String       @id @default(cuid())
+  tenantId     String
+  documentId   String
+  version      Int
+  versionType  String       @default("MAJOR") // MAJOR | MINOR
+  storageKey   String       @unique
+  originalName String
+  mimeType     String
+  sizeBytes    Int
+  checksum     String
+  createdById  String
+  createdAt    DateTime     @default(now())
+  tenant       Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  document     Document     @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  creator      User         @relation("DocumentVersionCreator", fields: [createdById], references: [id], onDelete: Restrict)
+
+  @@unique([documentId, version])
+  @@index([tenantId, documentId])
+}
+
+model ListDefinition {
+  id           String       @id @default(cuid())
+  tenantId     String
+  siteId       String?
+  name         String
+  description  String?
+  icon         String?
+  createdById  String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  tenant       Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  site         Site?        @relation(fields: [siteId], references: [id], onDelete: SetNull)
+  creator      User         @relation("ListCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  fields       ListField[]
+  items        ListItem[]
+  referencedBy ListField[]  @relation("ListFieldRelation")
+
+  @@unique([tenantId, name])
+  @@index([tenantId])
+}
+
+model ListField {
+  id               String          @id @default(cuid())
+  tenantId         String
+  listDefinitionId String
+  name             String
+  slug             String
+  type             String
+  required         Boolean         @default(false)
+  optionsJson      String?
+  relationListId   String?
+  order            Int             @default(0)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  tenant           Organization    @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  listDefinition   ListDefinition  @relation(fields: [listDefinitionId], references: [id], onDelete: Cascade)
+  relationList     ListDefinition? @relation("ListFieldRelation", fields: [relationListId], references: [id], onDelete: SetNull)
+
+  @@unique([listDefinitionId, slug])
+  @@index([tenantId, listDefinitionId])
+}
+
+model ListItem {
+  id               String         @id @default(cuid())
+  tenantId         String
+  listDefinitionId String
+  valuesJson       String
+  createdById      String
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  tenant           Organization   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  listDefinition   ListDefinition @relation(fields: [listDefinitionId], references: [id], onDelete: Cascade)
+  creator          User           @relation("ListItemCreator", fields: [createdById], references: [id], onDelete: Restrict)
+
+  @@index([tenantId, listDefinitionId])
+}
+
+model FormDefinition {
+  id          String           @id @default(cuid())
+  tenantId    String
+  siteId      String?
+  name        String
+  description String?
+  schemaJson  String           @default("[]")
+  status      String           @default("DRAFT")
+  createdById String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  tenant      Organization     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  site        Site?            @relation(fields: [siteId], references: [id], onDelete: SetNull)
+  creator     User             @relation("FormCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  submissions FormSubmission[]
+
+  @@unique([tenantId, name])
+  @@index([tenantId, status])
+}
+
+model FormSubmission {
+  id               String         @id @default(cuid())
+  tenantId         String
+  formDefinitionId String
+  valuesJson       String
+  submittedById    String?
+  submittedAt      DateTime       @default(now())
+  tenant           Organization   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  formDefinition   FormDefinition @relation(fields: [formDefinitionId], references: [id], onDelete: Cascade)
+  submitter        User?          @relation("FormSubmitter", fields: [submittedById], references: [id], onDelete: SetNull)
+
+  @@index([tenantId, formDefinitionId])
+}
+
+model Project {
+  id          String       @id @default(cuid())
+  tenantId    String
+  name        String
+  description String?
+  color       String       @default("#6366f1")
+  createdById String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  tenant      Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  creator     User         @relation("ProjectCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  tasks       Task[]
+
+  @@unique([tenantId, name])
+  @@index([tenantId])
+}
+
+model Task {
+  id                   String              @id @default(cuid())
+  tenantId             String
+  title                String
+  description          String?
+  status               String              @default("TODO")
+  priority             String              @default("NORMAL")
+  startAt              DateTime?
+  dueAt                DateTime?
+  completedAt          DateTime?
+  tagsJson             String              @default("[]")
+  assignedMembershipId String?
+  assignedTeamId       String?
+  projectId            String?
+  documentId           String?
+  siteId               String?
+  createdById          String
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+  tenant               Organization        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  assignedMembership   OrganizationMember? @relation("TaskAssignee", fields: [assignedMembershipId], references: [id], onDelete: SetNull)
+  assignedTeam         Team?               @relation("TaskTeam", fields: [assignedTeamId], references: [id], onDelete: SetNull)
+  project              Project?            @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  document             Document?           @relation("TaskDocument", fields: [documentId], references: [id], onDelete: SetNull)
+  site                 Site?               @relation(fields: [siteId], references: [id], onDelete: SetNull)
+  creator              User                @relation("TaskCreator", fields: [createdById], references: [id], onDelete: Restrict)
+  comments             TaskComment[]
+
+  @@index([tenantId, status])
+  @@index([tenantId, assignedMembershipId])
+  @@index([tenantId, assignedTeamId])
+  @@index([tenantId, projectId])
+  @@index([tenantId, dueAt])
+  @@index([tenantId, completedAt])
+}
+
+model TaskComment {
+  id        String       @id @default(cuid())
+  tenantId  String
+  taskId    String
+  authorId  String
+  body      String
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  tenant    Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  task      Task         @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  author    User         @relation("TaskCommentAuthor", fields: [authorId], references: [id], onDelete: Restrict)
+
+  @@index([tenantId, taskId])
+}
+
+model DocumentComment {
+  id         String       @id @default(cuid())
+  tenantId   String
+  documentId String
+  authorId   String
+  body       String
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  tenant     Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  document   Document     @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  author     User         @relation("DocumentCommentAuthor", fields: [authorId], references: [id], onDelete: Restrict)
+
+  @@index([tenantId, documentId])
+}
+
+model FolderMetadataField {
+  id          String       @id @default(cuid())
+  tenantId    String
+  folderId    String
+  name        String
+  slug        String
+  type        String
+  required    Boolean      @default(false)
+  optionsJson String?
+  order       Int          @default(0)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  tenant      Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  folder      Folder       @relation(fields: [folderId], references: [id], onDelete: Cascade)
+
+  @@unique([folderId, slug])
+  @@index([tenantId, folderId])
+}
+
+model DocumentContent {
+  id          String       @id @default(cuid())
+  tenantId    String
+  documentId  String       @unique
+  text        String
+  extractedAt DateTime
+  versionId   String?
+  tenant      Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  document    Document     @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, documentId])
+}
+
+model ProcessDefinition {
+  id                  String               @id @default(cuid())
+  tenantId            String
+  name                String
+  description         String?
+  status              String               @default("DRAFT")
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+  tenant              Organization         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  workflowDefinitions WorkflowDefinition[]
+
+  @@unique([tenantId, name])
+  @@index([tenantId, status])
+}
+
+model WorkflowDefinition {
+  id                  String             @id @default(cuid())
+  tenantId            String
+  siteId              String?
+  processDefinitionId String?
+  name                String
+  description         String?
+  version             Int                @default(1)
+  definitionJson      String             @default("{}")
+  status              String             @default("DRAFT")
+  createdById         String?
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  tenant              Organization       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  site                Site?              @relation(fields: [siteId], references: [id], onDelete: SetNull)
+  processDefinition   ProcessDefinition? @relation(fields: [processDefinitionId], references: [id], onDelete: SetNull)
+  steps               WorkflowStep[]
+  instances           WorkflowInstance[]
+  triggers            WorkflowTrigger[]
+  quickActions        QuickAction[]
+
+  @@unique([tenantId, name, version])
+  @@index([tenantId, status])
+}
+
+model WorkflowStep {
+  id                   String             @id @default(cuid())
+  tenantId             String
+  workflowDefinitionId String
+  order                Int
+  type                 String
+  name                 String
+  configJson           String             @default("{}")
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  tenant               Organization       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  workflowDefinition   WorkflowDefinition @relation(fields: [workflowDefinitionId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, workflowDefinitionId, order])
+}
+
+model WorkflowInstance {
+  id                   String                  @id @default(cuid())
+  tenantId             String
+  workflowDefinitionId String
+  startedById          String
+  status               String                  @default("RUNNING")
+  currentStepOrder     Int                     @default(0)
+  inputJson            String?
+  contextJson          String?
+  outputJson           String?
+  errorMessage         String?
+  startedAt            DateTime                @default(now())
+  completedAt          DateTime?
+  tenant               Organization            @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  workflowDefinition   WorkflowDefinition      @relation(fields: [workflowDefinitionId], references: [id], onDelete: Restrict)
+  startedBy            OrganizationMember      @relation("WorkflowStarter", fields: [startedById], references: [id], onDelete: Restrict)
+  approvals            Approval[]
+  stepExecutions       WorkflowStepExecution[]
+
+  @@index([tenantId, status])
+  @@index([tenantId, workflowDefinitionId])
+}
+
+model WorkflowStepExecution {
+  id                 String           @id @default(cuid())
+  tenantId           String
+  workflowInstanceId String
+  stepOrder          Int
+  stepType           String
+  stepName           String
+  status             String           @default("PENDING")
+  resultJson         String?
+  errorMessage       String?
+  startedAt          DateTime         @default(now())
+  completedAt        DateTime?
+  tenant             Organization     @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  workflowInstance   WorkflowInstance @relation(fields: [workflowInstanceId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, workflowInstanceId])
+}
+
+model Approval {
+  id                 String               @id @default(cuid())
+  tenantId           String
+  workflowInstanceId String
+  stepOrder          Int                  @default(0)
+  approverId         String
+  status             String               @default("PENDING")
+  decisionNote       String?
+  decidedAt          DateTime?
+  delegatedById      String?
+  createdAt          DateTime             @default(now())
+  tenant             Organization         @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  workflowInstance   WorkflowInstance     @relation(fields: [workflowInstanceId], references: [id], onDelete: Cascade)
+  approver           OrganizationMember   @relation("ApprovalApprover", fields: [approverId], references: [id], onDelete: Restrict)
+  delegatedBy        OrganizationMember?  @relation("ApprovalDelegator", fields: [delegatedById], references: [id], onDelete: SetNull)
+  comments           ApprovalComment[]
+  delegations        ApprovalDelegation[]
+
+  @@index([tenantId, approverId, status])
+  @@index([tenantId, workflowInstanceId])
+}
+
+model ApprovalComment {
+  id         String             @id @default(cuid())
+  tenantId   String
+  approvalId String
+  authorId   String
+  body       String
+  createdAt  DateTime           @default(now())
+  tenant     Organization       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  approval   Approval           @relation(fields: [approvalId], references: [id], onDelete: Cascade)
+  author     OrganizationMember @relation("ApprovalCommentAuthor", fields: [authorId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, approvalId])
+}
+
+model ApprovalDelegation {
+  id           String             @id @default(cuid())
+  tenantId     String
+  approvalId   String
+  fromMemberId String
+  toMemberId   String
+  reason       String?
+  createdAt    DateTime           @default(now())
+  tenant       Organization       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  approval     Approval           @relation(fields: [approvalId], references: [id], onDelete: Cascade)
+  fromMember   OrganizationMember @relation("ApprovalDelegationFrom", fields: [fromMemberId], references: [id], onDelete: Cascade)
+  toMember     OrganizationMember @relation("ApprovalDelegationTo", fields: [toMemberId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, approvalId])
+}
+
+model NotificationDelivery {
+  id             String       @id @default(cuid())
+  tenantId       String
+  notificationId String
+  channel        String       @default("IN_APP")
+  status         String       @default("PENDING")
+  externalId     String?
+  errorMessage   String?
+  attemptedAt    DateTime?
+  deliveredAt    DateTime?
+  createdAt      DateTime     @default(now())
+  tenant         Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, notificationId, channel])
+}
+
+model Notification {
+  id          String                 @id @default(cuid())
+  tenantId    String
+  recipientId String
+  type        String
+  title       String
+  body        String
+  dataJson    String?
+  readAt      DateTime?
+  createdAt   DateTime               @default(now())
+  tenant      Organization           @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  recipient   OrganizationMember     @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+  deliveries  NotificationDelivery[]
+
+  @@index([tenantId, recipientId, readAt])
+}
+
+model AuditLog {
+  id           String              @id @default(cuid())
+  tenantId     String
+  actorId      String?
+  action       String
+  resourceType String
+  resourceId   String?
+  contextJson  String?
+  ipAddress    String?
+  result       String              @default("SUCCESS")
+  occurredAt   DateTime            @default(now())
+  tenant       Organization        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  actor        OrganizationMember? @relation("AuditActor", fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([tenantId, occurredAt])
+  @@index([tenantId, resourceType, resourceId])
+  @@index([tenantId, action])
+}
+
+model OrganizationSettings {
+  id                    String       @id @default(cuid())
+  tenantId              String       @unique
+  logoUrl               String?
+  language              String       @default("pt-PT")
+  timezone              String       @default("Europe/Lisbon")
+  passwordMinLength     Int          @default(8)
+  passwordRequireUpper  Boolean      @default(true)
+  passwordRequireLower  Boolean      @default(true)
+  passwordRequireDigit  Boolean      @default(true)
+  passwordRequireSymbol Boolean      @default(false)
+  storageQuotaBytes     BigInt       @default(10737418240)
+  notificationsEnabled  Boolean      @default(true)
+  emailNotifications    Boolean      @default(false)
+  trashRetentionDays    Int          @default(30)
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+  tenant                Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId])
+}
+
+model AIConversation {
+  id        String       @id @default(cuid())
+  tenantId  String
+  userId    String
+  title     String       @default("Nova conversa")
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  tenant    Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  messages  AIMessage[]
+
+  @@index([tenantId, userId])
+}
+
+model AIMessage {
+  id             String         @id @default(cuid())
+  conversationId String
+  role           String // "user" | "assistant"
+  content        String
+  actionType     String? // "chat" | "summarize" | "classify" | "keywords" | "qa" | "create_list" | "create_workflow" | "report"
+  actionData     String? // JSON payload for structured actions (e.g. proposed workflow)
+  tokensUsed     Int            @default(0)
+  costUsd        Float          @default(0)
+  createdAt      DateTime       @default(now())
+  conversation   AIConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([conversationId])
+}
+
+model AIOperation {
+  id           String       @id @default(cuid())
+  tenantId     String
+  userId       String
+  operation    String // "chat" | "summarize" | "classify" | "keywords" | "qa" | "create_list" | "create_workflow" | "report"
+  provider     String       @default("local")
+  model        String       @default("rule-based")
+  tokensInput  Int          @default(0)
+  tokensOutput Int          @default(0)
+  costUsd      Float        @default(0)
+  durationMs   Int          @default(0)
+  success      Boolean      @default(true)
+  errorMessage String?
+  createdAt    DateTime     @default(now())
+  tenant       Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, createdAt])
+}
+
+model Dashboard {
+  id         String            @id @default(cuid())
+  tenantId   String
+  name       String
+  layoutJson String
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  tenant     Organization      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  widgets    DashboardWidget[]
+
+  @@unique([tenantId, name])
+  @@index([tenantId])
+}
+
+model SavedView {
+  id                    String       @id @default(cuid())
+  tenantId              String
+  createdByMembershipId String
+  resourceType          String // "list" | "tasks" | "documents"
+  resourceId            String? // listDefinitionId, folderId, or null
+  name                  String
+  isShared              Boolean      @default(false)
+  configJson            String       @default("{}")
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+  tenant                Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, resourceType, resourceId])
+  @@index([tenantId, createdByMembershipId])
+}
+
+model Subscription {
+  id           String       @id @default(cuid())
+  tenantId     String
+  membershipId String
+  targetType   String // "folder" | "document" | "list" | "task" | "project"
+  targetId     String
+  eventsJson   String       @default("[]")
+  createdAt    DateTime     @default(now())
+  tenant       Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, membershipId, targetType, targetId])
+  @@index([tenantId, targetType, targetId])
+}
+
+model DashboardWidget {
+  id           String       @id @default(cuid())
+  tenantId     String
+  dashboardId  String
+  type         String
+  configJson   String
+  positionJson String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  tenant       Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  dashboard    Dashboard    @relation(fields: [dashboardId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, dashboardId])
+}
+
+// --- Billing & Plans ---
+
+model Plan {
+  id            String                     @id @default(cuid())
+  code          String                     @unique // "free", "basic", "professional", "business", "enterprise"
+  name          String
+  description   String?
+  priceMonthly  Int                        @default(0) // cents
+  priceAnnual   Int                        @default(0) // cents
+  currency      String                     @default("EUR")
+  isActive      Boolean                    @default(true)
+  sortOrder     Int                        @default(0)
+  featuresJson  String                     @default("[]") // array of feature strings
+  limitsJson    String                     @default("{}") // structured limits (users, storage, documents, workflows, ai)
+  createdAt     DateTime                   @default(now())
+  updatedAt     DateTime                   @updatedAt
+  subscriptions OrganizationSubscription[]
+}
+
+model OrganizationSubscription {
+  id                   String       @id @default(cuid())
+  tenantId             String       @unique
+  planId               String
+  status               String       @default("ACTIVE") // ACTIVE, PAST_DUE, CANCELED, TRIALING
+  billingCycle         String       @default("MONTHLY") // MONTHLY, ANNUAL
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  stripePriceId        String?
+  trialEndsAt          DateTime?
+  currentPeriodStart   DateTime?
+  currentPeriodEnd     DateTime?
+  canceledAt           DateTime?
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+  tenant               Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  plan                 Plan         @relation(fields: [planId], references: [id], onDelete: Restrict)
+
+  @@index([planId])
+  @@index([status])
+}
+
+// --- Access requests ("Gerir acesso" / Request Access) ---
+
+model AccessRequest {
+  id                    String       @id @default(cuid())
+  tenantId              String
+  requesterMembershipId String
+  resourceType          String // "document" | "folder"
+  resourceId            String
+  message               String?
+  status                String       @default("PENDING") // PENDING | APPROVED | REJECTED
+  decidedByMembershipId String?
+  decidedAt             DateTime?
+  createdAt             DateTime     @default(now())
+  tenant                Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, status])
+  @@index([tenantId, resourceType, resourceId])
+  @@index([tenantId, requesterMembershipId])
+}
+
+// --- External webhooks ---
+
+model Webhook {
+  id                    String            @id @default(cuid())
+  tenantId              String
+  name                  String
+  url                   String
+  secret                String // for HMAC signing
+  eventsJson            String            @default("[]")
+  status                String            @default("ACTIVE") // ACTIVE | DISABLED
+  createdByMembershipId String
+  createdAt             DateTime          @default(now())
+  updatedAt             DateTime          @updatedAt
+  tenant                Organization      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  deliveries            WebhookDelivery[]
+
+  @@index([tenantId, status])
+}
+
+model WebhookDelivery {
+  id           String       @id @default(cuid())
+  tenantId     String
+  webhookId    String
+  event        String
+  payloadJson  String
+  status       String // PENDING | SUCCESS | FAILED
+  responseCode Int?
+  error        String?
+  attemptedAt  DateTime     @default(now())
+  tenant       Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  webhook      Webhook      @relation(fields: [webhookId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, webhookId, attemptedAt])
+}
+
+model WorkflowTrigger {
+  id                   String             @id @default(cuid())
+  tenantId             String
+  workflowDefinitionId String
+  event                String // document.created | document.updated | document.deleted | document.version.added | document.published | list.item.created | task.created | form.submitted
+  scopeType            String             @default("organization") // organization | folder | list
+  scopeId              String?
+  enabled              Boolean            @default(true)
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  tenant               Organization       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  workflowDefinition   WorkflowDefinition @relation(fields: [workflowDefinitionId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, event, enabled])
+  @@index([tenantId, workflowDefinitionId])
+}
+
+model QuickAction {
+  id                   String             @id @default(cuid())
+  tenantId             String
+  name                 String
+  targetType           String             @default("document") // document | folder
+  workflowDefinitionId String
+  scopeId              String? // optional folder scope restricting where the action shows
+  position             Int                @default(0)
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+  tenant               Organization       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  workflowDefinition   WorkflowDefinition @relation(fields: [workflowDefinitionId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, targetType])
+}
+
+model Announcement {
+  id          String             @id @default(cuid())
+  tenantId    String
+  title       String
+  body        String
+  audience    String             @default("ALL") // ALL | TEAM:<teamId>
+  publishAt   DateTime           @default(now())
+  expiresAt   DateTime?
+  createdById String
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  tenant      Organization       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdBy   OrganizationMember @relation(fields: [createdById], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, publishAt])
+}
+
+// --- Sites / workspaces (SharePoint-style) ---
+
+model Site {
+  id          String       @id @default(cuid())
+  tenantId    String
+  parentId    String?
+  name        String
+  slug        String
+  description String?
+  type        String       @default("TEAM") // DEPARTMENT | PROJECT | TEAM | HUB
+  icon        String       @default("folder")
+  color       String       @default("#6366f1")
+  visibility  String       @default("ORG") // ORG | PRIVATE
+  createdById String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  tenant      Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  creator     User?        @relation("SiteCreator", fields: [createdById], references: [id], onDelete: SetNull)
+  parent      Site?        @relation("SiteTree", fields: [parentId], references: [id], onDelete: Cascade)
+  children    Site[]       @relation("SiteTree")
+  members     SiteMember[]
+  pages       SitePage[]
+  newsPosts   NewsPost[]
+  folders     Folder[]
+  lists       ListDefinition[]
+  forms       FormDefinition[]
+  workflows   WorkflowDefinition[]
+  tasks       Task[]
+
+  @@unique([tenantId, slug])
+  @@index([tenantId, parentId])
+}
+
+model SiteMember {
+  id           String             @id @default(cuid())
+  tenantId     String
+  siteId       String
+  membershipId String
+  role         String             @default("VIEWER") // ADMIN | MANAGER | EDITOR | CONTRIBUTOR | VIEWER
+  createdAt    DateTime           @default(now())
+  tenant       Organization       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  site         Site               @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  membership   OrganizationMember @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+
+  @@unique([siteId, membershipId])
+  @@index([tenantId, membershipId])
+}
+
+model SitePage {
+  id          String       @id @default(cuid())
+  tenantId    String
+  siteId      String
+  title       String
+  slug        String
+  widgetsJson String       @default("[]")
+  status      String       @default("DRAFT") // DRAFT | PUBLISHED
+  isHome      Boolean      @default(false)
+  createdById String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  tenant      Organization @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  site        Site         @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  creator     User?        @relation("SitePageCreator", fields: [createdById], references: [id], onDelete: SetNull)
+
+  @@unique([siteId, slug])
+  @@index([tenantId, siteId])
+}
+
+model NewsPost {
+  id                 String             @id @default(cuid())
+  tenantId           String
+  siteId             String?
+  title              String
+  excerpt            String?
+  body               String             @default("")
+  coverColor         String             @default("#6366f1")
+  category           String?
+  tagsJson           String             @default("[]")
+  authorMembershipId String
+  status             String             @default("DRAFT") // DRAFT | PUBLISHED | SCHEDULED
+  featured           Boolean            @default(false)
+  publishedAt        DateTime?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+  tenant             Organization       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  site               Site?              @relation(fields: [siteId], references: [id], onDelete: SetNull)
+  author             OrganizationMember @relation(fields: [authorMembershipId], references: [id], onDelete: Cascade)
+  comments           NewsComment[]
+
+  @@index([tenantId, status, publishedAt])
+  @@index([tenantId, siteId])
+}
+
+model NewsComment {
+  id                 String             @id @default(cuid())
+  tenantId           String
+  newsId             String
+  authorMembershipId String
+  body               String
+  createdAt          DateTime           @default(now())
+  tenant             Organization       @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  news               NewsPost           @relation(fields: [newsId], references: [id], onDelete: Cascade)
+  author             OrganizationMember @relation(fields: [authorMembershipId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, newsId])
+}
+
+model ContactRequest {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  company   String?
+  message   String
+  createdAt DateTime @default(now())
+}
+

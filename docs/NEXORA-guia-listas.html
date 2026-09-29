@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<title>NEXORA — Guia de Listas</title>
+<style>
+  @page { size: A4; margin: 18mm 15mm 18mm 15mm; }
+  * { box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; font-size: 9.5pt; color: #1c2430; line-height: 1.45; margin: 0; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; color: #0f172a; }
+  h2 { font-size: 13.5pt; color: #0f172a; border-bottom: 2.5px solid #4f46e5; padding-bottom: 1.5mm; margin: 8mm 0 3mm; page-break-after: avoid; }
+  h3 { font-size: 11pt; color: #3730a3; margin: 5mm 0 2mm; page-break-after: avoid; }
+  h4 { font-size: 10pt; color: #0f172a; margin: 3.5mm 0 1.5mm; page-break-after: avoid; }
+  p { margin: 1.5mm 0; }
+  .cover { text-align: center; padding-top: 60mm; page-break-after: always; }
+  .cover .brand { font-size: 30pt; font-weight: 800; letter-spacing: 6px; color: #4f46e5; }
+  .cover .sub { font-size: 14pt; color: #475569; margin-top: 4mm; }
+  .cover .meta { margin-top: 20mm; font-size: 10pt; color: #64748b; }
+  .section { page-break-before: always; }
+  .no-break { page-break-inside: avoid; }
+  table { border-collapse: collapse; width: 100%; margin: 2mm 0 4mm; }
+  th { background: #eef2ff; color: #312e81; text-align: left; font-size: 8.5pt; }
+  th, td { border: 1px solid #cbd5e1; padding: 1.4mm 2mm; vertical-align: top; }
+  tr { page-break-inside: avoid; }
+  thead { display: table-header-group; }
+  code { background: #f1f5f9; padding: 0 3px; border-radius: 3px; font-family: Consolas, monospace; font-size: 8.5pt; }
+  ol.steps { margin: 1mm 0 3mm; padding-left: 6mm; }
+  ol.steps > li { margin: 1.1mm 0; padding-left: 1mm; }
+  .exp { color: #166534; }
+  .exp::before { content: "→ Esperado: "; font-weight: 600; color: #15803d; }
+  .deny { color: #b91c1c; }
+  .deny::before { content: "→ Esperado (negado): "; font-weight: 600; color: #b91c1c; }
+  .note { background: #fffbeb; border: 1px solid #f59e0b; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .tip { background: #eff6ff; border: 1px solid #3b82f6; border-left-width: 4px; padding: 2mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #4f46e5; padding: 2.5mm 3mm; border-radius: 2px; margin: 2mm 0; }
+  .example .ex-title { font-weight: 700; color: #3730a3; margin-bottom: 1mm; }
+  ul { margin: 1mm 0 2mm; padding-left: 5.5mm; }
+  li { margin: 0.8mm 0; }
+  .small { font-size: 8.5pt; color: #475569; }
+  .role-pill { display: inline-block; background: #e0e7ff; color: #3730a3; border-radius: 10px; padding: 0 2.5mm; font-size: 8pt; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="brand">NEXORA</div>
+  <div class="sub">Guia Completo — Listas</div>
+  <div class="meta">
+    <p>Módulo: Listas (menu lateral → Listas · <code>/lists</code>)</p>
+    <p>Ambiente: desenvolvimento local · Web http://localhost:5173</p>
+    <p>Versão: 1.0 · Data: ____________</p>
+  </div>
+</div>
+
+<h2>1. O que são Listas</h2>
+<p>Uma <b>Lista</b> no NEXORA é uma <b>mini base de dados estruturada</b> — o equivalente a uma lista do SharePoint ou a uma folha Excel com tipos de coluna fortes. Define-se um esquema de <b>campos</b> (colunas) e depois a equipa mantém <b>registos</b> (linhas) em conjunto: criar, editar, filtrar, ordenar, exportar.</p>
+<p><b>Quando usar uma Lista:</b> dados vivos que a equipa mantém continuamente — inventário, contactos, fornecedores, requisições, pipeline comercial, controlo de equipamento, registo de formações. Se precisa de <i>recolher</i> respostas de várias pessoas (uma submissão por pessoa), use <b>Formulários</b> em vez disso.</p>
+
+<h2>2. Anatomia de uma lista</h2>
+<table>
+  <thead><tr><th>Elemento</th><th>O que é</th></tr></thead>
+  <tbody>
+    <tr><td><b>Lista</b></td><td>O contentor: nome + descrição + esquema de campos</td></tr>
+    <tr><td><b>Campo (field)</b></td><td>Uma coluna com nome, <b>slug</b> (identificador técnico), <b>tipo</b>, obrigatoriedade e opções</td></tr>
+    <tr><td><b>Slug</b></td><td>Identificador único do campo (minúsculas, números e hífens, ex.: <code>valor-anual</code>) — usado nas APIs e em valores de registo</td></tr>
+    <tr><td><b>Registo (item)</b></td><td>Uma linha de dados — valores por slug de campo</td></tr>
+    <tr><td><b>Vista guardada</b></td><td>Combinação de filtros/ordenação gravada para reutilização</td></tr>
+  </tbody>
+</table>
+
+<h2>3. Tipos de campo</h2>
+<table>
+  <thead><tr><th>Tipo</th><th>Guarda</th><th>Exemplo</th></tr></thead>
+  <tbody>
+    <tr><td><b>Texto</b></td><td>Texto curto (uma linha)</td><td>Nome, referência</td></tr>
+    <tr><td><b>Texto longo</b></td><td>Texto multi-linha</td><td>Observações, morada</td></tr>
+    <tr><td><b>Número</b></td><td>Valor numérico</td><td>Quantidade, ordem</td></tr>
+    <tr><td><b>Moeda</b></td><td>Valor monetário</td><td>Preço unitário, valor anual</td></tr>
+    <tr><td><b>Data</b></td><td>Data (dia/mês/ano)</td><td>Data limite, validade</td></tr>
+    <tr><td><b>Data/hora</b></td><td>Data com hora</td><td>Entrega prevista</td></tr>
+    <tr><td><b>Booleano</b></td><td>Sim/Não</td><td>Urgente, ativo</td></tr>
+    <tr><td><b>Escolha</b></td><td>Uma opção de uma lista definida — <i>exige opções</i></td><td>Estado: Ativo/Inativo/Potencial</td></tr>
+    <tr><td><b>Email</b></td><td>Endereço de email validado</td><td>Email do contacto</td></tr>
+    <tr><td><b>URL</b></td><td>Endereço web</td><td>Website do fornecedor</td></tr>
+    <tr><td><b>Utilizador</b></td><td>Membro da organização</td><td>Gestor de conta</td></tr>
+    <tr><td><b>Relação</b></td><td>Ligação a um registo de <b>outra lista</b> — <i>exige lista de destino</i></td><td>Cliente → registo da lista «Clientes»</td></tr>
+    <tr><td><b>Ficheiro</b></td><td>Anexo/documento</td><td>Contrato assinado, foto</td></tr>
+  </tbody>
+</table>
+<div class="note"><b>Campos «Escolha»</b> precisam de pelo menos uma opção (valor + etiqueta). <b>Campos «Relação»</b> precisam de indicar a lista de destino — permitem ligar listas entre si (ex.: lista «Projetos» com campo relação para «Clientes»).</div>
+
+<h2>4. Criar e configurar uma lista — passo a passo</h2>
+<h3>4.1 Criar (com ou sem template)</h3>
+<ol class="steps">
+  <li>Menu <b>Listas</b> → <b>«Nova lista»</b> — abre o <b>seletor de modelos</b>.</li>
+  <li>Escolher <b>«Em branco»</b> ou um template: <i>Clientes, Inventário, Contactos, Fornecedores, Requisições</i> — o template nasce já com os campos preenchidos.</li>
+  <li>Ajustar nome e descrição → Criar. <span class="exp">Lista criada com os campos do modelo, pronta a receber registos.</span></li>
+</ol>
+<h3>4.2 Editar o esquema de campos</h3>
+<ol class="steps">
+  <li>Abrir a lista → modo de edição de campos.</li>
+  <li><b>Adicionar campo</b>: nome, slug (gerado automaticamente a partir do nome, editável), tipo, obrigatório, opções (se Escolha) ou lista de destino (se Relação).</li>
+  <li>Reordenar com as setas; editar ou remover campos existentes.</li>
+  <li><b>Guardar</b>. <span class="exp">Confirmação «Lista guardada»; erros de validação aparecem com mensagem traduzida.</span></li>
+</ol>
+<div class="tip"><b>Cuidado ao remover campos:</b> registos existentes perdem os valores dessa coluna. Prefira renomear/reordenar quando possível.</div>
+<h3>4.3 Gerir registos</h3>
+<ol class="steps">
+  <li><b>«Novo registo»</b> → preencher os campos → criar.</li>
+  <li>Clicar numa linha → editar valores → guardar.</li>
+  <li>Menu de linha → <b>eliminar registo</b>.</li>
+  <li><b>Exportar CSV</b> — descarrega todos os registos para Excel.</li>
+  <li><b>Duplicar lista</b> — cria uma cópia da estrutura (útil para variantes).</li>
+</ol>
+
+<h2>5. Exemplos práticos</h2>
+
+<div class="example">
+  <div class="ex-title">Exemplo 1 — Lista «Clientes» (CRM simples)</div>
+  <table>
+    <thead><tr><th>Campo</th><th>Slug</th><th>Tipo</th><th>Notas</th></tr></thead>
+    <tbody>
+      <tr><td>Nome</td><td><code>nome</code></td><td>Texto</td><td>Obrigatório</td></tr>
+      <tr><td>Empresa</td><td><code>empresa</code></td><td>Texto</td><td></td></tr>
+      <tr><td>Email</td><td><code>email</code></td><td>Email</td><td>Validado</td></tr>
+      <tr><td>Telefone</td><td><code>telefone</code></td><td>Texto</td><td></td></tr>
+      <tr><td>Estado</td><td><code>estado</code></td><td>Escolha</td><td>Ativo / Inativo / Potencial</td></tr>
+      <tr><td>Valor anual</td><td><code>valor-anual</code></td><td>Moeda</td><td></td></tr>
+      <tr><td>Gestor</td><td><code>gestor</code></td><td>Utilizador</td><td>Membro responsável</td></tr>
+    </tbody>
+  </table>
+  <p>Registos de exemplo: «ABC, S.A. — ativo — 18 500 € — gestor: Bruno».</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 2 — Inventário com relação a fornecedores</div>
+  <p>Duas listas ligadas: <b>«Fornecedores»</b> (Empresa, NIF, Email, Estado) e <b>«Inventário»</b> (Produto, Referência, Quantidade, Preço, <i>Fornecedor → relação para a lista Fornecedores</i>). Cada artigo aponta para o registo real do fornecedor — sem duplicação de dados.</p>
+</div>
+
+<div class="example">
+  <div class="ex-title">Exemplo 3 — Requisições internas</div>
+  <p>Template «Requisições»: Artigo, Quantidade, Urgente (booleano), Data limite, Estado (Pendente/Aprovada/Entregue). Combinar com um <b>Processo</b> de aprovação: novo registo → aprovação do gestor → estado muda para Aprovada.</p>
+</div>
+
+<h2>6. Listas vs Formulários — quando usar cada um</h2>
+<table>
+  <thead><tr><th></th><th>Lista</th><th>Formulário</th></tr></thead>
+  <tbody>
+    <tr><td><b>Propósito</b></td><td>Base de dados mantida pela equipa</td><td>Recolha de respostas (uma por pessoa)</td></tr>
+    <tr><td><b>Quem edita</b></td><td>Quem tem <code>lists.manage</code> edita qualquer registo</td><td>Cada membro submete a sua resposta</td></tr>
+    <tr><td><b>Registos</b></td><td>Linhas editáveis e apagáveis continuamente</td><td>Submissões datadas, ligadas ao autor</td></tr>
+    <tr><td><b>Exemplos</b></td><td>Clientes, inventário, fornecedores</td><td>Pedido de férias, questionário, inscrição</td></tr>
+  </tbody>
+</table>
+
+<h2>7. Permissões</h2>
+<table>
+  <thead><tr><th>Ação</th><th>Permissão</th><th>Papéis</th></tr></thead>
+  <tbody>
+    <tr><td>Ver listas e registos, exportar</td><td><code>lists.view</code></td><td>Todos</td></tr>
+    <tr><td>Criar lista, editar campos, criar/editar/eliminar registos, duplicar</td><td><code>lists.manage</code></td><td>Admin, Manager, Editor</td></tr>
+    <tr><td>Member / Viewer</td><td>—</td><td>Só leitura — botões de escrita ausentes/desativados</td></tr>
+  </tbody>
+</table>
+
+<h2>8. Boas práticas e resolução de problemas</h2>
+<ul>
+  <li><b>Comece por um template</b> — é mais rápido ajustar do que criar do zero.</li>
+  <li><b>Slugs estáveis:</b> o slug identifica o campo nos dados/API — não o mude depois de ter registos.</li>
+  <li><b>Marque como obrigatório só o essencial</b> — demasiados obrigatórios afastam quem regista.</li>
+  <li><b>Use «Escolha» em vez de texto livre</b> para estados/categorias — evita «Ativo», «activo», «ATIVO».</li>
+  <li><b>Relações</b> em vez de duplicar dados — o fornecedor existe uma vez, é referenciado em todo o lado.</li>
+</ul>
+<table>
+  <thead><tr><th>Sintoma</th><th>Causa provável</th></tr></thead>
+  <tbody>
+    <tr><td>«Escolha» não grava</td><td>Falta pelo menos uma opção (valor + etiqueta)</td></tr>
+    <tr><td>«Relação» não grava</td><td>Falta escolher a lista de destino</td></tr>
+    <tr><td>Slug rejeitado</td><td>Só minúsculas, números e hífens — sem espaços nem acentos</td></tr>
+    <tr><td>Sem botões de criar/editar</td><td>Member/Viewer — falta <code>lists.manage</code></td></tr>
+  </tbody>
+</table>
+
+</body>
+</html>
