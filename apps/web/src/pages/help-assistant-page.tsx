@@ -19,16 +19,24 @@ interface HelpChatMessage {
   createdAt: string;
 }
 
-// Build a knowledge base summary from the help articles for the AI context.
-function buildKnowledgeContext(): string {
-  const lines: string[] = ["Documentação Nexora disponível:"];
-  for (const article of HELP_ARTICLES) {
-    lines.push(`- ${article.slug} (${article.category}): ${article.keywords.join(", ")}`);
-  }
-  return lines.join("\n");
-}
+// The chat API limits messages to 4000 chars, so instead of sending the whole
+// knowledge base (~11KB) we attach only the articles that match the question,
+// with their real content so the AI answers from the official documentation.
+const CONTEXT_BUDGET = 3200;
 
-const KNOWLEDGE_CONTEXT = buildKnowledgeContext();
+function buildContextFor(message: string, t: (key: string) => string): string {
+  const lines: string[] = [];
+  for (const { article } of searchArticles(message).slice(0, 3)) {
+    const body = article.sections.map((s) => t(s.body)).join("\n");
+    lines.push(`## ${t(article.titleKey)}\n${body}`);
+  }
+  if (lines.length === 0) {
+    for (const article of HELP_ARTICLES.slice(0, 20)) {
+      lines.push(`- ${article.slug}: ${t(article.titleKey)}`);
+    }
+  }
+  return lines.join("\n\n").slice(0, CONTEXT_BUDGET);
+}
 
 // Map article keywords to navigation actions
 function findActionsForResponse(content: string): Array<{ label: string; route: string }> {
@@ -93,12 +101,16 @@ export function HelpAssistantPage() {
   }, [messages]);
 
   const chatMutation = useMutation({
-    mutationFn: (message: string) => aiApi.chat(organization.id, message),
-    onSuccess: (data: { message: AIMessageDto }) => {
+    mutationFn: (question: string) => {
+      const context = buildContextFor(question, t);
+      const message = `${question}\n\n[Contexto: O utilizador está na Central de Ajuda do Nexora. ${context}]`;
+      return aiApi.chat(organization.id, message);
+    },
+    onSuccess: (data: { message: AIMessageDto }, question: string) => {
       let content = data.message.content;
       // Check if the AI response is relevant to Nexora functionality.
       // If the response seems generic or doesn't reference Nexora features, augment with help context.
-      const helpResults = searchArticles(input);
+      const helpResults = searchArticles(question);
       if (helpResults.length > 0 && helpResults[0]) {
         const topArticle = helpResults[0].article;
         const articleLink = `\n\n📚 ${t("help.relatedArticle")}: ${t(topArticle.titleKey)}`;
@@ -150,9 +162,7 @@ export function HelpAssistantPage() {
     setMessages((prev) => [...prev, userMsg, pendingMsg]);
     setInput("");
 
-    // Augment the message with help context so the AI knows about Nexora documentation
-    const contextualMessage = `${trimmed}\n\n[Contexto: O utilizador está na Central de Ajuda do Nexora. ${KNOWLEDGE_CONTEXT}]`;
-    chatMutation.mutate(contextualMessage);
+    chatMutation.mutate(trimmed);
   }
 
   return (
