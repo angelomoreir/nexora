@@ -3,15 +3,21 @@ import { CheckCircle2, Mail, MapPin } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { PublicSection, PublicSectionTitle } from "../../components/layout/public-layout";
-import { Alert, Button, Field, Input, Textarea } from "../../components/ui";
+import { useSearchParams } from "react-router";
+import { Alert, Button, Field, Input, Select, Textarea } from "../../components/ui";
 import { ApiClientError } from "../../lib/api";
 import { apiErrorText } from "../../lib/api-error";
 
 const apiUrl = import.meta.env?.VITE_API_URL ?? "http://localhost:3000/api/v1";
 
+const INTENTS = ["demo", "pricing", "partner", "contact"] as const;
+const TEAM_SIZES = ["1-10", "11-50", "51-200", "201-500", "500+"] as const;
+
 export function ContactPage() {
   const { t } = useTranslation();
-  const [form, setForm] = useState({ name: "", email: "", company: "", message: "" });
+  const [searchParams] = useSearchParams();
+  const initialIntent = INTENTS.find((value) => value === searchParams.get("intent")) ?? "contact";
+  const [form, setForm] = useState({ name: "", email: "", company: "", message: "", intent: initialIntent as string, teamSize: "" });
   const [sent, setSent] = useState(false);
 
   const submit = useMutation({
@@ -19,7 +25,7 @@ export function ContactPage() {
       const response = await fetch(`${apiUrl}/public/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(form)
+        body: JSON.stringify({ ...form, teamSize: form.teamSize || undefined })
       });
       if (!response.ok) {
         const payload = await response.json().catch(() => null);
@@ -62,7 +68,20 @@ export function ContactPage() {
                 <Field label={t("common.name")}><Input required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} /></Field>
                 <Field label="Email"><Input required type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} /></Field>
               </div>
-              <Field label={t("public.contact.company")}><Input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} /></Field>
+              <Field label={t("public.contact.intent")}>
+                <Select value={form.intent} onChange={(e) => setForm({ ...form, intent: e.target.value })}>
+                  {INTENTS.map((value) => <option key={value} value={value}>{t(`public.contact.intents.${value}`)}</option>)}
+                </Select>
+              </Field>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Field label={t("public.contact.company")}><Input value={form.company} onChange={(e) => setForm({ ...form, company: e.target.value })} /></Field>
+                <Field label={t("public.contact.teamSize")}>
+                  <Select value={form.teamSize} onChange={(e) => setForm({ ...form, teamSize: e.target.value })}>
+                    <option value="">{t("public.contact.teamSizeUnset")}</option>
+                    {TEAM_SIZES.map((value) => <option key={value} value={value}>{value}</option>)}
+                  </Select>
+                </Field>
+              </div>
               <Field label={t("public.contact.message")}><Textarea required rows={5} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} /></Field>
               {submit.error ? <Alert variant="danger">{apiErrorText(submit.error, t)}</Alert> : null}
               <Button className="w-full" loading={submit.isPending}>{submit.isPending ? t("common.sending") : t("public.contact.send")}</Button>

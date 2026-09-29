@@ -89,7 +89,7 @@ export function PricingPage() {
   const formatPrice = (plan: PlanDto) =>
     formatNumber(priceFor(plan) / 100, { style: "currency", currency: plan.currency, maximumFractionDigits: priceFor(plan) % 100 === 0 ? 0 : 2 });
   const ctaFor = (plan: PlanDto) => {
-    if (plan.code === "enterprise") return { label: t("public.pricing.ctaContact"), to: "/contact" };
+    if (plan.code === "enterprise") return { label: t("public.pricing.ctaContact"), to: "/contact?intent=demo" };
     if (plan.code === "free") return { label: t("public.pricing.ctaFree"), to: "/register" };
     return { label: t("public.pricing.ctaPlan", { plan: t(`plans.${plan.code}.name`, { defaultValue: plan.name }) }), to: "/register" };
   };
@@ -379,7 +379,7 @@ export function PricingPage() {
             <p className="mx-auto mt-3 max-w-xl text-nav-muted">{t("public.pricing.finalSub")}</p>
             <div className="mt-8 flex flex-wrap justify-center gap-3">
               <Link to="/register"><Button size="lg">{t("public.pricing.ctaFree")}<ArrowRight className="size-4" /></Button></Link>
-              <Link to="/contact"><Button size="lg" variant="outline" className="border-border-strong bg-transparent text-nav-foreground hover:bg-surface-hover">{t("public.pricing.ctaContact")}</Button></Link>
+              <Link to="/contact?intent=demo"><Button size="lg" variant="outline" className="border-border-strong bg-transparent text-nav-foreground hover:bg-surface-hover">{t("public.pricing.ctaContact")}</Button></Link>
             </div>
           </div>
         </div>

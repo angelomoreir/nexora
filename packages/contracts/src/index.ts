@@ -1776,13 +1776,21 @@ export interface SecurityOverviewDto {
 
 // --- Public contact requests (admin) ---
 
+export type LeadStatus = "NEW" | "CONTACTED" | "DEMO" | "PROPOSAL" | "WON" | "LOST";
+export type LeadIntent = "contact" | "demo" | "pricing" | "partner";
+
 export interface ContactRequestDto {
   id: string;
   name: string;
   email: string;
   company: string | null;
   message: string;
+  intent: LeadIntent;
+  teamSize: string | null;
+  status: LeadStatus;
+  notes: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface ContactRequestsResponse {
@@ -1790,6 +1798,12 @@ export interface ContactRequestsResponse {
   total: number;
   page: number;
   pageSize: number;
+  statusCounts: Record<LeadStatus, number>;
+}
+
+export interface UpdateContactRequestInput {
+  status?: LeadStatus;
+  notes?: string;
 }
 
 // --- Platform organizations (super admin, read-only) ---

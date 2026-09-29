@@ -29,7 +29,7 @@ export function LandingPage() {
           <p className="mx-auto mt-6 max-w-2xl text-lg text-nav-muted">{t("public.landing.heroSub")}</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link to="/register"><Button size="lg">{t("public.landing.ctaStart")}<ArrowRight className="size-4" /></Button></Link>
-            <Link to="/login"><Button size="lg" variant="outline" className="border-border-strong bg-transparent text-nav-foreground hover:bg-surface-hover">{t("public.landing.ctaDemo")}</Button></Link>
+            <Link to="/contact?intent=demo"><Button size="lg" variant="outline" className="border-border-strong bg-transparent text-nav-foreground hover:bg-surface-hover">{t("public.landing.ctaDemo")}</Button></Link>
           </div>
           <p className="mt-4 text-xs text-nav-muted">{t("public.landing.ctaNote")}</p>
 

@@ -1315,6 +1315,13 @@ model ContactRequest {
   email     String
   company   String?
   message   String
+  intent    String   @default("contact") // contact | demo | pricing | partner
+  teamSize  String?
+  status    String   @default("NEW") // NEW | CONTACTED | DEMO | PROPOSAL | WON | LOST
+  notes     String   @default("")
   createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  @@index([status])
 }
 
