@@ -4251,6 +4251,23 @@ export const de = {
         }
       ]
     },
+    "security": {
+      "short": "Sicherheit",
+      "title": "Sicherheit & DSGVO",
+      "updated": "Zuletzt aktualisiert: September 2026",
+      "intro": "Wie NEXORA die Daten Ihrer Organisation schützt. Diese Seite beschreibt die technischen und organisatorischen Maßnahmen der Plattform.",
+      "sections": [
+        { "heading": "1. Trennung zwischen Organisationen", "body": "Jeder Datensatz gehört genau einer Organisation, und alle Zugriffe werden serverseitig gefiltert. Automatisierte Tests versuchen bei jedem Release, auf Dokumente, Listen, Aufgaben, Workflows, Suche, Audit-Log und Downloads einer anderen Organisation zuzugreifen." },
+        { "heading": "2. Authentifizierung", "body": "Passwörter werden mit Argon2id gespeichert. Sitzungen nutzen kurzlebige Zugriffstokens in httpOnly-Cookies, Rotation des Refresh-Tokens mit Wiederverwendungserkennung und Widerruf der Sitzungen bei Abmeldung oder Passwortänderung. Single Sign-On über OpenID Connect ist für Unternehmen verfügbar." },
+        { "heading": "3. Zugriffskontrolle", "body": "Rollen (Super Admin, Admin, Manager, Editor, Member, Viewer) mit granularen Berechtigungen, Berechtigungen pro Ordner und Dokument sowie serverseitige Prüfung jeder Operation — nie nur in der Oberfläche." },
+        { "heading": "4. Audit", "body": "Relevante Aktionen (Erstellen, Bearbeiten, Teilen, Löschen, Berechtigungsänderungen) werden in einem Audit-Log protokolliert, das den Administratoren der Organisation zur Verfügung steht." },
+        { "heading": "5. Dateien und Freigaben", "body": "Liste erlaubter Dateiendungen, Prüfung von MIME-Typ und Dateisignatur, Größenlimit und nach Organisation getrennte Speicherung. Freigabelinks können mit Passwort und Ablaufdatum geschützt werden." },
+        { "heading": "6. Anwendungsschutz", "body": "Ratenbegrenzung, HTTP-Sicherheitsheader, Validierung aller Eingaben und Fehlermeldungen ohne interne Details. Abhängigkeiten werden auf bekannte Schwachstellen geprüft." },
+        { "heading": "7. DSGVO", "body": "Für hochgeladene Inhalte ist Ihre Organisation Verantwortlicher und NEXORA Auftragsverarbeiter. Ein Auftragsverarbeitungsvertrag (AVV/DPA) steht Geschäftskunden auf Anfrage zur Verfügung. Nach Ende des Abonnements können Daten 30 Tage lang exportiert werden." },
+        { "heading": "8. Unterauftragsverarbeiter", "body": "Infrastruktur-Hosting, Zahlungen (Stripe), E-Mail-Versand und — nur wenn die Organisation KI-Funktionen aktiviert — ein Anbieter von KI-Modellen. Die aktuelle Liste der Unterauftragsverarbeiter erhalten Sie auf Anfrage." },
+        { "heading": "9. Schwachstelle melden", "body": "Wenn Sie ein Sicherheitsproblem gefunden haben, kontaktieren Sie uns über die Kontaktseite. Wir prüfen jede Meldung und schätzen verantwortungsvolle Offenlegung." }
+      ]
+    },
     "privacy": {
       "short": "Datenschutz",
       "title": "Datenschutzerklärung",

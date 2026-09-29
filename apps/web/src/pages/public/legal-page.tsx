@@ -6,7 +6,7 @@ interface LegalSection {
   body: string;
 }
 
-function LegalPage({ kind }: { kind: "terms" | "privacy" }) {
+function LegalPage({ kind }: { kind: "terms" | "privacy" | "security" }) {
   const { t } = useTranslation();
   const sections = t(`legal.${kind}.sections`, { returnObjects: true }) as LegalSection[];
 
@@ -34,4 +34,8 @@ export function TermsPage() {
 
 export function PrivacyPage() {
   return <LegalPage kind="privacy" />;
+}
+
+export function SecurityPage() {
+  return <LegalPage kind="security" />;
 }

@@ -4251,6 +4251,23 @@ export const fr = {
         }
       ]
     },
+    "security": {
+      "short": "Sécurité",
+      "title": "Sécurité et RGPD",
+      "updated": "Dernière mise à jour : septembre 2026",
+      "intro": "Comment NEXORA protège les données de votre organisation. Cette page décrit les mesures techniques et organisationnelles appliquées sur la plateforme.",
+      "sections": [
+        { "heading": "1. Isolation entre organisations", "body": "Chaque enregistrement appartient à une seule organisation et tous les accès sont filtrés côté serveur. Des tests automatisés tentent d'accéder aux documents, listes, tâches, workflows, recherche, journal d'audit et téléchargements d'une autre organisation à chaque version." },
+        { "heading": "2. Authentification", "body": "Mots de passe stockés avec Argon2id. Sessions avec jetons d'accès de courte durée dans des cookies httpOnly, rotation du jeton de renouvellement avec détection de réutilisation et révocation des sessions à la déconnexion ou au changement de mot de passe. Authentification unique (SSO) via OpenID Connect disponible pour les entreprises." },
+        { "heading": "3. Contrôle d'accès", "body": "Rôles (Super Admin, Admin, Manager, Editor, Member, Viewer) avec permissions granulaires, permissions par dossier et document, et contrôle de chaque opération côté serveur — jamais uniquement dans l'interface." },
+        { "heading": "4. Audit", "body": "Les actions importantes (création, modification, partage, suppression, changements de permissions) sont enregistrées dans un journal d'audit consultable par les administrateurs de l'organisation." },
+        { "heading": "5. Fichiers et partages", "body": "Liste d'extensions autorisées, vérification du type MIME et de la signature du fichier, limite de taille et stockage séparé par organisation. Les liens de partage peuvent être protégés par mot de passe et date d'expiration." },
+        { "heading": "6. Protection de l'application", "body": "Limitation du débit des requêtes, en-têtes de sécurité HTTP, validation de toutes les entrées et messages d'erreur sans détails internes. Les dépendances sont auditées contre les vulnérabilités connues." },
+        { "heading": "7. RGPD", "body": "Pour le contenu téléversé, votre organisation est responsable du traitement et NEXORA agit en tant que sous-traitant. Un accord de traitement des données (DPA) est disponible sur demande pour les clients professionnels. À la fin de l'abonnement, les données restent exportables pendant 30 jours." },
+        { "heading": "8. Sous-traitants", "body": "Hébergement de l'infrastructure, paiements (Stripe), envoi d'e-mails et — uniquement lorsque l'organisation active les fonctionnalités d'IA — un fournisseur de modèles d'IA. La liste à jour des sous-traitants est fournie sur demande." },
+        { "heading": "9. Signaler une vulnérabilité", "body": "Si vous avez trouvé un problème de sécurité, contactez-nous via la page de contact. Nous examinons chaque signalement et apprécions la divulgation responsable." }
+      ]
+    },
     "privacy": {
       "short": "Confidentialité",
       "title": "Politique de Confidentialité",

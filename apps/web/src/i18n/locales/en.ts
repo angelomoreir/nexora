@@ -4288,6 +4288,23 @@ export const en = {
         }
       ]
     },
+    "security": {
+      "short": "Security",
+      "title": "Security & GDPR",
+      "updated": "Last updated: September 2026",
+      "intro": "How NEXORA protects your organization's data. This page describes the technical and organizational measures applied across the platform.",
+      "sections": [
+        { "heading": "1. Isolation between organizations", "body": "Every record belongs to a single organization and all access is filtered on the server. Automated tests attempt to reach another organization's documents, lists, tasks, workflows, search, audit log and downloads on every platform release." },
+        { "heading": "2. Authentication", "body": "Passwords stored with Argon2id. Sessions use short-lived access tokens in httpOnly cookies, refresh-token rotation with reuse detection, and session revocation on logout or password change. Single Sign-On via OpenID Connect is available for businesses." },
+        { "heading": "3. Access control", "body": "Roles (Super Admin, Admin, Manager, Editor, Member, Viewer) with granular permissions, folder- and document-level permissions, and server-side enforcement of every operation — never only in the interface." },
+        { "heading": "4. Audit", "body": "Relevant actions (creation, editing, sharing, deletion, permission changes) are recorded in an audit log available to the organization's administrators." },
+        { "heading": "5. Files and sharing", "body": "Allowed-extension list, MIME type and file signature checks, size limits and storage separated per organization. Share links can be protected with a password and an expiry date." },
+        { "heading": "6. Application protection", "body": "Rate limiting, HTTP security headers, validation of all input and error messages without internal details. Dependencies are audited against known vulnerabilities." },
+        { "heading": "7. GDPR", "body": "For uploaded content, your organization is the data controller and NEXORA acts as processor. A Data Processing Agreement (DPA) is available to business customers on request. After a subscription ends, data remains available for export for 30 days." },
+        { "heading": "8. Sub-processors", "body": "Infrastructure hosting, payments (Stripe), email delivery and — only when the organization enables AI features — an AI model provider. The current sub-processor list is provided on request." },
+        { "heading": "9. Report a vulnerability", "body": "If you found a security issue, contact us through the contact page. We review every report and appreciate responsible disclosure." }
+      ]
+    },
     "privacy": {
       "short": "Privacy",
       "title": "Privacy Policy",

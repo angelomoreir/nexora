@@ -3843,6 +3843,23 @@ export const ptPT = {
         { heading: "10. Lei aplicável e contacto", body: "Estes termos regem-se pela lei portuguesa e os litígios são submetidos aos tribunais de Lisboa, sem prejuízo de normas imperativas de proteção do consumidor. Contacto: japmoreira@gmail.com." }
       ]
     },
+    security: {
+      short: "Segurança",
+      title: "Segurança e RGPD",
+      updated: "Última atualização: setembro de 2026",
+      intro: "Como a NEXORA protege os dados da sua organização. Esta página descreve as medidas técnicas e organizativas aplicadas na plataforma.",
+      sections: [
+        { heading: "1. Isolamento entre organizações", body: "Cada registo pertence a uma única organização e todos os acessos são filtrados no servidor. Testes automáticos tentam aceder a documentos, listas, tarefas, workflows, pesquisa, auditoria e downloads de outra organização em cada versão da plataforma." },
+        { heading: "2. Autenticação", body: "Passwords guardadas com Argon2id. Sessões com token de acesso de curta duração em cookies httpOnly, rotação do token de renovação com deteção de reutilização e revogação de sessões no logout ou mudança de password. Single Sign-On via OpenID Connect disponível para empresas." },
+        { heading: "3. Controlo de acessos", body: "Perfis (Super Admin, Admin, Manager, Editor, Member, Viewer) com permissões granulares, permissões por pasta e documento e validação de todas as operações no servidor, nunca apenas na interface." },
+        { heading: "4. Auditoria", body: "As ações relevantes (criação, edição, partilha, eliminação, alterações de permissões) ficam registadas num registo de auditoria consultável pelos administradores da organização." },
+        { heading: "5. Ficheiros e partilhas", body: "Lista de extensões permitidas, verificação do tipo MIME e da assinatura binária do ficheiro, limite de tamanho e armazenamento separado por organização. Links de partilha podem ter password e data de expiração." },
+        { heading: "6. Proteção da aplicação", body: "Limitação de pedidos (rate limiting), cabeçalhos de segurança HTTP, validação de todos os dados de entrada e mensagens de erro sem detalhes internos. As dependências são auditadas contra vulnerabilidades conhecidas." },
+        { heading: "7. RGPD", body: "Para o conteúdo carregado, a sua organização é a responsável pelo tratamento e a NEXORA atua como subcontratante. Disponibilizamos um Acordo de Tratamento de Dados (DPA) a clientes empresariais mediante pedido. Após o fim da subscrição, os dados ficam disponíveis para exportação durante 30 dias." },
+        { heading: "8. Subcontratantes", body: "Alojamento de infraestrutura, pagamentos (Stripe), envio de email e — apenas quando a organização ativa funcionalidades de IA — um fornecedor de modelos de IA. A lista atualizada de subcontratantes é fornecida mediante pedido." },
+        { heading: "9. Reportar uma vulnerabilidade", body: "Se encontrou um problema de segurança, contacte-nos através da página de contacto. Analisamos todos os reportes e agradecemos a divulgação responsável." }
+      ]
+    },
     privacy: {
       short: "Privacidade",
       title: "Política de Privacidade",

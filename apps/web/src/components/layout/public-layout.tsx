@@ -73,6 +73,7 @@ export function PublicLayout() {
             {links.map((link) => <Link key={link.to} to={link.to} className="hover:text-nav-foreground">{link.label}</Link>)}
             <Link to="/terms" className="hover:text-nav-foreground">{t("legal.terms.short")}</Link>
             <Link to="/privacy" className="hover:text-nav-foreground">{t("legal.privacy.short")}</Link>
+            <Link to="/security" className="hover:text-nav-foreground">{t("legal.security.short")}</Link>
           </div>
           <p className="text-xs text-nav-muted">© 2026 NEXORA · {t("public.footerTag")}</p>
         </div>
