@@ -21,5 +21,5 @@ Monorepo (npm workspaces): `apps/api` (Fastify + Prisma/PostgreSQL), `apps/web` 
 - Shell on the dev machine is PowerShell: no `&&`, use separate commands.
 
 ## Known commercial/legal items
-- `hyperformula` (Sheets engine) is GPL-3.0 with `licenseKey: "gpl-v3"` — a commercial license is required for closed-source SaaS distribution, or the engine must be replaced.
+- Sheets formulas use the in-house engine `apps/web/src/lib/sheet-formula.ts` (replaced GPL-3.0 HyperFormula). Do not add copyleft (GPL/AGPL) runtime dependencies; check licenses before adding packages. Engine tests: `apps/web/test/sheet-formula.test.ts`.
 - `docs/legal/DPA-modelo-pt.md` is a template pending legal review.

@@ -7,6 +7,6 @@ export default defineConfig({
     environment: "happy-dom",
     globals: true,
     setupFiles: ["./test/setup.ts"],
-    include: ["test/**/*.test.tsx", "test/my-day.test.ts"]
+    include: ["test/**/*.test.tsx", "test/my-day.test.ts", "test/sheet-formula.test.ts"]
   }
 });

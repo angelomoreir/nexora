@@ -19,10 +19,10 @@ import { Highlight } from "@tiptap/extension-highlight";
 import { TextAlign } from "@tiptap/extension-text-align";
 import { TextStyleKit } from "@tiptap/extension-text-style";
 import { CharacterCount, Placeholder } from "@tiptap/extensions";
-import { FunctionArgumentType, FunctionPlugin, HyperFormula } from "hyperformula";
+import { columnIndex, columnName, displayValue, evaluateSheet, SUPPORTED_FUNCTIONS, type SheetFunction } from "../lib/sheet-formula";
 import { useWorkspace } from "../components/layout/app-layout";
 import { Alert, Badge, Breadcrumb, Button, Dialog, Dropdown, DropdownItem, Input, Select, Skeleton, useToast } from "../components/ui";
-import { analyticsApi, ApiClientError, documentsApi, formsApi, listsApi, tasksApi } from "../lib/api";
+import { analyticsApi, ApiClientError, dashboardApi, documentsApi, formsApi, listsApi, tasksApi } from "../lib/api";
 import { apiErrorText } from "../lib/api-error";
 import { cn } from "../lib/utils";
 
@@ -46,46 +46,17 @@ const TASK_STATUS_ALIASES: Record<string, string[]> = {
   OPEN: ["TODO", "IN_PROGRESS", "IN_REVIEW"], ABERTAS: ["TODO", "IN_PROGRESS", "IN_REVIEW"], ABERTO: ["TODO", "IN_PROGRESS", "IN_REVIEW"], ATIVAS: ["TODO", "IN_PROGRESS", "IN_REVIEW"], ACTIVE: ["TODO", "IN_PROGRESS", "IN_REVIEW"]
 };
 
-class NexoraFunctionsPlugin extends FunctionPlugin {
-  static implementedFunctions = {
-    TASKSCOUNT: { method: "tasksCount", parameters: [{ argumentType: FunctionArgumentType.STRING, optionalArg: true }] },
-    TASKSOVERDUE: { method: "tasksOverdue" },
-    LISTSCOUNT: { method: "listsCount" },
-    FORMCOUNT: { method: "formsCount" },
-    DOCSCOUNT: { method: "docsCount" }
-  };
-
-  tasksCount(ast: { args: unknown[] }, state: never) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (this as any).runFunction(ast.args, state, (this as any).metadata("TASKSCOUNT"), (status: unknown) => {
-      if (!status) return NEXORA_SHEET_DATA.tasks.total;
-      const statuses = TASK_STATUS_ALIASES[String(status).toUpperCase()] ?? [String(status).toUpperCase()];
-      return statuses.reduce((sum, key) => sum + (NEXORA_SHEET_DATA.tasks.byStatus[key] ?? 0), 0);
-    });
-  }
-  tasksOverdue(ast: { args: unknown[] }, state: never) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (this as any).runFunction(ast.args, state, (this as any).metadata("TASKSOVERDUE"), () => NEXORA_SHEET_DATA.tasks.overdue);
-  }
-  listsCount(ast: { args: unknown[] }, state: never) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (this as any).runFunction(ast.args, state, (this as any).metadata("LISTSCOUNT"), () => NEXORA_SHEET_DATA.lists);
-  }
-  formsCount(ast: { args: unknown[] }, state: never) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (this as any).runFunction(ast.args, state, (this as any).metadata("FORMCOUNT"), () => NEXORA_SHEET_DATA.forms);
-  }
-  docsCount(ast: { args: unknown[] }, state: never) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (this as any).runFunction(ast.args, state, (this as any).metadata("DOCSCOUNT"), () => NEXORA_SHEET_DATA.documents);
-  }
-}
-
-try {
-  HyperFormula.registerFunctionPlugin(NexoraFunctionsPlugin, { enGB: { TASKSCOUNT: "TASKSCOUNT", TASKSOVERDUE: "TASKSOVERDUE", LISTSCOUNT: "LISTSCOUNT", FORMCOUNT: "FORMCOUNT", DOCSCOUNT: "DOCSCOUNT" } });
-} catch {
-  // already registered (HMR)
-}
+const NEXORA_FUNCTIONS: Record<string, SheetFunction> = {
+  TASKSCOUNT: ([status]) => {
+    if (status === undefined || status === null || status === "") return NEXORA_SHEET_DATA.tasks.total;
+    const statuses = TASK_STATUS_ALIASES[String(status).toUpperCase()] ?? [String(status).toUpperCase()];
+    return statuses.reduce((sum, key) => sum + (NEXORA_SHEET_DATA.tasks.byStatus[key] ?? 0), 0);
+  },
+  TASKSOVERDUE: () => NEXORA_SHEET_DATA.tasks.overdue,
+  LISTSCOUNT: () => NEXORA_SHEET_DATA.lists,
+  FORMCOUNT: () => NEXORA_SHEET_DATA.forms,
+  DOCSCOUNT: () => NEXORA_SHEET_DATA.documents
+};
 
 export function DocumentEditorPage() {
   const { t } = useTranslation();
@@ -486,9 +457,9 @@ type SheetTab = { name: string; cells: Record<string, string>; styles: Record<st
 type Range = { r1: number; c1: number; r2: number; c2: number };
 type ChartType = "bar" | "line" | "pie";
 
-const SHEET_FUNCTIONS = ["SUM", "AVERAGE", "MIN", "MAX", "COUNT", "COUNTA", "IF", "AND", "OR", "NOT", "ROUND", "ABS", "CONCAT", "VLOOKUP", "TODAY", "NOW", "TASKSCOUNT", "TASKSOVERDUE", "LISTSCOUNT", "FORMCOUNT", "DOCSCOUNT"];
+const SHEET_FUNCTIONS = [...SUPPORTED_FUNCTIONS, ...Object.keys(NEXORA_FUNCTIONS)];
 
-function colName(col: number) { return String.fromCharCode(65 + col); }
+const colName = columnName;
 function cellKey(row: number, col: number) { return `${colName(col)}${row + 1}`; }
 
 function normalizeRange(a: { row: number; col: number }, b: { row: number; col: number }): Range {
@@ -584,24 +555,6 @@ function SheetEditor({ organizationId, document, content, canEdit, saving, onSav
     return () => { window.removeEventListener("mousemove", move); window.removeEventListener("mouseup", up); };
   }, [activeSheet, scheduleSave]);
 
-  const grid = useMemo(() => {
-    const data: string[][] = Array.from({ length: rowCount }, () => Array.from({ length: columnCount }, () => ""));
-    for (const [key, value] of Object.entries(cells)) {
-      const match = /^([A-Z]+)(\d+)$/.exec(key);
-      const name = match?.[1];
-      const rowText = match?.[2];
-      if (!name || !rowText) continue;
-      const col = name.charCodeAt(0) - 65;
-      const row = Number.parseInt(rowText, 10) - 1;
-      const target = data[row];
-      if (target && col >= 0 && col < columnCount) target[col] = value;
-    }
-    return data;
-  }, [cells, rowCount, columnCount]);
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const hf = useMemo(() => HyperFormula.buildFromArray(grid, { licenseKey: "gpl-v3" }), [grid, dataVersion]);
-
   // Snapshot of org data for Nexora functions (=TASKSCOUNT, etc.) — refreshed on open.
   useEffect(() => {
     let alive = true;
@@ -616,7 +569,7 @@ function SheetEditor({ organizationId, document, content, canEdit, saving, onSav
         tasksApi.list(organizationId, { scope: "all", status: "CANCELLED" }),
         listsApi.list(organizationId, {}),
         formsApi.list(organizationId, {}),
-        documentsApi.list(organizationId, {}),
+        dashboardApi.get(organizationId),
         analyticsApi.operational(organizationId, 90)
       ]);
       if (!alive) return;
@@ -634,26 +587,19 @@ function SheetEditor({ organizationId, document, content, canEdit, saving, onSav
         ?? tasksList.filter((task) => task.dueAt && new Date(task.dueAt).getTime() < now && task.status !== "DONE" && task.status !== "CANCELLED").length;
       NEXORA_SHEET_DATA.lists = value(lists)?.total ?? 0;
       NEXORA_SHEET_DATA.forms = value(forms)?.total ?? 0;
-      NEXORA_SHEET_DATA.documents = value(docs)?.total ?? 0;
+      NEXORA_SHEET_DATA.documents = value(docs)?.metrics.documents ?? 0;
       setDataVersion((v) => v + 1);
     })();
     return () => { alive = false; };
   }, [organizationId]);
   const computed = useMemo(() => {
+    const values = evaluateSheet(cells, NEXORA_FUNCTIONS);
     const out: Record<string, string> = {};
-    for (let row = 0; row < rowCount; row += 1) {
-      for (let col = 0; col < columnCount; col += 1) {
-        const raw = cells[cellKey(row, col)];
-        if (raw === undefined) continue;
-        if (!raw.startsWith("=")) { out[cellKey(row, col)] = raw; continue; }
-        try {
-          const value = hf.getCellValue({ sheet: 0, row, col });
-          out[cellKey(row, col)] = value === null ? "" : typeof value === "object" ? "#ERROR" : String(value);
-        } catch { out[cellKey(row, col)] = "#ERROR"; }
-      }
-    }
+    for (const [key, value] of Object.entries(values)) out[key] = cells[key]?.startsWith("=") ? displayValue(value) : cells[key]!;
     return out;
-  }, [cells, hf, rowCount, columnCount]);
+    // dataVersion re-evaluates Nexora functions once org data has loaded
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cells, dataVersion]);
 
   // Trigger engine: fires a task when a cell condition transitions false → true.
   const fireTrigger = useCallback((trigger: SheetTrigger) => {
@@ -694,7 +640,7 @@ function SheetEditor({ organizationId, document, content, canEdit, saving, onSav
       for (const [key, raw] of Object.entries(tab.cells)) {
         const match = /^([A-Z]+)(\d+)$/.exec(key);
         if (!match?.[1] || !match[2]) continue;
-        const cell = ws.getCell(Number.parseInt(match[2], 10), match[1].charCodeAt(0) - 64);
+        const cell = ws.getCell(Number.parseInt(match[2], 10), columnIndex(match[1]) + 1);
         if (raw.startsWith("=")) cell.value = { formula: raw.slice(1), result: undefined };
         else {
           const num = Number(raw);
@@ -858,7 +804,7 @@ function SheetEditor({ organizationId, document, content, canEdit, saving, onSav
       for (const [key, value] of entries) {
         const match = /^([A-Z]+)(\d+)$/.exec(key)!;
         const r = Number.parseInt(match[2]!, 10) - 1;
-        const c = match[1]!.charCodeAt(0) - 65;
+        const c = columnIndex(match[1]!);
         (rows.get(r) ?? rows.set(r, {}).get(r)!)[c] = value;
       }
       const sortedRows = [...rows.entries()].sort((a, b) => {
@@ -902,7 +848,7 @@ function SheetEditor({ organizationId, document, content, canEdit, saving, onSav
   }
 
   function exportCsv() {
-    const csv = grid.map((row, r) => row.map((_, c) => `"${String(computed[cellKey(r, c)] ?? "").replace(/"/g, '""')}"`).join(",")).join("\n");
+    const csv = Array.from({ length: rowCount }, (_, r) => Array.from({ length: columnCount }, (_, c) => `"${String(computed[cellKey(r, c)] ?? "").replace(/"/g, '""')}"`).join(",")).join("\n");
     const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const anchor = window.document.createElement("a");
