@@ -13,6 +13,7 @@
     "lint": "eslint .",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio"
   },
   "dependencies": {
@@ -20,6 +21,7 @@
     "@fastify/cors": "11.1.0",
     "@fastify/multipart": "^10.1.1",
     "@fastify/rate-limit": "11.1.0",
+    "@fastify/static": "10.1.5",
     "@nexora/contracts": "0.1.0",
     "@prisma/client": "6.12.0",
     "argon2": "0.45.1",
@@ -29,6 +31,7 @@
     "mammoth": "^1.12.3",
     "nodemailer": "10.0.10",
     "pdf-parse": "^1.1.1",
+    "prisma": "6.12.0",
     "stripe": "22.5.0",
     "zod": "4.1.5"
   },
@@ -38,7 +41,6 @@
     "@types/nodemailer": "8.0.1",
     "eslint": "^9.39.5",
     "globals": "^17.12.0",
-    "prisma": "6.12.0",
     "tsx": "4.20.5",
     "typescript": "5.9.2",
     "typescript-eslint": "^8.70.0"

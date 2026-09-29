@@ -1,0 +1,32 @@
+services:
+  - type: web
+    name: nexora
+    runtime: docker
+    plan: free
+    region: frankfurt
+    healthCheckPath: /api/v1/health/live
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: API_HOST
+        value: 0.0.0.0
+      - key: API_PORT
+        value: "3000"
+      - key: STORAGE_DRIVER
+        value: local
+      - key: STORAGE_LOCAL_ROOT
+        value: ./storage
+      - key: MAIL_CONSOLE_ENABLED
+        value: "true"
+      - key: AI_PROVIDER
+        value: local
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_ACCESS_SECRET
+        generateValue: true
+      - key: WEB_ORIGIN
+        sync: false
+      - key: APP_URL
+        sync: false
+      - key: API_PUBLIC_URL
+        sync: false

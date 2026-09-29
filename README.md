@@ -155,24 +155,33 @@ Em produção a API recusa arrancar se `JWT_ACCESS_SECRET` for o valor por omiss
 
 ### Docker
 
-```dockerfile
-FROM node:22-slim
-WORKDIR /app
-RUN apt-get update && apt-get install -y --no-install-recommends openssl && rm -rf /var/lib/apt/lists/*
-COPY package*.json ./
-COPY apps/api/package.json ./apps/api/
-COPY apps/web/package.json ./apps/web/
-COPY packages/contracts/package.json ./packages/contracts/
-# Instalação completa: o build precisa de typescript e prisma (devDependencies)
-RUN npm ci
-COPY . .
-RUN npm run db:generate && npm run build -w @nexora/contracts && npm run build -w @nexora/api
-ENV NODE_ENV=production API_HOST=0.0.0.0 API_PORT=3000
-EXPOSE 3000
-CMD ["node", "apps/api/dist/server.js"]
+O `Dockerfile` na raiz faz build multi-stage: compila contracts+api+web, instala só dependências de produção no stage final e corre `prisma migrate deploy` antes de arrancar. Em produção a própria API serve `apps/web/dist` (SPA fallback incluído), por isso um único serviço aloja a app completa.
+
+```bash
+docker build -t nexora .
+docker run -p 3000:3000 --env-file .env nexora
 ```
 
-Crie um `.dockerignore` com pelo menos `node_modules`, `**/dist`, `.env`, `apps/api/storage` e `apps/api/prisma/*.db`. **Nunca inclua o `.env` na imagem:** a API carrega-o com `override: true`, pelo que se sobreporia às variáveis de ambiente do container. As migrações devem correr antes do arranque (por exemplo, `docker run … sh -c "cd apps/api && npx prisma migrate deploy"`).
+O `.dockerignore` já exclui `node_modules`, `**/dist`, `.env`, `apps/api/storage` e `apps/api/prisma/*.db`. **Nunca inclua o `.env` na imagem:** a API carrega-o com `override: true`, pelo que se sobreporia às variáveis de ambiente do container.
+
+### Render + Neon (tier gratuito)
+
+O `render.yaml` na raiz é um Blueprint do Render para um único web service Docker (plano free, Frankfurt) que corre API+frontend.
+
+1. **Base de dados** — crie um projeto gratuito no [Neon](https://neon.tech) e copie a connection string (`postgresql://…?sslmode=require`)
+2. **Repositório** — faça push para o GitHub (repo pode ser privado)
+3. **Render** — Dashboard → New → Blueprint → aponte ao repo. Preencha as variáveis `sync: false`:
+   - `DATABASE_URL` = connection string do Neon
+   - `WEB_ORIGIN` = `https://<nome>.onrender.com` (URL final do serviço; se o nome `nexora` estiver livre → `https://nexora.onrender.com`)
+   - `APP_URL` e `API_PUBLIC_URL` = o mesmo URL
+   - `JWT_ACCESS_SECRET` é gerado automaticamente
+4. O health check usa `/api/v1/health/live` (não toca na BD, por isso não falha enquanto o Neon acorda do scale-to-zero)
+
+Notas do tier gratuito:
+
+- O serviço **adormece após 15 min** sem tráfego; o primeiro pedido demora ~1 min a acordar
+- O **disco é efémero**: uploads (`STORAGE_DRIVER=local`) perdem-se em cada deploy — para persistência, configure S3 (Cloudflare R2 tem 10 GB grátis)
+- O Render **bloqueia SMTP outbound** (25/465/587) → `MAIL_CONSOLE_ENABLED=true` escreve os emails nos logs (útil para links de reset de password); alternativa: provider SMTP na porta 2525
 
 ### Proxy reverso (Nginx)
 

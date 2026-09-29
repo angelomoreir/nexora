@@ -2,8 +2,12 @@ import cookie from "@fastify/cookie";
 import cors from "@fastify/cors";
 import rateLimit from "@fastify/rate-limit";
 import multipart from "@fastify/multipart";
+import fastifyStatic from "@fastify/static";
 import { Prisma } from "@prisma/client";
 import Fastify from "fastify";
+import { existsSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { ZodError } from "zod";
 import { env } from "./config/env.js";
 import { AppError } from "./lib/errors.js";
@@ -55,7 +59,13 @@ export function buildApp() {
   app.decorateRequest("auth", null);
   app.register(cookie);
   app.register(multipart, { limits: { fileSize: env.DOCUMENT_MAX_SIZE_BYTES, files: 1, fields: 10 } });
-  app.register(rateLimit, { global: true, max: 100, timeWindow: "1 minute" });
+  app.register(rateLimit, {
+    global: true,
+    max: 100,
+    timeWindow: "1 minute",
+    // Static SPA assets served by the same process shouldn't eat into the API limit.
+    allowList: (request) => request.method === "GET" && !request.url.startsWith("/api/")
+  });
   app.register(cors, {
     origin: (origin, callback) => callback(null, !origin || allowedOrigins.has(origin)),
     credentials: true,
@@ -104,7 +114,25 @@ export function buildApp() {
   app.register(userRoute, { prefix: "/api/v1" });
   app.register(roleRoute, { prefix: "/api/v1" });
 
-  app.setNotFoundHandler((_request, reply) => {
+  // In production the API also serves the built SPA (apps/web/dist), so a
+  // single service can host the whole app — keeps SameSite=Lax auth cookies
+  // working without a reverse proxy.
+  const webRoot = fileURLToPath(new URL("../../web/dist", import.meta.url));
+  const serveWeb = env.NODE_ENV === "production" && existsSync(webRoot);
+  if (serveWeb) {
+    app.register(fastifyStatic, {
+      root: webRoot,
+      setHeaders: (reply, filePath) => {
+        reply.header("Cache-Control", filePath.includes(`${path.sep}assets${path.sep}`) ? "public, max-age=31536000, immutable" : "no-cache");
+      }
+    });
+  }
+
+  app.setNotFoundHandler((request, reply) => {
+    // SPA fallback: client-side routes get index.html, API paths keep JSON 404s.
+    if (serveWeb && request.method === "GET" && !request.url.startsWith("/api/")) {
+      return reply.sendFile("index.html");
+    }
     reply.status(404).send({ error: { code: "NOT_FOUND", message: "The requested endpoint was not found." } });
   });
 

@@ -1,0 +1,15 @@
+node_modules
+**/dist
+**/*.tsbuildinfo
+.env
+apps/api/storage
+apps/api/prisma/*.db
+.git
+docs
+*.docx
+*.lnk
+*.png
+simulacao.html
+Dockerfile
+.dockerignore
+render.yaml
